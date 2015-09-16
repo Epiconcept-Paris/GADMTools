@@ -1,0 +1,9 @@
+Package: GADMTools
+Type: Package
+Title: Easy use of www.gadm.org shapefiles
+Version: 1.0
+Date: 2015-09-05
+Author: jp.decorps@epiconcept.com
+Maintainer: <jp.decorps@epiconcept.com>
+Description: MAnipulate, assemble,export gadm shapefiles. Create choroplethe, heatmaps, dots plot, proportional dots.
+License: GPL
