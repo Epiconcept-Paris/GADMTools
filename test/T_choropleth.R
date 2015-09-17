@@ -1,4 +1,5 @@
-source("../GADMTools/R/gadm.R")
+library(GADMTools)
+
 
 MAP <- gadm.loadCountries("FRA", level = 1)
 DAT = read.csv2("FRA_REGIONS.csv")

@@ -1,14 +1,13 @@
-library(rgdal)
-library(maptools)
+# library(rgdal)
+# library(maptools)
 library(ggplot2);
-library(plyr)
-library(maptools)
-library(rgeos)
-library(sp);
-library(ggmap);
-library(dplyr);
-library(scales)
-library(RColorBrewer)
+# library(plyr)
+# library(maptools)
+# library(rgeos)
+# library(sp);
+# library(ggmap);
+# library(dplyr);
+# library(scales)
 
 #/home/kdo/GEODATA/GADM/SYR_adm0.RData
 
@@ -42,6 +41,12 @@ GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2/R/"
 ##          specify in "fileNames".
 ## ---------------------------------------------------------------------------
 gadm.loadCountries <- function (fileNames, level = 0, basefile="./", baseurl="http://biogeo.ucdavis.edu/data/gadm2/R/") {
+  require(ggplot2)
+  require(rgdal)
+  require(maptools)
+  require(sp)
+  require(dplyr)
+  require(RColorBrewer)
   ## load file and change prefix
   loadChangePrefix <- function (fileName, level = 0) {
     FILENAME = sprintf("%s_adm%d.RData", fileName,level)

@@ -1,1 +1,8 @@
-exportPattern("^[[:alpha:]]+")
+#exportPattern("^[[:alpha:]]+")
+export(
+  choropleth.GADMWrapper,
+  choropleth,
+  dots,
+  propDots,
+  gadm.loadCountries
+)

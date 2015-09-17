@@ -7,3 +7,4 @@ Author: jp.decorps@epiconcept.com
 Maintainer: <jp.decorps@epiconcept.com>
 Description: MAnipulate, assemble,export gadm shapefiles. Create choroplethe, heatmaps, dots plot, proportional dots.
 License: GPL
+depends: maptools,sp,ggplot2
