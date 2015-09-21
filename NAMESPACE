@@ -4,5 +4,8 @@ export(
   choropleth,
   dots,
   propDots,
-  gadm.loadCountries
+  gadm.loadCountries,
+  listNames.GADMWrapper,
+  listNames,
+  subset
 )

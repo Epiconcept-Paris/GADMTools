@@ -1,4 +1,4 @@
-source("../GADMTools/R/gadm.R")
+library(GADMTools)
 
 MAP <- gadm.loadCountries("SYR", level = 1)
 P = read.table("SYR_places.csv", sep=";", header=TRUE);
