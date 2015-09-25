@@ -40,14 +40,20 @@ GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2/R/"
 ##          SpatialPolygonsDataFrame object that contains all maps you 
 ##          specify in "fileNames".
 ## ---------------------------------------------------------------------------
-gadm.loadCountries <- function (fileNames, level = 0, basefile="./", baseurl="http://biogeo.ucdavis.edu/data/gadm2/R/") {
+gadm.loadCountries <- function (fileNames, 
+                                level = 0, 
+                                basefile="./", 
+                                baseurl="http://biogeo.ucdavis.edu/data/gadm2/R/",
+                                simplify=NULL) {
   require(ggplot2)
   require(rgdal)
+  require(rgeos)
   require(maptools)
   require(sp)
   require(dplyr)
   require(RColorBrewer)
-  ## load file and change prefix
+  
+  # ---- Load file and change prefix
   loadChangePrefix <- function (fileName, level = 0) {
     FILENAME = sprintf("%s_adm%d.RData", fileName,level)
     LOCAL_FILE = sprintf("%s%s", basefile, FILENAME)
@@ -68,10 +74,19 @@ gadm.loadCountries <- function (fileNames, level = 0, basefile="./", baseurl="ht
   }
   polygon <- sapply(fileNames, loadChangePrefix, level)
   polyMap <- do.call("rbind", polygon)
+  
+  # ---- Simplify polygones if requested by user
+  if (!is.null(simplify)) {
+    S <- gSimplify(polyMap, simplify, topologyPreserve = TRUE)
+    polyMap@polygons <- S@polygons
+  }
+  
+  # ---- Create GADMWrapper object
   structure(list("basename"=basefile,
                  "spdf"=polyMap,
                  "level"=level),
             class = "GADMWrapper")
+  
 }
 
 ## ---------------------------------------------------------------------------
