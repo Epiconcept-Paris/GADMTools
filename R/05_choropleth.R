@@ -27,6 +27,30 @@ choropleth.GADMWrapper <- function(this,
   .palette <- palette
   .steps <- steps
   .labels <- labels
+
+  # -------------------------------------------------------
+  # BREAKS
+  # -------------------------------------------------------
+  if (is.null(breaks)) {
+    if (!is.factor(.data[,.value])) {
+      .data[,.value] <- cut(.data[,.value],.steps)
+    }
+  }
+  else if (length(breaks) > 1) {
+    .data[,.value] <- cut(.data[,.value], breaks=breaks, labels = .labels)
+  }
+  else {
+    .type <- c("sd", "equal", "pretty", "quantile", "kmeans",
+               "hclust", "bclust", "fisher", "jenks")
+    if (breaks %in% .type) {
+      XB <- classIntervals(.data[,.value], n=.steps, style=breaks)
+      .data[,.value] <- cut(.data[,.value], breaks=XB$brks, labels = .labels)
+    }
+    else {
+      .MSG <- sprintf("%s not in %s", breaks, .type)
+      stop(cat())
+    }
+  }
   
   if (!is.null(join.name)) {
     names(.data)[names(.data)==join.name] <- .name
@@ -63,23 +87,12 @@ choropleth.GADMWrapper <- function(this,
     }
   }
   
-  if (is.null(breaks)) {
-    if (!is.factor(P$CHPLT_VALUE)) {
-      P$CHPLT_VALUE <- cut(P$CHPLT_VALUE,.steps)
-    }
-  }
-  else {
-    P$CHPLT_VALUE <- cut(P$CHPLT_VALUE, breaks=breaks, labels = .labels)
-  }
-  
+
   if (is.null(labels)) {
     .labels <- levels(P$CHPLT_VALUE)
   }
   
   if (is.null(legend)) .legend <- value
-  
-  
-  #  if (is.null(range)) .range <- c(min(P$CHPLT_VALUE, na.rm=T), max(P$CHPLT_VALUE, na.rm=T))
   
   ggplot(P, aes(x=long, y=lat, group=group)) +
     geom_polygon(data=P, 

@@ -14,35 +14,22 @@ library(ggplot2);
 GADM_BASE = "/home/kdo/GEODATA/GADM/";
 GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2/R/"
 
-# gadm.init <- function(basename="./") {
-#   if (!is.character(basename)) stop("basename must be character string")
-#   structure(list(basename), class = "GADMWrapper")
-# }
-# 
-# gadm.getBaseName <- function(obj) UseMethod("gadm.getBaseName", obj)
-# #gadm.getCountries <- function (fileNames, level = 0, ...) UseMethod("gadm.getCountries", obj)
-#   
-# gadm.getBaseName.GADMWrapper <- function(obj) {
-#   obj[[1]];
-# }
-
-# GADM <- gadm.init()
-# class(GADM)
-# gadm.getBaseName(GADM);
 
 ## ---------------------------------------------------------------------------
 ## Function : gadm.getCountries (constructor)
 ## Description : load a file from local system or from GADM repository 
 ##               You just have to specify the countries (ISO3 CODE) of the
 ##               file name, like "ARG" for Argentina.
-##               Optionally you can specify which level you want to have
+##               Optionally you can specify which level you want to have and
+##               simplify or not theshapefile (a value less or equal 0.01
+##               is recommended)
 ## Return : This function creates a GADMWrapper that contains a 
 ##          SpatialPolygonsDataFrame object that contains all maps you 
 ##          specify in "fileNames".
 ## ---------------------------------------------------------------------------
 gadm.loadCountries <- function (fileNames, 
                                 level = 0, 
-                                basefile="./", 
+                                basefile="GADM/", 
                                 baseurl="http://biogeo.ucdavis.edu/data/gadm2/R/",
                                 simplify=NULL) {
   require(ggplot2)
