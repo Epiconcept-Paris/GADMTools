@@ -14,7 +14,7 @@ choropleth.GADMWrapper <- function(this,
   if (is.null(value)) stop("Unknown value (NULL)\n")
   
   if (this$level == 0) {
-    .name <-"NAME_ISO"
+    .name <-"ISO"
   } else {
     .name <- sprintf("NAME_%d", this$level)
     .id   <- sprintf("ID_%d", this$level)
