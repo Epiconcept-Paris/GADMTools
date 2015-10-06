@@ -1,10 +1,5 @@
-# library(rgdal)
-# library(maptools)
 library(ggplot2);
 # library(plyr)
-# library(maptools)
-# library(rgeos)
-# library(sp);
 # library(ggmap);
 # library(dplyr);
 # library(scales)
@@ -253,6 +248,7 @@ propDots.GADMWrapper <- function(this, data, value, breaks=NULL, range=NULL, lab
     list(.B, .min, .max)
   }
 
+  .data <- .data[order(-.data[,"population"]),]
   .inter <- getBreaks(value)
   .breaks <- breaks
   
