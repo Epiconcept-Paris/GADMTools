@@ -171,29 +171,70 @@ vignette <- function(main, region,
 }
 
 dots <- function(this, points, ...) UseMethod("dots", this)
-dots.GADMWrapper <- function(this, points, color="red", title="", subtitle="") {
+dots.GADMWrapper <- function(this, points, color="red",
+                             value = NULL,
+                             steps = 5,
+                             palette = NULL,
+                             strate = NULL ,
+                             title="") {
   if (this$level == 0) {
-    .name <-"NAME_ISO"
+    .name <-"ISO"
   } else {
     .name <- sprintf("NAME_%d", this$level)
   }
   
   .data <- fortify(this$spdf, region=.name);
-  .titles <- sprintf("%s\n%s", title, subtitle)
+  .title <- title
   .pcolor <- color
+  .value <- value
+  .points <- points
+  .steps <- steps
+  .strate <- strate
   
-  ggplot() +
+  # Removing missing values
+  # -------------------------------------------
+  .points <- .points[!is.na(.points[,.value]),]
+  
+  if (!is.null(.value)) {
+    if (!is.factor(.points[,.value])) {
+      .points[,.value] <- cut(.points[,.value],.steps)
+    }
+  }
+  
+  if (!is.null(.strate)) {
+    .points[,.strate] <- as.factor(.points[,.strate])
+  }
+
+  
+  P <- ggplot() +
     geom_polygon(data=.data, aes(x=long, y=lat,  group=group),
-                 fill=NA, color="black", size = 0.5)+
-      geom_point(data=P, aes(x=longitude, y=latitude, size=5), color=.pcolor, shape=16) +
-      labs(title = .titles, fill = "") + theme(legend.position="none")+
-      coord_map();
+                 fill=NA, color="black", size = 0.5)
+  if (!is.null(.value)) {
+    P <- P + geom_point(data=.points,
+                        aes_string(x="longitude", y="latitude", 
+                                   color=eval(.value),
+                                   shape=eval(.strate)), 
+                        size=12, alpha=0.8)
+    
+  }
+  else {  
+        P <- P + geom_point(data=.points, aes(x=longitude, y=latitude, size=5), color=.pcolor, shape=16) +
+        labs(title = .title, fill = "") + theme(legend.position="none")
+      }
+
+  P <- P + theme_bw() +
+    theme(panel.border = element_blank()) +
+    theme(legend.key = element_blank()) +
+    theme(axis.text = element_blank()) +
+    theme(axis.title = element_blank()) +
+    coord_map();
+    P
 }  
 
 propDots <- function(this, data, ...) UseMethod("propDots", this)
 propDots.GADMWrapper <- function(this, data, value, breaks=NULL, range=NULL, labels=NULL, color="red", title="", subtitle="") {
   if (this$level == 0) {
-    .name <-"NAME_ISO"
+    .name <-"ISO"
   } else {
     .name <- sprintf("NAME_%d", this$level)
   }

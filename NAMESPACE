@@ -2,6 +2,7 @@
 export(
   choropleth.GADMWrapper,
   choropleth,
+  dots.GADMWrapper,
   dots,
   propDots,
   gadm.loadCountries,
