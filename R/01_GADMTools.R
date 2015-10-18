@@ -7,7 +7,7 @@ library(ggplot2);
 #/home/kdo/GEODATA/GADM/SYR_adm0.RData
 
 GADM_BASE = "/home/kdo/GEODATA/GADM/";
-GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2/R/"
+GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2.7/rds/"
 
 
 ## ---------------------------------------------------------------------------
@@ -25,7 +25,7 @@ GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2/R/"
 gadm.loadCountries <- function (fileNames, 
                                 level = 0, 
                                 basefile="GADM/", 
-                                baseurl="http://biogeo.ucdavis.edu/data/gadm2/R/",
+                                baseurl=GADM_URL,
                                 simplify=NULL) {
   require(ggplot2)
   require(classInt)
@@ -38,18 +38,20 @@ gadm.loadCountries <- function (fileNames,
   
   # ---- Load file and change prefix
   loadChangePrefix <- function (fileName, level = 0) {
-    FILENAME = sprintf("%s_adm%d.RData", fileName,level)
+    FILENAME = sprintf("%s_adm%d.rds", fileName,level)
     LOCAL_FILE = sprintf("%s%s", basefile, FILENAME)
     if (file.exists(LOCAL_FILE)) {
-      load(LOCAL_FILE)
+      gadm <- readRDS(LOCAL_FILE)
       theFile <- spChFIDs(gadm, paste(fileName, row.names(gadm), sep = "_"))
       theFile
     } else {
       gadm <- NULL
       REMOTE_FILE = sprintf("%s%s", baseurl, FILENAME)
-      load(url(REMOTE_FILE))
+#      gadm <- readRDS(url(REMOTE_FILE))
+      r <- download.file(REMOTE_FILE, LOCAL_FILE)
+      gadm <- readRDS(LOCAL_FILE)
       if (!is.null(gadm)) {
-        save(gadm, file=LOCAL_FILE)
+        saveRDS(gadm, file=LOCAL_FILE)
         theFile <- spChFIDs(gadm, paste(fileName, row.names(gadm), sep = "_"))
         theFile
       }
