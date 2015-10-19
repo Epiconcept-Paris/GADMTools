@@ -219,7 +219,7 @@ dots.GADMWrapper <- function(this, points, color="red",
         P <- P + geom_point(data=.points, aes(x=longitude, y=latitude, size=5, fill=.pcolor), color="black", shape=16) +
         labs(title = .title) + theme(legend.position="none")
       }
-  P <- P + scale_shape_manual(values = c(65:75)) +
+  P <- P + scale_shape_manual(values = c(15:18,65:75)) +
     theme_bw() +
     theme(panel.border = element_blank()) +
     theme(legend.key = element_blank()) +
