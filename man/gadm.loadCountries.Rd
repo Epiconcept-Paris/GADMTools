@@ -4,10 +4,11 @@
 \title{
 gadm.loadCountries}
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Load one or more GADM shapefiles in from a local path or from a remote repository.
 }
 \usage{
-gadm.loadCountries(fileNames, level = 0, basefile = "./", baseurl = "http://biogeo.ucdavis.edu/data/gadm2/R/")
+gadm.loadCountries(fileNames, level = 0, basefile=GADM_BASE,
+                  baseurl=GADM_URL, simplify=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -23,11 +24,16 @@ gadm.loadCountries(fileNames, level = 0, basefile = "./", baseurl = "http://biog
   \item{baseurl}{
 %%     ~~Describe \code{baseurl} here~~
 }
+  \item{simplify}{
+%%     ~~Describe \code{baseurl} here~~
+}
+
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+TODO
 }
 \value{
+TODO
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
@@ -35,56 +41,23 @@ gadm.loadCountries(fileNames, level = 0, basefile = "./", baseurl = "http://biog
 %% ...
 }
 \references{
-%% ~put references to the literature/web site here ~
-}
+TODO}
 \author{
-%%  ~~who you are~~
+jp.decorps@epiconcept.fr
 }
 \note{
-%%  ~~further notes~~
+TODO
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+TODO
 }
 \examples{
 ##---- Should be DIRECTLY executable !! ----
 ##-- ==>  Define data, use random,
 ##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (fileNames, level = 0, basefile = "./", baseurl = "http://biogeo.ucdavis.edu/data/gadm2/R/") 
-{
-    loadChangePrefix <- function(fileName, level = 0) {
-        FILENAME = sprintf("\%s_adm\%d.RData", fileName, level)
-        LOCAL_FILE = sprintf("\%s\%s", basefile, FILENAME)
-        if (file.exists(LOCAL_FILE)) {
-            load(LOCAL_FILE)
-            theFile <- spChFIDs(gadm, paste(fileName, row.names(gadm), 
-                sep = "_"))
-            theFile
-        }
-        else {
-            gadm <- NULL
-            REMOTE_FILE = sprintf("\%s\%s", baseurl, FILENAME)
-            load(url(REMOTE_FILE))
-            if (!is.null(gadm)) {
-                save(gadm, file = LOCAL_FILE)
-                theFile <- spChFIDs(gadm, paste(fileName, row.names(gadm), 
-                  sep = "_"))
-                theFile
-            }
-        }
-    }
-    polygon <- sapply(fileNames, loadChangePrefix, level)
-    polyMap <- do.call("rbind", polygon)
-    structure(list(basename = basefile, spdf = polyMap, level = level), 
-        class = "GADMWrapper")
-  }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{ ~kwd1 }
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
