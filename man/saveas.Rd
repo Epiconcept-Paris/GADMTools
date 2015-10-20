@@ -4,7 +4,7 @@
 \title{
 saveas}
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+TODO
 }
 \usage{
 saveas(this, name = NULL)
@@ -19,9 +19,10 @@ saveas(this, name = NULL)
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+TODO
 }
 \value{
+TODO
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
@@ -29,28 +30,26 @@ saveas(this, name = NULL)
 %% ...
 }
 \references{
-%% ~put references to the literature/web site here ~
+TODO
 }
 \author{
-%%  ~~who you are~~
+Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 }
 \note{
-%%  ~~further notes~~
+TODO
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+TODO
 }
 \examples{
 ##---- Should be DIRECTLY executable !! ----
 ##-- ==>  Define data, use random,
 ##--	or do  help(data=index)  for the standard data sets.
 
-## The function is currently defined as
-function (this, name = NULL) 
-UseMethod("saveas", this)
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

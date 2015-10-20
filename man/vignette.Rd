@@ -4,10 +4,13 @@
 \title{
 vignette}
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+TODO
 }
 \usage{
-vignette(main, region, maincolor = "black", regioncolor = "white", mainfill = "grey", regionfill = "black", mainsize = 1, regionsize = 0.5)
+vignette(main, region, maincolor = "black",
+regioncolor = "white", mainfill = "grey", 
+regionfill = "black", 
+mainsize = 1, regionsize = 0.5)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -37,9 +40,10 @@ vignette(main, region, maincolor = "black", regioncolor = "white", mainfill = "g
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+TODO
 }
 \value{
+TODO
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
@@ -47,38 +51,26 @@ vignette(main, region, maincolor = "black", regioncolor = "white", mainfill = "g
 %% ...
 }
 \references{
-%% ~put references to the literature/web site here ~
+TODO
 }
 \author{
-%%  ~~who you are~~
+Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 }
 \note{
-%%  ~~further notes~~
+TODO
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+TODO
 }
 \examples{
 ##---- Should be DIRECTLY executable !! ----
 ##-- ==>  Define data, use random,
 ##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (main, region, maincolor = "black", regioncolor = "white", 
-    mainfill = "grey", regionfill = "black", mainsize = 1, regionsize = 0.5) 
-{
-    Map <- gadm.initMap("")
-    Map <- addMap(Map, main, color = maincolor, fill = mainfill, 
-        size = mainsize)
-    Map <- addMap(Map, region, color = regioncolor, fill = regionfill, 
-        size = regionsize)
-    Map$P <- Map$P + theme_nothing(legend = TRUE)
-    render(Map)
-  }
 }
+
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ ~kwd1 }

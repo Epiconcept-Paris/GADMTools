@@ -10,6 +10,7 @@ License: GPL
 depends: maptools, sp, ggplot2, dplyr, classint
 Imports:
   ggplot2,
+  dplyr,
   RColorBrewer,
   classInt,
   sp,

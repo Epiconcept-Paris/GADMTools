@@ -1,24 +1,38 @@
-\name{subset}
-\alias{subset}
+\name{propDots}
+\alias{propDots}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-subset}
+dots}
 \description{
-TODO
+Plot proportionnal circles on a map.
 }
 \usage{
-subset(this, level = 1, regions = NA)
+propDots(x, data, value, breaks=NULL, range=NULL,
+         labels=NULL, color="red", title="")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{this}{
-%%     ~~Describe \code{this} here~~
+  \item{x}{Object - a GADMWrapper object}
+  \item{data}{
+%%     ~~Describe \code{region} here~~
 }
-  \item{level}{
-%%     ~~Describe \code{level} here~~
+  \item{value}{
+%%     ~~Describe \code{maincolor} here~~
 }
-  \item{regions}{
-%%     ~~Describe \code{regions} here~~
+  \item{breaks}{
+%%     ~~Describe \code{regioncolor} here~~
+}
+  \item{range}{
+%%     ~~Describe \code{mainfill} here~~
+}
+  \item{labels}{
+%%     ~~Describe \code{regionfill} here~~
+}
+  \item{color}{
+%%     ~~Describe \code{mainsize} here~~
+}
+  \item{title}{
+%%     ~~Describe \code{regionsize} here~~
 }
 }
 \details{
@@ -32,15 +46,12 @@ TODO
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
 }
-%% ------------------------------------------------------------------
 \references{
 TODO
 }
-%% ------------------------------------------------------------------
 \author{
 Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 }
-%% ------------------------------------------------------------------
 \note{
 TODO
 }
@@ -54,6 +65,7 @@ TODO
 ##---- Should be DIRECTLY executable !! ----
 ##-- ==>  Define data, use random,
 ##--	or do  help(data=index)  for the standard data sets.
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

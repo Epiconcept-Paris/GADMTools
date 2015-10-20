@@ -1,5 +1,15 @@
-choropleth <- function(this, ...) UseMethod("choropleth", this)
-choropleth.GADMWrapper <- function(this,
+choropleth <- function(x, data,
+                       value=NULL,
+                       breaks = NULL,
+                       steps = 5,
+                       join.id=NULL,
+                       join.name=NULL,
+                       legend = NULL,
+                       labels = NULL,
+                       palette=NULL,
+                       title="") UseMethod("choropleth", x)
+
+choropleth.GADMWrapper <- function(x,
                                    data,
                                    value=NULL,
                                    breaks = NULL,
@@ -13,11 +23,11 @@ choropleth.GADMWrapper <- function(this,
   
   if (is.null(value)) stop("Unknown value (NULL)\n")
   
-  if (this$level == 0) {
+  if (x$level == 0) {
     .name <-"ISO"
   } else {
-    .name <- sprintf("NAME_%d", this$level)
-    .id   <- sprintf("ID_%d", this$level)
+    .name <- sprintf("NAME_%d", x$level)
+    .id   <- sprintf("ID_%d", x$level)
   }
   
   .data <- data
@@ -54,18 +64,18 @@ choropleth.GADMWrapper <- function(this,
   
   if (!is.null(join.name)) {
     names(.data)[names(.data)==join.name] <- .name
-    .map <- fortify(this$spdf, region=.name)
+    .map <- fortify(x$spdf, region=.name)
     names(.map)[names(.map)=="id"] <- .name
   }
   else if (!is.null(join.id)){
     names(.data)[names(.data)==join.id] <- .id
-    .map <- fortify(this$spdf, region=.id)
+    .map <- fortify(x$spdf, region=.id)
     names(.map)[names(.map)=="id"] <- .id
     .map[,.id] <- as.integer(.map[,.id])
   }
   
   
-  P <- left_join(.map, .data)
+  P <- dplyr::left_join(.map, .data)
   if (!is.factor(P[,value])) {
     P[,value] <- as.numeric(P[,value])
   }
@@ -93,8 +103,8 @@ choropleth.GADMWrapper <- function(this,
   }
   
   if (is.null(legend)) .legend <- value
-  
-  ggplot(P, aes(x=long, y=lat, group=group)) +
+    long = lat = group = CHPLT_VALUE <- NULL
+    ggplot(P, aes(x=long, y=lat, group=group)) +
     geom_polygon(data=P, 
                  aes(x=long, y=lat, group=group, fill=CHPLT_VALUE),
                  color = "black", size = 0.25) +

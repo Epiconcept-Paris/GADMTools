@@ -6,7 +6,7 @@ library(ggplot2);
 
 #/home/kdo/GEODATA/GADM/SYR_adm0.RData
 
-GADM_BASE = "/home/kdo/GEODATA/GADM/";
+GADM_BASE = "GADM/";
 GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2.7/rds/"
 
 
@@ -24,17 +24,12 @@ GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2.7/rds/"
 ## ---------------------------------------------------------------------------
 gadm.loadCountries <- function (fileNames, 
                                 level = 0, 
-                                basefile="GADM/", 
+                                basefile=GADM_BASE, 
                                 baseurl=GADM_URL,
-                                simplify=NULL) {
-  require(ggplot2)
-  require(classInt)
-  require(rgdal)
-  require(rgeos)
-  require(maptools)
-  require(sp)
-  require(dplyr)
-  require(RColorBrewer)
+                                simplify=NULL)
+  {
+  requireNamespace("ggplot2","classInt", "rgdal", "rgeos")
+  requireNamespace("maptools","sp", "dplyr", "RColorBrewer")
   
   # ---- Load file and change prefix
   loadChangePrefix <- function (fileName, level = 0) {
@@ -47,7 +42,6 @@ gadm.loadCountries <- function (fileNames,
     } else {
       gadm <- NULL
       REMOTE_FILE = sprintf("%s%s", baseurl, FILENAME)
-#      gadm <- readRDS(url(REMOTE_FILE))
       r <- download.file(REMOTE_FILE, LOCAL_FILE)
       gadm <- readRDS(LOCAL_FILE)
       if (!is.null(gadm)) {
@@ -95,18 +89,18 @@ subset <- function(this, level=1, regions=NA) {
 ## Method : listNames
 ## Return : a list of names for the selected level
 ## ---------------------------------------------------------------------------
-listNames <- function(this, level=0) UseMethod("listNames", this)
-listNames.GADMWrapper <- function(this, level=0) {
-  if (level > this$level) {
-    cat(sprintf("Warning: max level=%d\n", this$level))
-    level = this$level
+listNames <- function(x, level=0) UseMethod("listNames", x)
+listNames.GADMWrapper <- function(x, level=0) {
+  if (level > x$level) {
+    cat(sprintf("Warning: max level=%d\n", x$level))
+    level = x$level
   }
-  if (this$level == 0) {
+  if (x$level == 0) {
     name <-"NAME_ISO"
   } else {
     name <- sprintf("NAME_%d", level)
   }
-  unique(this$spdf@data[, name])
+  unique(x$spdf@data[, name])
 }
 
 ## ---------------------------------------------------------------------------
@@ -139,6 +133,7 @@ addMap.GADMmap <- function(this, layer, level=0, color="black", fill="black", si
   } else {
     name <- sprintf("NAME_%d", level)
   }
+  long = lat = group <- NULL
   D <- fortify(layer$spdf, region=name)
   this$P <- this$P + geom_polygon(data = D, aes(x = long, y = lat, group = group),
                fill=fill, color=color, size=size)
@@ -167,20 +162,26 @@ vignette <- function(main, region,
   render(Map)
 }
 
-dots <- function(this, points, ...) UseMethod("dots", this)
-dots.GADMWrapper <- function(this, points, color="red",
+dots <- function(x, points, color="red",
+                 value = NULL,
+                 steps = 5,
+                 palette = NULL,
+                 strate = NULL ,
+                 title="") UseMethod("dots", x)
+
+dots.GADMWrapper <- function(x, points, color="red",
                              value = NULL,
                              steps = 5,
                              palette = NULL,
                              strate = NULL ,
                              title="") {
-  if (this$level == 0) {
+  if (x$level == 0) {
     .name <-"ISO"
   } else {
-    .name <- sprintf("NAME_%d", this$level)
+    .name <- sprintf("NAME_%d", x$level)
   }
   
-  .data <- fortify(this$spdf, region=.name);
+  .data <- fortify(x$spdf, region=.name);
   .title <- title
   .pcolor <- color
   .value <- value
@@ -202,7 +203,7 @@ dots.GADMWrapper <- function(this, points, color="red",
     .points[,.strate] <- as.factor(.points[,.strate])
   }
 
-  
+  long = lat = group <- NULL
   P <- ggplot() +
     geom_polygon(data=.data, aes(x=long, y=lat,  group=group),
                  fill=NA, color="black", size = 0.5)
@@ -215,10 +216,11 @@ dots.GADMWrapper <- function(this, points, color="red",
                         size=8, alpha=0.8)
     
   }
-  else {  
-        P <- P + geom_point(data=.points, aes(x=longitude, y=latitude, size=5, fill=.pcolor), color="black", shape=16) +
-        labs(title = .title) + theme(legend.position="none")
-      }
+  else { 
+    longitude = latitude <- NULL
+    P <- P + geom_point(data=.points, aes(x=longitude, y=latitude, size=5, fill=.pcolor), color="black", shape=16) +
+      labs(title = .title) + theme(legend.position="none")
+  }
   P <- P + scale_shape_manual(values = c(15:18,65:75)) +
     theme_bw() +
     theme(panel.border = element_blank()) +
@@ -229,18 +231,18 @@ dots.GADMWrapper <- function(this, points, color="red",
     P
 }  
 
-propDots <- function(this, data, ...) UseMethod("propDots", this)
-propDots.GADMWrapper <- function(this, data, value, breaks=NULL, range=NULL, labels=NULL, color="red", title="", subtitle="") {
-  if (this$level == 0) {
+propDots <- function(x, data, value, breaks=NULL, range=NULL, labels=NULL, color="red", title="") UseMethod("propDots", x)
+propDots.GADMWrapper <- function(x, data, value, breaks=NULL, range=NULL, labels=NULL, color="red", title="") {
+  if (x$level == 0) {
     .name <-"ISO"
   } else {
-    .name <- sprintf("NAME_%d", this$level)
+    .name <- sprintf("NAME_%d", x$level)
   }
   
-  .map <- fortify(this$spdf, region=.name)
+  .map <- fortify(x$spdf, region=.name)
   .data <- data
   .value <- value
-  .titles <- sprintf("%s\n%s", title, subtitle)
+  .title <- title
   .pcolor <- color
 
   getBreaks <- function(value) {
@@ -251,7 +253,7 @@ propDots.GADMWrapper <- function(this, data, value, breaks=NULL, range=NULL, lab
     list(.B, .min, .max)
   }
 
-  .data <- .data[order(-.data[,"population"]),]
+  .data <- .data[order(-.data[,.value]),]
   .inter <- getBreaks(value)
   .breaks <- breaks
   
@@ -269,6 +271,7 @@ propDots.GADMWrapper <- function(this, data, value, breaks=NULL, range=NULL, lab
     .labels <- .breaks
   }
   
+  long = lat = group <- NULL
   ggplot() +
   geom_polygon(data=.map, aes(x=long, y=lat,  group=group),
                  fill=NA, color="black", size = 0.5) +
@@ -279,7 +282,7 @@ propDots.GADMWrapper <- function(this, data, value, breaks=NULL, range=NULL, lab
                     color=.pcolor, shape=16, alpha=0.3) +
 
   scale_size_area(max_size = 24, breaks=.breaks, limits = .range, labels=.labels) +
-  labs(title = .titles, fill = "") + 
+  labs(title = .title, fill = "") + 
   theme_bw() +
   theme(panel.border = element_blank()) +
   theme(legend.key = element_blank()) +
@@ -308,6 +311,7 @@ isopleth.GADMWrapper <- function(this, data, palette=NULL, title="", subtitle=""
     .palette <- colorRampPalette(brewer.pal(9, palette), space="Lab")
   }
   
+  with(.map, {
   ggplot() +
     geom_polygon(data=.map, aes(x=long, y=lat,  group=group),
                  fill=NA, color="black", size = 0.5) +
@@ -322,7 +326,7 @@ isopleth.GADMWrapper <- function(this, data, palette=NULL, title="", subtitle=""
     theme(axis.title = element_blank()) +
     theme(axis.ticks = element_blank()) +
     coord_map();
-  
+  })
 } 
 
 

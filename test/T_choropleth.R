@@ -1,20 +1,19 @@
 library(GADMTools)
 
 
-MAP <- gadm.loadCountries("FRA", level = 1, simplify=0.01)
+MAP <- gadm.loadCountries("FRA", level = 1)
 DAT = read.csv2("FRA_REGIONS.csv")
 
-#str(DAT)
-listNames(MAP, level = 1)
+str(DAT)
 
-#Region = MAP$spdf@data$NAME_1
-system.time(
+listNames(MAP, level = 1)
+Region = MAP$spdf@data$NAME_1
+
 choropleth(MAP, DAT,
            join.id = "Code.INSEE",
            value = "Population.2011",
            legend = "Population par régions",
            title="Choropleth avec palette par défaut (Heatmap - 5 steps)")
-)
 
 choropleth(MAP, DAT,
            join.id = "Code.INSEE",
