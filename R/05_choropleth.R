@@ -2,8 +2,8 @@ choropleth <- function(x, data,
                        value=NULL,
                        breaks = NULL,
                        steps = 5,
-                       join.id=NULL,
-                       join.name=NULL,
+                       data.join=NULL,
+                       adm.join=NULL,
                        legend = NULL,
                        labels = NULL,
                        palette=NULL,
@@ -14,7 +14,8 @@ choropleth.GADMWrapper <- function(x,
                                    value=NULL,
                                    breaks = NULL,
                                    steps = 5,
-                                   join.id=NULL,
+                                   adm.join = NULL,
+                                   data.join=NULL,
                                    join.name=NULL,
                                    legend = NULL,
                                    labels = NULL,
@@ -23,12 +24,18 @@ choropleth.GADMWrapper <- function(x,
   
   if (is.null(value)) stop("Unknown value (NULL)\n")
   
-  if (x$level == 0) {
-    .name <-"ISO"
-  } else {
-    .name <- sprintf("NAME_%d", x$level)
-    .id   <- sprintf("ID_%d", x$level)
+  if (!is.null(adm.join)) {
+    .name = adm.join
   }
+  else {
+    stop("adm.join is NULL! You MUST provide a name.")
+  }
+#   if (x$level == 0) {
+#     .name <-"ISO"
+#   } else {
+#     .name <- sprintf("NAME_%d", x$level)
+#     .id   <- sprintf("ID_%d", x$level)
+#   }
   
   .data <- data
   .value <- value
@@ -43,6 +50,8 @@ choropleth.GADMWrapper <- function(x,
   # -------------------------------------------------------
   if (is.null(breaks)) {
     if (!is.factor(.data[,.value])) {
+#       breaks <- as.vector(quantile(.data[,.value], na.rm = T))
+#       breaks <- c(0,breaks)
       .data[,.value] <- cut(.data[,.value],.steps)
     }
   }
@@ -62,17 +71,17 @@ choropleth.GADMWrapper <- function(x,
     }
   }
   
-  if (!is.null(join.name)) {
-    names(.data)[names(.data)==join.name] <- .name
+  if (!is.null(data.join)) {
+    names(.data)[names(.data)==data.join] <- .name
     .map <- fortify(x$spdf, region=.name)
     names(.map)[names(.map)=="id"] <- .name
   }
-  else if (!is.null(join.id)){
-    names(.data)[names(.data)==join.id] <- .id
-    .map <- fortify(x$spdf, region=.id)
-    names(.map)[names(.map)=="id"] <- .id
-    .map[,.id] <- as.integer(.map[,.id])
-  }
+#   else if (!is.null(join.id)){
+#     names(.data)[names(.data)==join.id] <- .id
+#     .map <- fortify(x$spdf, region=.id)
+#     names(.map)[names(.map)=="id"] <- .id
+#     .map[,.id] <- as.integer(.map[,.id])
+#   }
   
   
   P <- dplyr::left_join(.map, .data)
@@ -103,12 +112,12 @@ choropleth.GADMWrapper <- function(x,
   }
   
   if (is.null(legend)) .legend <- value
-    long = lat = group = CHPLT_VALUE <- NULL
-    ggplot(P, aes(x=long, y=lat, group=group)) +
-    geom_polygon(data=P, 
-                 aes(x=long, y=lat, group=group, fill=CHPLT_VALUE),
-                 color = "black", size = 0.25) +
-    
+  long = lat = group = CHPLT_VALUE <- NULL
+  .P <- ggplot(P, aes(x=long, y=lat, group=group)) +
+  geom_polygon(data=P, 
+               aes(x=long, y=lat, group=group, fill=CHPLT_VALUE),
+               color = "black", size = 0.25) +
+  
     scale_fill_manual(.legend, values = .palette, 
                       limits=levels(P$CHPLT_VALUE),
                       labels=.labels,
@@ -122,5 +131,9 @@ choropleth.GADMWrapper <- function(x,
     theme(axis.title = element_blank()) +
     theme(axis.ticks = element_blank()) +
     coord_map();
+    if (.legend == FALSE) {
+      .P <- .P + theme(legend.position="none")
+    }
+  .P
 }
 

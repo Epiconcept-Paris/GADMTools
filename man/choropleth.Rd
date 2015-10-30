@@ -1,10 +1,11 @@
 \name{choropleth}
 \alias{choropleth}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-Draw a choropleth on selected regions}
+
+\title{ Draw a choropleth on selected regions }
+
 \description{
-TODO
+Drawing a choropleth with GADMTools is easy and straightforward. You just have to select your shape(s) file(s) with \emph{gadm.loadcountries}, load your data from a
+csv file for example, and call the choropleth function with the rights arguments.
 }
 \usage{
 choropleth (x, data, value=NULL, breaks = NULL, steps = 5, join.id=NULL,
@@ -12,67 +13,59 @@ choropleth (x, data, value=NULL, breaks = NULL, steps = 5, join.id=NULL,
             title="")
 
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{main} here~~
-}
+  \item{x}{ \bold{Object} GADMWrapper }
+  
   \item{data}{
-%%     ~~Describe \code{region} here~~
+\bold{data.frame} - data to plot
 }
   \item{value}{
-%%     ~~Describe \code{maincolor} here~~
+  \bold{String} - the name of the column in the data.frame we want to plot (eg: an incidence in epidemiology studies)
 }
   \item{breaks}{
 %%     ~~Describe \code{regioncolor} here~~
 }
-  \item{steps}{
-%%     ~~Describe \code{mainfill} here~~
+  \item{steps}{ \bold{Integer} - number of breaks. Default = 5. If \emph{breaks} is \bold{NOT NULL} this value is used internally with cut().
 }
-  \item{join.id}{
-%%     ~~Describe \code{regionfill} here~~
+  \item{join.id}{ \bold{String} - the name of the column in the data.frame
+  wich will be joined with the ID_LEVEL of the map.
 }
-  \item{join.name}{
-%%     ~~Describe \code{mainsize} here~~
+  \item{join.name}{ \bold{String} - the name of the column in the data.frame
+  wich will be joined with the NAME_LEVEL of the map.
 }
   \item{legend}{
-%%     ~~Describe \code{regionsize} here~~
+  \bold{String} - title of legend. Default \bold{NULL}. 
 }
-  \item{labels}{
-%%     ~~Describe \code{regionsize} here~~
-}
+  \item{labels}{ \bold{String vector} labels for the legend. Default \bold{NULL}}
+  
   \item{palette}{
-%%     ~~Describe \code{regionsize} here~~
+  \bold{String} - A RColorBrewer palette name or a \bold{String vector} a
+  vector of colors. Default \bold{NULL}.
 }
   \item{title}{
-%%     ~~Describe \code{regionsize} here~~
+  \bold{String} - Title of the plot. Default is an empty string
 }
 }
 \details{
-TODO
+----
 }
 \value{
-TODO
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+    \bold{Object}  ggplot2
 }
 \references{
-TODO
+----
 }
 \author{
 Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 }
 \note{
-TODO
+----
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-TODO
+----
 }
 \examples{
 ##---- Should be DIRECTLY executable !! ----

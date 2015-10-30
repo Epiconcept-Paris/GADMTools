@@ -1,48 +1,44 @@
 \name{saveas}
 \alias{saveas}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-saveas}
+
+\title{ Save your own GADM shapefile as rds  file}
 \description{
-TODO
+Save a GADM shapefile (.rds)
 }
 \usage{
-saveas(this, name = NULL)
+saveas(x, name = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{this}{
-%%     ~~Describe \code{this} here~~
+  \item{x}{
+\bold{Object} - GADMWWrapper
 }
   \item{name}{
-%%     ~~Describe \code{name} here~~
+\bold{String} - File path
 }
 }
 \details{
-TODO
+----
 }
+
 \value{
-TODO
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+----
+
 }
 \references{
-TODO
+----
 }
 \author{
 Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 }
 \note{
-TODO
+Do not specify the rds extension, it was added automatically
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-TODO
+----
 }
 \examples{
 ##---- Should be DIRECTLY executable !! ----

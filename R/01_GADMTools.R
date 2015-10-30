@@ -1,10 +1,7 @@
-library(ggplot2);
-# library(plyr)
-# library(ggmap);
+# library(ggplot2);
 # library(dplyr);
-# library(scales)
-
-#/home/kdo/GEODATA/GADM/SYR_adm0.RData
+# require(sp)
+loadNamespace("sp")  
 
 GADM_BASE = "GADM/";
 GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2.7/rds/"
@@ -28,9 +25,9 @@ gadm.loadCountries <- function (fileNames,
                                 baseurl=GADM_URL,
                                 simplify=NULL)
   {
-  requireNamespace("ggplot2","classInt", "rgdal", "rgeos")
-  requireNamespace("maptools","sp", "dplyr", "RColorBrewer")
-  
+#   requireNamespace("ggplot2","classInt", "rgdal", "rgeos")
+#   requireNamespace("maptools","sp", "dplyr", "RColorBrewer")
+ loadNamespace("sp")  
   # ---- Load file and change prefix
   loadChangePrefix <- function (fileName, level = 0) {
     FILENAME = sprintf("%s_adm%d.rds", fileName,level)
@@ -53,7 +50,7 @@ gadm.loadCountries <- function (fileNames,
   }
   polygon <- sapply(fileNames, loadChangePrefix, level)
   polyMap <- do.call("rbind", polygon)
-  
+#  polyMap <- sp::rbind(polygon)
   # ---- Simplify polygones if requested by user
   if (!is.null(simplify)) {
     S <- gSimplify(polyMap, simplify, topologyPreserve = TRUE)
@@ -72,16 +69,21 @@ gadm.loadCountries <- function (fileNames,
 ## Method : subset
 ## Return : a new object GADMWrapper with the selected regions
 ## ---------------------------------------------------------------------------
-subset <- function(this, level=0, regions=NA) UseMethod("subset", this)
-subset <- function(this, level=1, regions=NA) {
+subset <- function(x, level=NULL, regions=NULL) UseMethod("subset", x)
+subset <- function(x, level=NULL, regions=NULL) {
+  if (is.null(level)) {
+    level <- x$level 
+  }
+  if (is.null(regions)) {
+    stop("Missing value for regions")
+  }
   NAME <- sprintf("NAME_%d", level)
-  df <- this$spdf
-  x <- as.data.frame(df[, NAME])
-  colnames(x) <- c("N")
-  df <- df[x$N %in% regions,];
-  structure(list("basename"=this$basename,
-                  "spdf"=df,
-                 "level"=this$level),
+  df1 <- as.data.frame(x$spdf[, NAME])
+  colnames(df1) <- c("N")
+  df2 <- x$spdf[df1$N %in% regions,];
+  structure(list("basename"=x$basename,
+                  "spdf"=df2,
+                 "level"=x$level),
             class = "GADMWrapper")  
 }
 
@@ -107,14 +109,14 @@ listNames.GADMWrapper <- function(x, level=0) {
 ## Method : saveas
 ## Return : the name of the saved file
 ## ---------------------------------------------------------------------------
-saveas <- function(this, name=NULL) UseMethod("saveas", this)
-saveas.GADMWrapper <- function(this, name=NULL) {
+saveas <- function(x, name=NULL) UseMethod("saveas", x)
+saveas.GADMWrapper <- function(x, name=NULL) {
   if (is.null(name)) {
     stop("You have to provide a name.")
   }
-  FName <- sprintf("%s_adm%d.RData", name, this$level)
-  gadm = this$spdf
-  save(gadm, file=FName);
+  FName <- sprintf("%s%s_adm%d.rds", x$basename, name, x$level)
+  gadm = x$spdf
+  saveRDS(gadm, file=FName);
   FName
 }
 
@@ -218,8 +220,16 @@ dots.GADMWrapper <- function(x, points, color="red",
   }
   else { 
     longitude = latitude <- NULL
-    P <- P + geom_point(data=.points, aes(x=longitude, y=latitude, size=5, fill=.pcolor), color="black", shape=16) +
-      labs(title = .title) + theme(legend.position="none")
+    P <- P + geom_point(data=points, aes(x=longitude, y=latitude), size=4, color=.pcolor, shape=16) +
+      labs(title = .title) + 
+      theme(legend.position="none")+
+      theme_bw() +
+      theme(panel.border = element_blank()) +
+      theme(legend.key = element_blank()) +
+      theme(axis.text = element_blank()) +
+      theme(axis.title = element_blank()) +
+      coord_map();
+    return(P)
   }
   P <- P + scale_shape_manual(values = c(15:18,65:75)) +
     theme_bw() +
@@ -329,4 +339,43 @@ isopleth.GADMWrapper <- function(this, data, palette=NULL, title="", subtitle=""
   })
 } 
 
+plotmap <- function(x, title="") UseMethod("plotmap", x)
+plotmap.GADMWrapper <- function(x, title="") {
+  #  stop("input function ok")
+  if (x$level == 0) {
+    .name <-"ISO"
+  } else {
+    .name <- sprintf("NAME_%d", x$level)
+  }
+  
+  #  stop("ok")
+  .map <- fortify(x$spdf, region=.name)
+  
+  long = lat = group <- NULL
+  
+  P <- ggplot() +
+    geom_polygon(data=.map, aes(x=long, y=lat, group=group),
+                 fill=NA, color="black", size = 0.5)+
+    labs(title = title, fill = "") + 
+#    theme_bw() +
+    theme(panel.border = element_blank()) +
+    theme(legend.key = element_blank()) +
+    theme(axis.text = element_blank()) +
+    theme(axis.title = element_blank()) +
+    theme(axis.ticks = element_blank()) +
+    coord_map();
+  P
+}
 
+grid.map <- function(left, right, center=NULL, title=NULL) {
+  LS = do.call(arrangeGrob, c(left, list(ncol=1)))
+  RS = do.call(arrangeGrob, c(right, list(ncol=1)))
+  
+  .title = sprintf("\n%s", title)
+  if (!is.null(center)) {
+    CS = do.call(arrangeGrob, center)
+    grid.arrange(LS, CS, RS, ncol=3, main=.title, widths=c(1,3,1))
+  } else {
+      grid.arrange(LS, RS, ncol=2, main=title, widths=c(1,3), heights=c(1,1.5))
+  }
+}

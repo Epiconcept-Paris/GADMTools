@@ -7,12 +7,18 @@ import("ggplot2","RColorBrewer",
 export(
   choropleth,
   dots,
-  propDots,
   gadm.loadCountries,
+  isopleth,
   listNames,
-  subset
+  plotmap,
+  propDots,
+  subset,
+  saveas,
+  grid.map
 )
 S3method(choropleth, GADMWrapper)
 S3method(dots, GADMWrapper)
 S3method(listNames, GADMWrapper)
+S3method(plotmap, GADMWrapper)
 S3method(propDots, GADMWrapper)
+S3method(saveas, GADMWrapper)
