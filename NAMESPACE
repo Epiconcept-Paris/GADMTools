@@ -18,6 +18,7 @@ export(
 )
 S3method(choropleth, GADMWrapper)
 S3method(dots, GADMWrapper)
+S3method(isopleth, GADMWrapper)
 S3method(listNames, GADMWrapper)
 S3method(plotmap, GADMWrapper)
 S3method(propDots, GADMWrapper)
