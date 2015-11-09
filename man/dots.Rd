@@ -1,8 +1,7 @@
 \name{dots}
 \alias{dots}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-dots}
+\title{Plot dots on a map}
 \description{
 Plot points on a map with different colors and shapes.
 }
@@ -13,62 +12,56 @@ dots(x, points, color="red", value = NULL, steps = 5, palette = NULL,
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{main} here~~
+  \item{x}{ \bold{Object} GADMWrapper}
+  \item{points}{ 
+  \bold{Object} data.frame with columns 'latitude' and 'longitude'
 }
-  \item{points}{
-%%     ~~Describe \code{region} here~~
-}
-  \item{color}{
-%%     ~~Describe \code{maincolor} here~~
-}
+  \item{color}{ a valid color}
   \item{value}{
-%%     ~~Describe \code{regioncolor} here~~
+  \bold{Character} Name of a column of the data.frame. If is not null, colored dots are displayed according to the value. 
 }
   \item{steps}{
-%%     ~~Describe \code{mainfill} here~~
+  \bold{Integer} Number of breaks for the value field
 }
-  \item{palette}{
-%%     ~~Describe \code{regionfill} here~~
+  \item{palette}{ a valid palette
 }
   \item{strate}{
-%%     ~~Describe \code{mainsize} here~~
+  \bold{Character} name of a column of the data.frame. If is not null,
+  display dots with different shapes according to the value
 }
   \item{title}{
-%%     ~~Describe \code{regionsize} here~~
+\bold{Character} The title of the plot
 }
 }
 \details{
-TODO
+----
 }
 \value{
-TODO
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+  \bold{Object} ggplot2
 }
 \references{
-TODO
+----
 }
 \author{
 Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 }
 \note{
-TODO
+----
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-TODO
+\code{\link{RColorBrewer}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
+library(GADMTools)
+library(sp)
+data(quakes)
+M <- gadm.loadCountries("FJI", basefile="./")
+colnames(quakes)[1] <- "latitude"
+colnames(quakes)[2] <- "longitude"
+dots(M, quakes, value="mag")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

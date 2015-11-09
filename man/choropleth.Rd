@@ -8,8 +8,8 @@ Drawing a choropleth with GADMTools is easy and straightforward. You just have t
 csv file for example, and call the choropleth function with the rights arguments.
 }
 \usage{
-choropleth (x, data, value=NULL, breaks = NULL, steps = 5, join.id=NULL,
-            join.name=NULL, legend = NULL, labels = NULL, palette=NULL,
+choropleth (x, data, value=NULL, breaks = NULL, steps = 5, adm.join=NULL,
+            data.join=NULL, legend = NULL, labels = NULL, palette=NULL,
             title="")
 
 }
@@ -27,11 +27,11 @@ choropleth (x, data, value=NULL, breaks = NULL, steps = 5, join.id=NULL,
 }
   \item{steps}{ \bold{Integer} - number of breaks. Default = 5. If \emph{breaks} is \bold{NOT NULL} this value is used internally with cut().
 }
-  \item{join.id}{ \bold{String} - the name of the column in the data.frame
-  wich will be joined with the ID_LEVEL of the map.
+  \item{adm.join}{ \bold{String} - the name in GADM spdf dataset wich will be
+  joined with a column of the data..
 }
-  \item{join.name}{ \bold{String} - the name of the column in the data.frame
-  wich will be joined with the NAME_LEVEL of the map.
+  \item{data.join}{ \bold{String} - the name of the column in the data.frame
+  wich will be joined with the adm.join.
 }
   \item{legend}{
   \bold{String} - title of legend. Default \bold{NULL}. 
@@ -65,7 +65,7 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-----
+\link{classIntervals}
 }
 \examples{
 ##---- Should be DIRECTLY executable !! ----

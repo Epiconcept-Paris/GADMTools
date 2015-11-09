@@ -41,11 +41,13 @@ Do not specify the rds extension, it was added automatically
 ----
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-
+library(GADMTools)
+library(sp)
+France = gadm.loadCountries("FRA", level=1, basefile="./")
+Auvergne = subset(France,regions = "Auvergne", level=1)
+saveas(Auvergne, "./AUVERGNE")
+AUV <- gadm.loadCountries("AUVERGNE", level=1, basefile="./")
+plotmap(AUV)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

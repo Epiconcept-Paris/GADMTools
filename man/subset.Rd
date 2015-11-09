@@ -1,40 +1,26 @@
 \name{subset}
 \alias{subset}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-subset}
+\title{ Extract regions}
 \description{
-TODO
+With subset you can easyly extract one or more regions from a country at the current level
 }
 \usage{
-subset(this, level = 1, regions = NA)
+subset(x, level = NULL, regions = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{this}{
-%%     ~~Describe \code{this} here~~
-}
-  \item{level}{
-%%     ~~Describe \code{level} here~~
-}
-  \item{regions}{
-%%     ~~Describe \code{regions} here~~
-}
+  \item{x}{ \bold{Object} GADMWrapper }
+  \item{level}{ \bold{Integer} the level regions are extracted from }
+  \item{regions}{ \bold{String vector} of named regions }
 }
 \details{
-TODO
+----
 }
-\value{
-TODO
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
+\value{ \bold{Object} GADMWrapper }
 %% ------------------------------------------------------------------
 \references{
-TODO
+----
 }
 %% ------------------------------------------------------------------
 \author{
@@ -42,18 +28,20 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 }
 %% ------------------------------------------------------------------
 \note{
-TODO
+----
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-TODO
+  \code{\link{listNames}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+library(GADMTools)
+library(sp)
+France = gadm.loadCountries("FRA", level=2, basefile="./")
+Auvergne = subset(France,regions = "Auvergne", level=1)
+plotmap(Auvergne, title="Auvergne - level 1")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

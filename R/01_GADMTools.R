@@ -2,13 +2,14 @@
 # library(dplyr);
 # require(sp)
 loadNamespace("sp")  
+#importFrom(gridExtra, arrangeGrob)
 
 GADM_BASE = "GADM/";
 GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2.7/rds/"
 
 
 ## ---------------------------------------------------------------------------
-## Function : gadm.getCountries (constructor)
+## Function : gadm.loadtCountries (constructor)
 ## Description : load a file from local system or from GADM repository 
 ##               You just have to specify the countries (ISO3 CODE) of the
 ##               file name, like "ARG" for Argentina.
@@ -150,6 +151,14 @@ render.GADMmap <- function(this) {
 }
 
 vignette <- function(main, region,
+                     maincolor="black",
+                     regioncolor="white",
+                     mainfill="grey",
+                     regionfill="black",
+                     mainsize=1.0,
+                     regionsize=0.5) UseMethod("vignette", main)
+
+vignette.GADMWrapper <- function(main, region,
                      maincolor="black",
                      regioncolor="white",
                      mainfill="grey",
@@ -301,17 +310,17 @@ propDots.GADMWrapper <- function(x, data, value, breaks=NULL, range=NULL, labels
   coord_map();
 }  
 
-isopleth <- function(this, ...) UseMethod("isopleth", this)
-isopleth.GADMWrapper <- function(this, data, palette=NULL, title="", subtitle="") {
-  if (this$level == 0) {
+isopleth <- function(x,  data, palette=NULL, title="") UseMethod("isopleth", x)
+isopleth.GADMWrapper <- function(x, data, palette=NULL, title="") {
+  if (x$level == 0) {
     .name <-"NAME_ISO"
   } else {
-    .name <- sprintf("NAME_%d", this$level)
+    .name <- sprintf("NAME_%d", x$level)
   }
   
-  .map <- fortify(this$spdf, region=.name)
+  .map <- fortify(x$spdf, region=.name)
   .data <- data
-  .titles <- sprintf("%s\n%s", title, subtitle)
+  .titles <- title
   .palette <- palette
 
   if (is.null(palette)) {
@@ -374,8 +383,8 @@ grid.map <- function(left, right, center=NULL, title=NULL) {
   .title = sprintf("\n%s", title)
   if (!is.null(center)) {
     CS = do.call(arrangeGrob, center)
-    grid.arrange(LS, CS, RS, ncol=3, main=.title, widths=c(1,3,1))
+    gridExtra::grid.arrange(LS, CS, RS, ncol=3, main=.title, widths=c(1,3,1))
   } else {
-      grid.arrange(LS, RS, ncol=2, main=title, widths=c(1,3), heights=c(1,1.5))
+    gridExtra::grid.arrange(LS, RS, ncol=2, main=title, widths=c(1,3), heights=c(1,1.5))
   }
 }

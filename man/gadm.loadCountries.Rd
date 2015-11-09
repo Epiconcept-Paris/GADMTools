@@ -1,8 +1,7 @@
 \name{gadm.loadCountries}
 \alias{gadm.loadCountries}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-gadm.loadCountries}
+\title{Load one or more GADM shapefiles}
 \description{
 Load one or more GADM shapefiles in from a local path or from a remote repository.
 }
@@ -13,51 +12,72 @@ gadm.loadCountries(fileNames, level = 0, basefile=GADM_BASE,
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{fileNames}{
-%%     ~~Describe \code{fileNames} here~~
+\bold{Character vector} of named regions. An ISO-3166-1 code or a custom name. You don't have to specify the suffix (admX) nor the file extension (.rds)
 }
   \item{level}{
-%%     ~~Describe \code{level} here~~
+\bold{Integer} the level of administrative boundaries 
 }
   \item{basefile}{
-%%     ~~Describe \code{basefile} here~~
+\bold{Character vector} the path of the directory where shapefiles are stored. Default is "./GADM"
 }
   \item{baseurl}{
-%%     ~~Describe \code{baseurl} here~~
+\bold{Character vector} The url of GADM files. Default is "http://biogeo.ucdavis.edu/data/gadm2.7/rds/
 }
   \item{simplify}{
-%%     ~~Describe \code{baseurl} here~~
+\bold{Numeric} Numerical tolerance value to be used by the Douglas-Peuker algorithm. (don't use a value greater than 0.01)
 }
 
 }
-\details{
-TODO
+
+\section{ISO-3166-1 }{
+
+See : \url{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3}
+
+\code{
+ "ABW","AFG","AGO","AIA","ALA","ALB","AND","ANT","ARE","ARG", 
+ "ARM","ASM","ATA","ATF","ATG","AUS","AUT","AZE","BDI","BEL", 
+ "BEN","BFA","BGD","BGR","BHR","BHS","BIH","BLM","BLR","BLZ", 
+ "BMU","BOL","BRA","BRB","BRN","BTN","BVT","BWA","CAF","CAN", 
+ "CCK","CHE","CHL","CHN","CIV","CMR","COD","COG","COK","COL", 
+ "COM","CPV","CRI","CUB","CXR","CYM","CYP","CZE","DEU","DJI", 
+ "DMA","DNK","DOM","DZA","ECU","EGY","ERI","ESH","ESP","EST", 
+ "ETH","FIN","FJI","FLK","FRA","FRO","FSM","GAB","GBR","GEO", 
+ "GGY","GHA","GIB","GIN","GLP","GMB","GNB","GNQ","GRC","GRD", 
+ "GRL","GTM","GUF","GUM","GUY","HKG","HMD","HND","HRV","HTI", 
+ "HUN","IDN","IMN","IND","IOT","IRL","IRN","IRQ","ISL","ISR", 
+ "ITA","JAM","JEY","JOR","JPN","KAZ","KEN","KGZ","KHM","KIR", 
+ "KNA","KOR","KWT","LAO","LBN","LBR","LBY","LCA","LIE","LKA", 
+ "LSO","LTU","LUX","LVA","MAC","MAF","MAR","MCO","MDA","MDG", 
+ "MDV","MEX","MHL","MKD","MLI","MLT","MMR","MNE","MNG","MNP", 
+ "MOZ","MRT","MSR","MTQ","MUS","MWI","MYS","MYT","NAM","NCL", 
+ "NER","NFK","NGA","NIC","NIU","NLD","NOR","NPL","NRU","NZL", 
+ "OMN","PAK","PAN","PCN","PER","PHL","PLW","PNG","POL","PRI", 
+ "PRK","PRT","PRY","PSE","PYF","QAT","REU","ROU","RUS","RWA", 
+ "SAU","SDN","SEN","SGP","SGS","SHN","SJM","SLB","SLE","SLV", 
+ "SMR","SOM","SPM","SRB","STP","SUR","SVK","SVN","SWE","SWZ", 
+ "SYC","SYR","TCA","TCD","TGO","THA","TJK","TKL","TKM","TLS", 
+ "TON","TTO","TUN","TUR","TUV","TWN","TZA","UGA","UKR","UMI", 
+ "URY","USA","UZB","VAT","VCT","VEN","VGB","VIR","VNM","VUT",  
+ "WLF","WSM","YEM","ZAF","ZMB","ZWE"}
+
 }
-\value{
-TODO
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
+
+\value{ \bold{Object} GADMWrapper }
 \references{
-TODO}
-\author{
-jp.decorps@epiconcept.fr
-}
+----}
+\author{Jean Pierre Decorps <jp.decorps@epiconcept.fr>}
 \note{
-TODO
+----
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-TODO
+----
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+library(GADMTools)
+library(sp)
+Belgium = gadm.loadCountries("BEL", level=2, basefile="./")
+plotmap(Belgium)
 }
 \keyword{ ~kwd1 }
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

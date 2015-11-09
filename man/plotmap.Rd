@@ -1,0 +1,49 @@
+\name{plotmap}
+\alias{plotmap}
+
+\title{ Draw a shapefile from a GADMWrapper object }
+
+\description{
+.
+}
+\usage{
+plotmap(x, title="")
+}
+\arguments{
+  \item{x}{ \bold{Object} GADMWrapper }
+  
+  \item{title}{
+  \bold{String} - Title of the plot. Default is an empty string
+}
+}
+\details{
+----
+}
+\value{
+    \bold{Object}  ggplot2
+}
+\references{
+----
+}
+\author{
+Jean Pierre Decorps <jp.decorps@epiconcept.fr>
+}
+\note{
+----
+}
+
+%% ~Make other sections like Warning with \section{Warning }{....} ~
+
+\seealso{
+----
+}
+\examples{
+library(GADMTools)
+library(sp)
+map <- gadm.loadCountries(c("FRA"), level=1, basefile="./")
+plotmap(map)
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{ ~kwd1 }
+\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

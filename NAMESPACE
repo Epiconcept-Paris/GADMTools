@@ -4,6 +4,7 @@ import("ggplot2","RColorBrewer",
        "sp","rgdal","maptools","rgeos","ggmap",
        "scales")
 #importFrom(dplyr, left_join)
+importFrom(gridExtra, arrangeGrob)
 export(
   choropleth,
   dots,
@@ -14,7 +15,8 @@ export(
   propDots,
   subset,
   saveas,
-  grid.map
+  grid.map,
+  vignette
 )
 S3method(choropleth, GADMWrapper)
 S3method(dots, GADMWrapper)
@@ -23,3 +25,4 @@ S3method(listNames, GADMWrapper)
 S3method(plotmap, GADMWrapper)
 S3method(propDots, GADMWrapper)
 S3method(saveas, GADMWrapper)
+S3method(vignette, GADMWrapper)

@@ -1,10 +1,9 @@
 \name{propDots}
 \alias{propDots}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-dots}
+\title{Plot proportionnal circles on a map.}
 \description{
-Plot proportionnal circles on a map.
+Plot values with proportionnal circles on a map.
 }
 \usage{
 propDots(x, data, value, breaks=NULL, range=NULL,
@@ -12,59 +11,51 @@ propDots(x, data, value, breaks=NULL, range=NULL,
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{Object - a GADMWrapper object}
+  \item{x}{
+  \bold{Object} GADMWrapper
+  }
   \item{data}{
-%%     ~~Describe \code{region} here~~
+  \bold{Object} data.frame with columns 'latitude' and 'longitude
 }
   \item{value}{
-%%     ~~Describe \code{maincolor} here~~
+  \bold{Character} Name of a column of the data.frame.}
+  
+  \item{breaks}{ a vector of breaks
 }
-  \item{breaks}{
-%%     ~~Describe \code{regioncolor} here~~
-}
-  \item{range}{
-%%     ~~Describe \code{mainfill} here~~
-}
-  \item{labels}{
-%%     ~~Describe \code{regionfill} here~~
-}
-  \item{color}{
-%%     ~~Describe \code{mainsize} here~~
-}
-  \item{title}{
-%%     ~~Describe \code{regionsize} here~~
-}
+  \item{range}{ vector min, max}
+  \item{labels}{vector of labels}
+  \item{color}{a valid color}
+  \item{title}{\bold{Character} The title of the plot}
 }
 \details{
-TODO
+----
 }
 \value{
-TODO
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+\bold{Object} ggplot2
 }
 \references{
-TODO
+----
 }
 \author{
 Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 }
 \note{
-TODO
+----
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-TODO
+----
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+library(GADMTools)
+library(sp)
+data(quakes)
+M <- gadm.loadCountries("FJI", basefile="./")
+colnames(quakes)[1] <- "latitude"
+colnames(quakes)[2] <- "longitude"
+propDots(M, quakes, value="mag")
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
