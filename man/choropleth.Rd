@@ -4,8 +4,8 @@
 \title{ Draw a choropleth on selected regions }
 
 \description{
-Drawing a choropleth with GADMTools is easy and straightforward. You just have to select your shape(s) file(s) with \emph{gadm.loadcountries}, load your data from a
-csv file for example, and call the choropleth function with the rights arguments.
+Drawing a choropleth (colored regions based on data values) with GADMTools is straightforward. You just have to select your shape(s) file(s) with \emph{gadm.loadcountries}, load your data from a
+csv file for example, and call the choropleth function with the right arguments.
 }
 \usage{
 choropleth (x, data, value=NULL, breaks = NULL, steps = 5, adm.join=NULL,
@@ -27,23 +27,23 @@ choropleth (x, data, value=NULL, breaks = NULL, steps = 5, adm.join=NULL,
 }
   \item{steps}{ \bold{Integer} - number of breaks. Default = 5. If \emph{breaks} is \bold{NOT NULL} this value is used internally with cut().
 }
-  \item{adm.join}{ \bold{String} - the name in GADM spdf dataset wich will be
-  joined with a column of the data..
+  \item{adm.join}{ \bold{String} - the name in GADM spdf dataset which will be
+  joined with a column of the data.
 }
   \item{data.join}{ \bold{String} - the name of the column in the data.frame
-  wich will be joined with the adm.join.
+  which will be joined with the adm.join.
 }
   \item{legend}{
-  \bold{String} - title of legend. Default \bold{NULL}. 
+  \bold{String} - legend title. Default \bold{NULL}. 
 }
   \item{labels}{ \bold{String vector} labels for the legend. Default \bold{NULL}}
   
   \item{palette}{
-  \bold{String} - A RColorBrewer palette name or a \bold{String vector} a
+  \bold{String} - An RColorBrewer palette name or a \bold{String vector} 
   vector of colors. Default \bold{NULL}.
 }
   \item{title}{
-  \bold{String} - Title of the plot. Default is an empty string
+  \bold{String} - Title of the plot. Default is an empty string.
 }
 }
 \details{

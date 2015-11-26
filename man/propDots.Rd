@@ -1,9 +1,9 @@
 \name{propDots}
 \alias{propDots}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Plot proportionnal circles on a map.}
+\title{Plot proportionnal circles (dots) on a map}
 \description{
-Plot values with proportionnal circles on a map.
+Plot values as proportionnal circles on a map.
 }
 \usage{
 propDots(x, data, value, breaks=NULL, range=NULL,
@@ -15,7 +15,7 @@ propDots(x, data, value, breaks=NULL, range=NULL,
   \bold{Object} GADMWrapper
   }
   \item{data}{
-  \bold{Object} data.frame with columns 'latitude' and 'longitude
+  \bold{Object} data.frame with columns 'latitude' and 'longitude'
 }
   \item{value}{
   \bold{Character} Name of a column of the data.frame.}

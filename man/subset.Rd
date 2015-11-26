@@ -3,7 +3,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Extract regions}
 \description{
-With subset you can easyly extract one or more regions from a country at the current level
+With subset you can extract one or more regions from a country at the current level.
 }
 \usage{
 subset(x, level = NULL, regions = NULL)
@@ -11,7 +11,7 @@ subset(x, level = NULL, regions = NULL)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{ \bold{Object} GADMWrapper }
-  \item{level}{ \bold{Integer} the level regions are extracted from }
+  \item{level}{ \bold{Integer} the level at which the regions are extracted from }
   \item{regions}{ \bold{String vector} of named regions }
 }
 \details{
@@ -39,7 +39,7 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 \examples{
 library(GADMTools)
 library(sp)
-France = gadm.loadCountries("FRA", level=2, basefile="./")
+France = gadm.loadCountries("FRA", level=1, basefile="./")
 Auvergne = subset(France,regions = "Auvergne", level=1)
 plotmap(Auvergne, title="Auvergne - level 1")
 }

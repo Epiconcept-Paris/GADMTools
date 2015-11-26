@@ -18,16 +18,16 @@ dots(x, points, color="red", value = NULL, steps = 5, palette = NULL,
 }
   \item{color}{ a valid color}
   \item{value}{
-  \bold{Character} Name of a column of the data.frame. If is not null, colored dots are displayed according to the value. 
+  \bold{Character} Name of a column in the data.frame. If is not null, colored dots are displayed according to the value. 
 }
   \item{steps}{
-  \bold{Integer} Number of breaks for the value field
+  \bold{Integer} Number of breaks for the value field.
 }
   \item{palette}{ a valid palette
 }
   \item{strate}{
-  \bold{Character} name of a column of the data.frame. If is not null,
-  display dots with different shapes according to the value
+  \bold{Character} name of a column in the data.frame. If is not null,
+  display dots with different shapes according to the value.
 }
   \item{title}{
 \bold{Character} The title of the plot

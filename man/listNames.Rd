@@ -1,9 +1,9 @@
 \name{listNames}
 \alias{listNames}
 
-\title{ List the names of regions for a specific level}
+\title{ List the region names for a specific administrative level}
 \description{
-List the names associated with the administration level.
+Returns a list of the names associated with the particular administration level.
 }
 \usage{
 listNames(x, level = 0)
@@ -14,11 +14,11 @@ listNames(x, level = 0)
 \bold{Object} - a GADMWrapper object
 }
   \item{level}{
-\bold{Integer} - the value of the administration level (eg 0 to 3)
+\bold{Integer} - the value of the administration level to list. Attention: only the administrative levels that have been loaded in the loadCountries object can be listed. Names are given in the country's language or English. 
 }
 }
 \details{
-Some countries provides by GADM have 5 levels or more.
+Some GADM country maps provide five or more administrative levels.
 }
 \value{
 \bold{Character vector} of names 
@@ -42,7 +42,7 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 library(GADMTools)
 library(sp)
 MAP <- gadm.loadCountries("FRA", level=1, basefile="./")
-listNames(MAP)
+listNames(MAP, level=1)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

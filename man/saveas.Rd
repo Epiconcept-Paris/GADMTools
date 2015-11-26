@@ -1,7 +1,7 @@
 \name{saveas}
 \alias{saveas}
 
-\title{ Save your own GADM shapefile as rds  file}
+\title{ Save your own GADM shapefile as an rds  file}
 \description{
 Save a GADM shapefile (.rds)
 }
@@ -32,7 +32,7 @@ saveas(x, name = NULL)
 Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 }
 \note{
-Do not specify the rds extension, it was added automatically
+Do not specify the rds extension, it is added automatically.
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~

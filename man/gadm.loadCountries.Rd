@@ -3,7 +3,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Load one or more GADM shapefiles}
 \description{
-Load one or more GADM shapefiles in from a local path or from a remote repository.
+Load one or more GADM shapefiles from a local path or from a remote repository.
 }
 \usage{
 gadm.loadCountries(fileNames, level = 0, basefile=GADM_BASE,
@@ -12,19 +12,19 @@ gadm.loadCountries(fileNames, level = 0, basefile=GADM_BASE,
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{fileNames}{
-\bold{Character vector} of named regions. An ISO-3166-1 code or a custom name. You don't have to specify the suffix (admX) nor the file extension (.rds)
+\bold{Character vector} of named regions. An ISO-3166-1 code or a custom name. You don't have to specify the suffix (admX) nor the file extension (.rds).
 }
   \item{level}{
-\bold{Integer} the level of administrative boundaries 
+\bold{Integer} the level of the administrative boundaries (0 is the country, higher values equal finer divisions) 
 }
   \item{basefile}{
 \bold{Character vector} the path of the directory where shapefiles are stored. Default is "./GADM"
 }
   \item{baseurl}{
-\bold{Character vector} The url of GADM files. Default is "http://biogeo.ucdavis.edu/data/gadm2.7/rds/
+\bold{Character vector} The url of GADM files. Default is "http://biogeo.ucdavis.edu/data/gadm2.7/rds/"
 }
   \item{simplify}{
-\bold{Numeric} Numerical tolerance value to be used by the Douglas-Peuker algorithm. (don't use a value greater than 0.01)
+\bold{Numeric} Numerical tolerance value to be used by the Douglas-Peuker algorithm. Higher values use less polygon points (and less memory) and lower values use more polygon points (and more memory). We suggest not going higher than 0.01 in order for intra-country boundaries to align.
 }
 
 }

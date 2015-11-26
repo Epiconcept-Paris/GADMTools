@@ -4,7 +4,7 @@
 \title{ Arrange maps on a grid }
 
 \description{
-.
+Allows you to arrange multiple maps into one image. This is useful for showing a country together with its territories in other parts of the world (ex: showing France and Reunion island) or placing two or more countries side by side.
 }
 \usage{
 grid.map(left, right, center=NULL, title=NULL)
@@ -17,11 +17,11 @@ grid.map(left, right, center=NULL, title=NULL)
 }
   
   \item{center}{
-  \bold{String} - A RColorBrewer palette name or a \bold{String vector} a
+  \bold{String} - an RColorBrewer palette name or a \bold{String vector} 
   vector of colors. Default \bold{NULL}.
 }
   \item{title}{
-  \bold{String} - Title of the plot. Default is an empty string
+  \bold{String} - plot title. Default is an empty string.
 }
 }
 \details{

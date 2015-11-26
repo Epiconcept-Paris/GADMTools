@@ -2,9 +2,9 @@
 \alias{vignette}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Create a vignette
-vignette}
+}
 \description{
-Vignette creates a map of a region over a map of a larger region
+Vignette will superimpose a region map over a larger (lower level) map.
 }
 \usage{
 vignette(main, region, maincolor = "black",

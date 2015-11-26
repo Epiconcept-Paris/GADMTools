@@ -8,9 +8,9 @@ Easy use of GADM shapefiles
 \description{
 See; \url{http://www.gadm.org/}
 
-\bold{GADM} is a spatial database of the location of the world's adminstrative boundaries for use in \bold{GIS} and similar software. Administrative areas in this database are countries and lower level subdivisions such as provinces, departments, etc...
+\bold{GADM} is a spatial database of the world's adminstrative boundaries for use in \bold{GIS} and similar software. Administrative areas in this database are countries and lower level subdivisions such as provinces, departments, cantons, etc.
 
-With \bold{GADMTools}, a wrapper for \bold{GADM} shapefiles, you can easily manipulate, assemble, subset these objects.
+With \bold{GADMTools}, a wrapper for \bold{GADM} shapefiles, you can easily manipulate, assemble, and create subsets of these objects.
 }
 \details{
 \tabular{ll}{

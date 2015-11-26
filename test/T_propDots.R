@@ -1,4 +1,5 @@
 library(GADMTools)
+library(sp)
 
 MAP <- gadm.loadCountries("SYR", level = 1)
 SYR = read.table("SYR_places.csv", sep=";", header=TRUE);
@@ -35,11 +36,11 @@ propDots(MAP, data=SYR, value="population")
 #          range = c(1, 100))
 # 
 .labels <- c("20%","40%","60%","80%","100%")
-SYR$population <- round(runif(n = 81, 5, 1200),0)
+SYR$population <- round(runif(n = 81, 5, 100),0)
 
 propDots(MAP, data=SYR, color="#9900ff", value="population",
-         title="Cas de Lechmaniose en Syrie",
-         subtitle = "Enquête du 10 Janvier 2015 au 10 Juillet 2015",
+         title="Cas de Lechmaniose en Syrie\nEnquête du 10 Janvier 2015 au 10 Juillet 2015",
          breaks = breaks,
-         range = c(1, 100),
-         labels = .labels)
+         range = c(1, 100)
+#         labels = .labels
+         )

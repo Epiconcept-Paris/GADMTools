@@ -1,10 +1,11 @@
 \name{isopleth}
 \alias{isopleth}
 
-\title{ Draw a isopleth on selected regions }
+\title{ Draw an isopleth on selected regions }
 
 \description{
-.
+Drawing an isopleth (also known as heat maps) with GADMTools is straightforward. You just have to select your shape(s) file(s) with \emph{gadm.loadcountries}, load your data from a
+csv file for example, and call the isoopleth function with the right arguments.
 }
 \usage{
 isopleth(x, data, palette=NULL, title="")
@@ -17,11 +18,11 @@ isopleth(x, data, palette=NULL, title="")
 }
   
   \item{palette}{
-  \bold{String} - A RColorBrewer palette name or a \bold{String vector} a
+  \bold{String} - An RColorBrewer palette name or a \bold{String vector} 
   vector of colors. Default \bold{NULL}.
 }
   \item{title}{
-  \bold{String} - Title of the plot. Default is an empty string
+  \bold{String} - Plot title. Default is an empty string.
 }
 }
 \details{

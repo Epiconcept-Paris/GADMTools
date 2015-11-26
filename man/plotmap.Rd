@@ -4,7 +4,7 @@
 \title{ Draw a shapefile from a GADMWrapper object }
 
 \description{
-.
+Given the graphic object of a map, this function will display it with a title.
 }
 \usage{
 plotmap(x, title="")
@@ -41,7 +41,7 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 library(GADMTools)
 library(sp)
 map <- gadm.loadCountries(c("FRA"), level=1, basefile="./")
-plotmap(map)
+plotmap(map, title="carte de la France")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
