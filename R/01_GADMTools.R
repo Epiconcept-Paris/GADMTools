@@ -298,7 +298,7 @@ propDots.GADMWrapper <- function(x, data, value, breaks=NULL, range=NULL, labels
   geom_point(data=.data,
                     aes_string(x="longitude", y="latitude", 
                     size=eval(value)), 
-                    color=.pcolor, shape=16, alpha=0.3) +
+                    fill=.pcolor, colour=color, shape=16, alpha=0.25) +
 
   scale_size_area(max_size = 24, breaks=.breaks, limits = .range, labels=.labels) +
   labs(title = .title, fill = "") + 

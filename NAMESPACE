@@ -10,6 +10,7 @@ export(
   dots,
   gadm.loadCountries,
   isopleth,
+  json.choropleth,
   listNames,
   plotmap,
   propDots,
@@ -19,6 +20,7 @@ export(
   vignette
 )
 S3method(choropleth, GADMWrapper)
+S3method(json.choropleth, GADMWrapper)
 S3method(dots, GADMWrapper)
 S3method(isopleth, GADMWrapper)
 S3method(listNames, GADMWrapper)
