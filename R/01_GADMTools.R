@@ -7,6 +7,7 @@ loadNamespace("sp")
 GADM_BASE = "GADM/";
 GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2.7/rds/"
 
+"%w/o%" <- function(x, y) x[!x %in% y] #--  x without y 
 
 ## ---------------------------------------------------------------------------
 ## Function : gadm.loadtCountries (constructor)
@@ -84,6 +85,28 @@ subset <- function(x, level=NULL, regions=NULL) {
   df2 <- x$spdf[df1$N %in% regions,];
   structure(list("basename"=x$basename,
                   "spdf"=df2,
+                 "level"=x$level),
+            class = "GADMWrapper")  
+}
+
+## ---------------------------------------------------------------------------
+## Method : remove
+## Return : a new object GADMWrapper without the selected regions
+## ---------------------------------------------------------------------------
+remove <- function(x, level=NULL, regions=NULL) UseMethod("remove", x)
+remove <- function(x, level=NULL, regions=NULL) {
+  if (is.null(level)) {
+    level <- x$level 
+  }
+  if (is.null(regions)) {
+    stop("Missing value for regions")
+  }
+  NAME <- sprintf("NAME_%d", level)
+  df1 <- as.data.frame(x$spdf[, NAME])
+  colnames(df1) <- c("N")
+  df2 <- x$spdf[!df1$N %in% regions,];
+  structure(list("basename"=x$basename,
+                 "spdf"=df2,
                  "level"=x$level),
             class = "GADMWrapper")  
 }
@@ -175,17 +198,23 @@ vignette.GADMWrapper <- function(main, region,
 
 dots <- function(x, points, color="red",
                  value = NULL,
+                 breaks = NULL,
                  steps = 5,
                  palette = NULL,
+                 labels = NULL,
                  strate = NULL ,
-                 title="") UseMethod("dots", x)
+                 title="",
+                 legend = NULL) UseMethod("dots", x)
 
 dots.GADMWrapper <- function(x, points, color="red",
                              value = NULL,
+                             breaks = NULL,
                              steps = 5,
                              palette = NULL,
+                             labels = NULL,
                              strate = NULL ,
-                             title="") {
+                             title="",
+                             legend = NULL) {
   if (x$level == 0) {
     .name <-"ISO"
   } else {
@@ -197,7 +226,9 @@ dots.GADMWrapper <- function(x, points, color="red",
   .pcolor <- color
   .value <- value
   .points <- points
+  .palette = palette
   .steps <- steps
+  .labels <- labels
   .strate <- strate
   
   # Removing missing values
@@ -205,47 +236,75 @@ dots.GADMWrapper <- function(x, points, color="red",
   .points <- .points[!is.na(.points[,.value]),]
   
   if (!is.null(.value)) {
-    if (!is.factor(.points[,.value])) {
-      .points[,.value] <- cut(.points[,.value],.steps)
-    }
+    .BRK <- computeBreaks(points[, .value], breaks = breaks, steps = .steps, labels = labels)
+    .BRK <- as.factor(.BRK)
+     .points$BREAKSVAL = .BRK
   }
   
   if (!is.null(.strate)) {
     .points[,.strate] <- as.factor(.points[,.strate])
   }
 
+  # Palettes
+  # ---------------------------------------------------------
+  if (is.null(palette)) {
+    .palette <- rev(brewer.pal(9, "Spectral"))
+  }
+  else {
+    if (length(palette)==1) {
+      .palette <- brewer.pal(9, palette)
+    }
+    else {
+      .steps <- length(palette)
+    }
+  }
+  
+  # Labels
+  # ---------------------------------------------------------
+  if (is.null(labels)) {
+    .labels <- levels(.points$BREAKSVAL)
+  }
+  
+  
+  # Theme base
+  # ----------------------------------------------------------
+  .Theme <-   theme_bw() +
+    theme(panel.border = element_blank()) +
+    theme(legend.key = element_blank()) +
+    theme(axis.text = element_blank()) +
+    theme(axis.title = element_blank()) +
+    theme(axis.ticks = element_blank())
+  # ----------------------------------------------------------
+  
   long = lat = group <- NULL
   P <- ggplot() +
     geom_polygon(data=.data, aes(x=long, y=lat,  group=group),
                  fill=NA, color="black", size = 0.5)
+
   if (!is.null(.value)) {
+    # Colored dots from breaks
+    # ----------------------------------------------------------
     P <- P + geom_point(data=.points,
-                        aes_string(x="longitude", y="latitude", 
-                                   color=eval(.value),
-                                   fill=eval(.value),
-                                   shape=eval(.strate)), 
-                        size=8, alpha=0.8)
+                        aes(x=longitude, y=latitude,
+                            color=factor(BREAKSVAL)), 
+                        size=8, alpha=0.8) +
+      
+      scale_color_manual(legend, values = .palette, 
+                        limits=levels(.BRK),
+                        labels=.labels,
+                        guide = guide_legend(reverse = T)) +
+      labs(title = title) 
+      
     
   }
   else { 
     longitude = latitude <- NULL
     P <- P + geom_point(data=points, aes(x=longitude, y=latitude), size=4, color=.pcolor, shape=16) +
-      labs(title = .title) + 
-      theme(legend.position="none")+
-      theme_bw() +
-      theme(panel.border = element_blank()) +
-      theme(legend.key = element_blank()) +
-      theme(axis.text = element_blank()) +
-      theme(axis.title = element_blank()) +
-      coord_map();
+      labs(title = title) + .Theme + coord_map();
     return(P)
   }
   P <- P + scale_shape_manual(values = c(15:18,65:75)) +
-    theme_bw() +
-    theme(panel.border = element_blank()) +
-    theme(legend.key = element_blank()) +
-    theme(axis.text = element_blank()) +
-    theme(axis.title = element_blank()) +
+    .Theme +
     coord_map();
     P
 }  

@@ -70,8 +70,8 @@ choropleth.GADMWrapper <- function(x,
     }
   }
   
-  if (!is.null(data.join)) {
-    names(.data)[names(.data)==data.join] <- .name
+  if (!is.null(adm.join)) {
+    names(.data)[names(.data)==adm.join] <- .name
     .map <- fortify(x$spdf, region=.name)
     names(.map)[names(.map)=="id"] <- .name
   }
@@ -81,7 +81,6 @@ choropleth.GADMWrapper <- function(x,
 #     names(.map)[names(.map)=="id"] <- .id
 #     .map[,.id] <- as.integer(.map[,.id])
 #   }
-  
   
   P <- dplyr::left_join(.map, .data)
   if (!is.factor(P[,value])) {
