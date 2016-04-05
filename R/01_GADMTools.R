@@ -428,9 +428,9 @@ plotmap.GADMWrapper <- function(x, title="") {
 #    theme_bw() +
     theme(panel.border = element_blank()) +
     theme(legend.key = element_blank()) +
-    theme(axis.text = element_blank()) +
-    theme(axis.title = element_blank()) +
-    theme(axis.ticks = element_blank()) +
+#    theme(axis.text = element_blank()) +
+#    theme(axis.title = element_blank()) +
+#    theme(axis.ticks = element_blank()) +
     coord_map();
   P
 }
