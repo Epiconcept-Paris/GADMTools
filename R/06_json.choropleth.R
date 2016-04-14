@@ -108,7 +108,7 @@ sink("params.json")
 cat(P3, "\n")
 sink()
 
-cat(P3)
+#cat(P3)
 
 writeOGR(x$spdf, dsn=.name, layer=.name, driver="GeoJSON")
 file.rename(.name, .fname)
@@ -123,6 +123,6 @@ cat(R, "\n")
 sink()
 
 
-x
+return(T)
 }
 

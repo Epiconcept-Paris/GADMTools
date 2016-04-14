@@ -1,12 +1,12 @@
 #exportPattern("^[[:alpha:]]+")
 import("ggplot2","RColorBrewer",
        "classInt",
-       "sp","rgdal","maptools","rgeos","ggmap",
-       "scales")
+       "sp","rgdal","maptools","rgeos","scales")
 #importFrom(dplyr, left_join)
 importFrom(gridExtra, arrangeGrob)
 export(
   choropleth,
+  classDots,
   computeBreaks,
   dots,
   gadm.loadCountries,
@@ -23,6 +23,7 @@ export(
 )
 S3method(choropleth, GADMWrapper)
 S3method(json.choropleth, GADMWrapper)
+S3method(classDots, GADMWrapper)
 S3method(dots, GADMWrapper)
 S3method(isopleth, GADMWrapper)
 S3method(listNames, GADMWrapper)

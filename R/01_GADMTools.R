@@ -196,6 +196,7 @@ vignette.GADMWrapper <- function(main, region,
   render(Map)
 }
 
+
 dots <- function(x, points, color="red",
                  value = NULL,
                  breaks = NULL,
@@ -238,7 +239,7 @@ dots.GADMWrapper <- function(x, points, color="red",
   if (!is.null(.value)) {
     .BRK <- computeBreaks(points[, .value], breaks = breaks, steps = .steps, labels = labels)
     .BRK <- as.factor(.BRK)
-     .points$BREAKSVAL = .BRK
+    .points$BREAKSVAL = .BRK
   }
   
   if (!is.null(.strate)) {
@@ -360,13 +361,13 @@ propDots.GADMWrapper <- function(x, data, value, breaks=NULL, range=NULL, labels
                     fill=.pcolor, colour=color, shape=16, alpha=0.25) +
 
   scale_size_area(max_size = 24, breaks=.breaks, limits = .range, labels=.labels) +
-  labs(title = .title, fill = "") + 
-  theme_bw() +
-  theme(panel.border = element_blank()) +
-  theme(legend.key = element_blank()) +
-  theme(axis.text = element_blank()) +
-  theme(axis.title = element_blank()) +
-  coord_map();
+    labs(title = .title, fill = "") + 
+    theme_bw() +
+    theme(panel.border = element_blank()) +
+    theme(legend.key = element_blank()) +
+    theme(axis.text = element_blank()) +
+    theme(axis.title = element_blank()) +
+    coord_map();
 }  
 
 isopleth <- function(x,  data, palette=NULL, title="") UseMethod("isopleth", x)
