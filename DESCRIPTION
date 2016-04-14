@@ -18,5 +18,4 @@ Imports:
   rgdal,
   maptools,
   rgeos,
-  ggmap,
   scales
