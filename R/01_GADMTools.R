@@ -27,9 +27,9 @@ gadm.loadCountries <- function (fileNames,
                                 baseurl=GADM_URL,
                                 simplify=NULL)
   {
-#   requireNamespace("ggplot2","classInt", "rgdal", "rgeos")
-#   requireNamespace("maptools","sp", "dplyr", "RColorBrewer")
- loadNamespace("sp")  
+  #   requireNamespace("ggplot2","classInt", "rgdal", "rgeos")
+  #   requireNamespace("maptools","sp", "dplyr", "RColorBrewer")
+  loadNamespace("sp")  
   # ---- Load file and change prefix
   loadChangePrefix <- function (fileName, level = 0) {
     FILENAME = sprintf("%s_adm%d.rds", fileName,level)
@@ -52,7 +52,7 @@ gadm.loadCountries <- function (fileNames,
   }
   polygon <- sapply(fileNames, loadChangePrefix, level)
   polyMap <- do.call("rbind", polygon)
-#  polyMap <- sp::rbind(polygon)
+  #  polyMap <- sp::rbind(polygon)
   # ---- Simplify polygones if requested by user
   if (!is.null(simplify)) {
     S <- gSimplify(polyMap, simplify, topologyPreserve = TRUE)
@@ -62,10 +62,11 @@ gadm.loadCountries <- function (fileNames,
   # ---- Create GADMWrapper object
   structure(list("basename"=basefile,
                  "spdf"=polyMap,
-                 "level"=level),
+                 "level"=level,
+                 "stripped" = FALSE),
             class = "GADMWrapper")
-  
 }
+
 
 ## ---------------------------------------------------------------------------
 ## Method : subset
@@ -85,7 +86,8 @@ subset <- function(x, level=NULL, regions=NULL) {
   df2 <- x$spdf[df1$N %in% regions,];
   structure(list("basename"=x$basename,
                   "spdf"=df2,
-                 "level"=x$level),
+                 "level"=x$level,
+                 "stripped"=FALSE),
             class = "GADMWrapper")  
 }
 
@@ -107,7 +109,8 @@ remove <- function(x, level=NULL, regions=NULL) {
   df2 <- x$spdf[!df1$N %in% regions,];
   structure(list("basename"=x$basename,
                  "spdf"=df2,
-                 "level"=x$level),
+                 "level"=x$level,
+                 "stripped"=FALSE),
             class = "GADMWrapper")  
 }
 
@@ -417,8 +420,11 @@ plotmap.GADMWrapper <- function(x, title="") {
     .name <- sprintf("NAME_%d", x$level)
   }
   
-  #  stop("ok")
-  .map <- fortify(x$spdf, region=.name)
+  .map <- x$spdf
+  if (x$stripped == FALSE) {
+    .map <- fortify(x$spdf, region=.name)
+  }
+  
   
   long = lat = group <- NULL
   
@@ -435,6 +441,7 @@ plotmap.GADMWrapper <- function(x, title="") {
     coord_map();
   P
 }
+
 
 grid.map <- function(left, right, center=NULL, title=NULL) {
   LS = do.call(arrangeGrob, c(left, list(ncol=1)))

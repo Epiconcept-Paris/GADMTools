@@ -1,7 +1,7 @@
 #exportPattern("^[[:alpha:]]+")
 import("ggplot2","RColorBrewer",
        "classInt",
-       "sp","rgdal","maptools","rgeos","scales")
+       "sp","rgdal","maptools","rgeos")
 #importFrom(dplyr, left_join)
 importFrom(gridExtra, arrangeGrob)
 export(
@@ -10,14 +10,19 @@ export(
   computeBreaks,
   dots,
   gadm.loadCountries,
+  gadm.loadStripped,
+  gadm.saveStripped,
   isopleth,
   json.choropleth,
   listNames,
   plotmap,
   propDots,
   remove,
+  stripSP,
   subset,
   saveas,
+  saveAsStripped,
+  strippedExists,
   grid.map,
   vignette
 )
@@ -30,4 +35,6 @@ S3method(listNames, GADMWrapper)
 S3method(plotmap, GADMWrapper)
 S3method(propDots, GADMWrapper)
 S3method(saveas, GADMWrapper)
+S3method(saveAsStripped, GADMWrapper)
+S3method(stripSP, GADMWrapper)
 S3method(vignette, GADMWrapper)

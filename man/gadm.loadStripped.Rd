@@ -1,30 +1,23 @@
-\name{gadm.loadCountries}
-\alias{gadm.loadCountries}
+\name{gadm.loadStripped}
+\alias{gadm.loadStripped}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Load one or more GADM shapefiles}
+\title{Load one GADM stripped shapefile}
 \description{
-Load one or more GADM shapefiles from a local path or from a remote repository.
+Load one GADM stripped shapefiles from a local path for use with ggplot2.
 }
 \usage{
-gadm.loadCountries(fileNames, level = 0, basefile=GADM_BASE,
-                  baseurl=GADM_URL, simplify=NULL)
+gadm.loadStripped(name, level, basefile='./')
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{fileNames}{
-\bold{Character vector} of named regions. An ISO-3166-1 code or a custom name. You don't have to specify the suffix (admX) nor the file extension (.rds).
+  \item{name}{
+\bold{Character vector} of a named region. An ISO-3166-1 code or a custom name. You don't have to specify the suffix (admX) nor the file extension (.rds).
 }
   \item{level}{
 \bold{Integer} the level of the administrative boundaries (0 is the country, higher values equal finer divisions) 
 }
   \item{basefile}{
-\bold{Character vector} the path of the directory where shapefiles are stored. Default is "./GADM"
-}
-  \item{baseurl}{
-\bold{Character vector} The url of GADM files. Default is "http://biogeo.ucdavis.edu/data/gadm2.7/rds/"
-}
-  \item{simplify}{
-\bold{Numeric} Numerical tolerance value to be used by the Douglas-Peuker algorithm. Higher values use less polygon points (and less memory) and lower values use more polygon points (and more memory). We suggest not going higher than 0.01 in order for intra-country boundaries to align.
+\bold{Character vector} the path of the directory where shapefiles are stored. Default is "./"
 }
 
 }
@@ -62,7 +55,7 @@ See : \url{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3}
 
 }
 
-\value{ \bold{Object} GADMWrapper }
+\value{ \bold{Object} GADMWrapper with stripped properties == TRUE}
 \references{
 ----}
 \author{Jean Pierre Decorps <jp.decorps@epiconcept.fr>}
@@ -74,10 +67,10 @@ See : \url{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3}
 ----
 }
 \examples{
-library(GADMTools)
-library(sp)
-Belgium = gadm.loadCountries("BEL", level=2, basefile="./")
-plotmap(Belgium)
+# library(GADMTools)
+# library(sp)
+# BE <- gadm.loadStripped('BEL', level=2)
+# plotmap(BE)
 }
 \keyword{ ~kwd1 }
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

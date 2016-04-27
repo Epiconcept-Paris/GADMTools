@@ -121,8 +121,11 @@ R <- toJSON(c(P2, P3))
 sink("output.json")
 cat(R, "\n")
 sink()
+# geojson <- geojson_json(x$spdf)
+# params <- toJSON(P2)
+# choropleth <- params + geojson
 
-
+#cat(params)
 return(T)
 }
 
