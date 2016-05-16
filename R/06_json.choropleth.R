@@ -15,8 +15,8 @@ computeBreaks <- function(x, breaks, steps, labels)
     .type <- c("sd", "equal", "pretty", "quantile", "kmeans",
                "hclust", "bclust", "fisher", "jenks")
     if (breaks %in% .type) {
-      XB <- classIntervals(.data[,.value], n=.steps, style=breaks)
-      .ret <- cut(x, breaks=XB$brks, labels = .labels)
+      XB <- classIntervals(x, n=steps, style=breaks)
+      .ret <- cut(x, breaks=XB$brks, labels = labels)
     }
     else {
       .MSG <- sprintf("%s not in %s", breaks, .type)
@@ -47,6 +47,8 @@ json.choropleth.GADMWrapper <- function(x,
                                    labels = NULL,
                                    palette=NULL,
                                    title="") {
+  
+  require(stringr)
   
   if (is.null(value)) stop("Unknown value (NULL)\n")
   
@@ -95,37 +97,40 @@ DFColors <- data.frame(Breaks = levels(.BRK), color=I(.palette))
 .fname <- sprintf("%s%s", .name, ".geojson")
 x$spdf <- merge(x$spdf, .data, by=adm.join)
 x$spdf@data$color <- as.character(x$spdf@data$color)
+
 names(x$spdf@data) <- sub(adm.join, "ADMINAREA", names(x$spdf@data))
 # ------------------------------------------------------------
 Palette = toJSON(palette);
 if (is.null(labels)) {
   labels <-rev(levels(.BRK));
 }
-P1 <- list(Palette = palette, Labels = labels)
-P2 <- list(params = P1)
-P3 <- toJSON(P2)
-sink("params.json")
-cat(P3, "\n")
-sink()
+P1 <- toJSON(list(Palette = palette, Labels = labels))
+P1 <- str_replace_all(P1, '"', "'")
+x$spdf@data$params <- rep(P1, length.out = nrow(x$spdf@data))
+# P2 <- list(params = P1)
+# P3 <- toJSON(P2)
+# sink("params.json")
+# cat(P3, "\n")
+# sink()
 
 #cat(P3)
 
 writeOGR(x$spdf, dsn=.name, layer=.name, driver="GeoJSON")
-file.rename(.name, .fname)
-G <- fromJSON(.fname)
-
-P1 <- list(Palette = palette, Labels = labels)
-P2 <- list(params = P1)
-P3 <- list(geojson = G)
-R <- toJSON(c(P2, P3))
-sink("output.json")
-cat(R, "\n")
-sink()
-# geojson <- geojson_json(x$spdf)
-# params <- toJSON(P2)
-# choropleth <- params + geojson
-
-#cat(params)
+file.rename(.name, "output.json")
+# G <- fromJSON(.fname)
+# 
+# P1 <- list(Palette = palette, Labels = labels)
+# P2 <- list(params = P1)
+# P3 <- list(geojson = G)
+# R <- toJSON(c(P2, P3))
+# sink("output.json")
+# cat(R, "\n")
+# sink()
+# # geojson <- geojson_json(x$spdf)
+# # params <- toJSON(P2)
+# # choropleth <- params + geojson
+# 
+# #cat(params)
 return(T)
 }
 

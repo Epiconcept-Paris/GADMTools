@@ -9,6 +9,7 @@ export(
   classDots,
   computeBreaks,
   dots,
+  fast.choropleth,
   gadm.loadCountries,
   gadm.loadStripped,
   gadm.saveStripped,
@@ -30,6 +31,7 @@ S3method(choropleth, GADMWrapper)
 S3method(json.choropleth, GADMWrapper)
 S3method(classDots, GADMWrapper)
 S3method(dots, GADMWrapper)
+S3method(fast.choropleth, GADMWrapper)
 S3method(isopleth, GADMWrapper)
 S3method(listNames, GADMWrapper)
 S3method(plotmap, GADMWrapper)
