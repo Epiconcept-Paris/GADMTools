@@ -78,15 +78,11 @@ fast.choropleth.GADMWrapper <- function(x,
   .breaks <- getBreaksValues(.data[, .value], breaks, .steps)
   .brks <- .breaks$brks
   
-#   XB <- computeBreaks(.data[, .value], breaks = breaks, steps = .steps, labels = labels)
-#   XB <- classIntervals(.data[, .value], n=.steps, style=breaks)
-#   br <- XB$brks
   
   # merge dataset and mapdata
   # --------------------------------------------------------
   .map <- merge(.map, .data, by=adm.join)
   
-#  .pal <- brewer.pal(.steps, palette)
   trellis.par.set(axis.line=list(col=NA)) 
-  spplot(.map, "rate03", col.regions = .palette, at=.brks, main=title)
+  spplot(.map, value, col.regions = .palette, at=.brks, main=title)
 }

@@ -13,8 +13,8 @@ stripSP(x, level=NULL)
   \item{x}{
 \bold{Object} GADMWrapper with property 'stripped' == FALSE
 }
-  \item{level}{
-\bold{Integer} the level of the administrative boundaries (0 is the country, higher values equal finer divisions) 
+  \item{name}{
+\bold{String} the name of the field to extract (eg NAME_X) 
 }
 }
 

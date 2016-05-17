@@ -13,8 +13,8 @@ gadm.saveStripped(x,  name, basefile = './')
   \item{x}{
 \bold{Object} GADMWrapper with stripped property == TRUE
 }
-  \item{name}{
-\bold{Character vector} of a named region. An ISO-3166-1 code or a custom name. You don't have to specify the suffix (admX) nor the file extension (.rds).
+  \item{fname}{
+\bold{String} file name of a region. You don't have to specify the suffix (admX) nor the file extension (.rds).
 }
   \item{basefile}{
 \bold{Character vector} the path of the directory where shapefiles are stored. Default is "./"
@@ -22,7 +22,7 @@ gadm.saveStripped(x,  name, basefile = './')
 }
 
 
-\value{ \bold{Object} GADMWrapper with stripped property == TRUE}
+\value{ \bold{Boolean} TRUE}
 \references{
 ----}
 \author{Jean Pierre Decorps <jp.decorps@epiconcept.fr>}

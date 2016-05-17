@@ -2,24 +2,27 @@
 ## Method : stripSP
 ## Return : a data.frame ready to use with ggplot2
 ## ---------------------------------------------------------------------------
-stripSP <- function(x, level=NULL) UseMethod("stripSP", x)
-stripSP.GADMWrapper <- function(x, level=NULL) {
-  if (is.null(level)) {
-    level <- x$level 
-  }
-  
-  if (x$level == 0) {
-    .name <-"ISO"
-  } else {
-    .name <- sprintf("NAME_%d", x$level)
-  }
+stripSP <- function(x, name=NULL) UseMethod("stripSP", x)
+stripSP.GADMWrapper <- function(x, name=NULL) {
+#   if (is.null(level)) {
+#     level <- x$level 
+#   }
+#   
+#   if (x$level == 0) {
+#     .name <-"ISO"
+#   } else {
+#     .name <- sprintf("NAME_%d", x$level)
+#   }
 
+  .name <- name
+  .level <- x$level
+  
   .map <- fortify(x$spdf, region=.name)
   
   # ---- Create GADMWrapper object
   structure(list("basename"=x$basefile,
                  "spdf"=.map,
-                 "level"=level,
+                 "level"=.level,
                  "stripped" = TRUE),
             class = "GADMWrapper")
 }
@@ -27,6 +30,7 @@ stripSP.GADMWrapper <- function(x, level=NULL) {
 gadm.loadStripped <- function(name, level, basefile='./') {
   FILENAME = sprintf("STRIP_%s_adm%d.rds", name,level)
   LOCAL_FILE = sprintf("%s%s", basefile, FILENAME)
+  print(LOCAL_FILE)
   .map <- readRDS(LOCAL_FILE)
   if (is.null(.map)) {
     stop("Error: Enable to read file!")
@@ -34,13 +38,13 @@ gadm.loadStripped <- function(name, level, basefile='./') {
   .map
 }
 
-saveAsStripped <- function(x, name, level= NULL, basefile = './') UseMethod("saveAsStripped")
-saveAsStripped.GADMWrapper <- function(x,  name, level = NULL, basefile = './') {
+saveAsStripped <- function(x, fname, name= NULL, basefile = './') UseMethod("saveAsStripped")
+saveAsStripped.GADMWrapper <- function(x,  fname, name = NULL, basefile = './') {
   SP <- x
   if (x$stripped == FALSE) {
-    SP <- stripSP(x, level)
+    SP <- stripSP(x, name)
   }
-  gadm.saveStripped(SP, name, basefile)
+  gadm.saveStripped(SP, fname, basefile)
 }
   
 strippedExists <- function(name, level, basefile = './') {
@@ -49,9 +53,9 @@ strippedExists <- function(name, level, basefile = './') {
   file.exists(LOCAL_FILE) 
 }
 
-gadm.saveStripped <- function(x, name, basefile = './') {
-  FILENAME = sprintf("STRIP_%s_adm%d.rds", name,x$level)
+gadm.saveStripped <- function(x, fname, basefile = './') {
+  FILENAME = sprintf("STRIP_%s_adm%d.rds", fname,x$level)
   LOCAL_FILE = sprintf("%s%s", basefile, FILENAME)
   saveRDS(x, file = LOCAL_FILE)
-  x
+  TRUE
 }

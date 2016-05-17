@@ -6,18 +6,18 @@
 Strip a GADMWrapper object (with property 'stripped' == FALSE) and save it  stripped (with property 'stripped' == TRUE).
 }
 \usage{
-saveAsStripped(x, name, level= NULL, basefile = './')
+saveAsStripped(x, fname, name= NULL, basefile = './')
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
 \bold{Object} GADMWrapper with stripped property == FALSE
 }
-  \item{name}{
-\bold{String} of a named region. An ISO-3166-1 code or a custom name. You don't have to specify the suffix (admX) nor the file extension (.rds).
+  \item{fname}{
+\bold{String} file name of the region to save. You don't have to specify the suffix (admX) nor the file extension (.rds).
 }
-  \item{level}{
-\bold{Integer} the level of the administrative boundaries (0 is the country, higher values equal finer divisions) 
+  \item{name}{
+\bold{String} the name of the field in spdf,  like "NAME_1". 
 }
   \item{basefile}{
 \bold{String} the path of the directory where shapefiles are stored. Default is "./"

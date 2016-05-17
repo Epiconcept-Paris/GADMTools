@@ -29,12 +29,6 @@ choropleth.GADMWrapper <- function(x,
   else {
     stop("adm.join is NULL! You MUST provide a name.")
   }
-#   if (x$level == 0) {
-#     .name <-"ISO"
-#   } else {
-#     .name <- sprintf("NAME_%d", x$level)
-#     .id   <- sprintf("ID_%d", x$level)
-#   }
   
   .data <- data
   .value <- value
@@ -49,8 +43,6 @@ choropleth.GADMWrapper <- function(x,
   # -------------------------------------------------------
   if (is.null(breaks)) {
     if (!is.factor(.data[,.value])) {
-#       breaks <- as.vector(quantile(.data[,.value], na.rm = T))
-#       breaks <- c(0,breaks)
       .data[,.value] <- cut(.data[,.value],.steps)
     }
   }
@@ -75,12 +67,6 @@ choropleth.GADMWrapper <- function(x,
     .map <- fortify(x$spdf, region=.name)
     names(.map)[names(.map)=="id"] <- .name
   }
-#   else if (!is.null(join.id)){
-#     names(.data)[names(.data)==join.id] <- .id
-#     .map <- fortify(x$spdf, region=.id)
-#     names(.map)[names(.map)=="id"] <- .id
-#     .map[,.id] <- as.integer(.map[,.id])
-#   }
   
   P <- dplyr::left_join(.map, .data)
   if (!is.factor(P[,value])) {

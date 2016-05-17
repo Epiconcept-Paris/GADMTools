@@ -5,7 +5,7 @@ loadNamespace("sp")
 #importFrom(gridExtra, arrangeGrob)
 
 GADM_BASE = "GADM/";
-GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2.7/rds/"
+GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2.8/rds/"
 
 "%w/o%" <- function(x, y) x[!x %in% y] #--  x without y 
 
