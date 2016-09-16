@@ -7,7 +7,7 @@ Plot points on a map with different colors and shapes.
 }
 \usage{
 dots(x, points, color="red", value = NULL, steps = 5, palette = NULL,
-     strate = NULL, title="")
+     strate = NULL, title="", legend = NULL, note="")
 
 }
 %- maybe also 'usage' for other objects documented here.
@@ -29,9 +29,9 @@ dots(x, points, color="red", value = NULL, steps = 5, palette = NULL,
   \bold{Character} name of a column in the data.frame. If is not null,
   display dots with different shapes according to the value.
 }
-  \item{title}{
-\bold{Character} The title of the plot
-}
+  \item{title}{\bold{Character} The title of the plot}
+  \item{legend}{\bold{Character} The title of the legend}
+  \item{note}{\bold{Character} Add an annotation}
 }
 \details{
 ----

@@ -208,7 +208,8 @@ dots <- function(x, points, color="red",
                  labels = NULL,
                  strate = NULL ,
                  title="",
-                 legend = NULL) UseMethod("dots", x)
+                 legend = NULL,
+                 note="") UseMethod("dots", x)
 
 dots.GADMWrapper <- function(x, points, color="red",
                              value = NULL,
@@ -218,7 +219,8 @@ dots.GADMWrapper <- function(x, points, color="red",
                              labels = NULL,
                              strate = NULL ,
                              title="",
-                             legend = NULL) {
+                             legend = NULL,
+                             note="") {
   if (x$level == 0) {
     .name <-"ISO"
   } else {
@@ -276,14 +278,18 @@ dots.GADMWrapper <- function(x, points, color="red",
     theme(panel.border = element_blank()) +
     theme(legend.key = element_blank()) +
     theme(axis.text = element_blank()) +
-    theme(axis.title = element_blank()) +
+#    theme(axis.title = element_blank()) +
     theme(axis.ticks = element_blank())
   # ----------------------------------------------------------
   
   long = lat = group <- NULL
-  P <- ggplot() +
-    geom_polygon(data=.data, aes(x=long, y=lat,  group=group),
-                 fill=NA, color="black", size = 0.5)
+  note <- gsub('(.{1,90})(\\s|$)', '\\1\n', note)
+  
+P <- ggplot() +
+  geom_polygon(data=.data, aes(x=long, y=lat,  group=group),
+               fill=NA, color="black", size = 0.5) +
+  xlab(paste("\n\n", note, sep="")) + ylab("")
+
 
   if (!is.null(.value)) {
     # Colored dots from breaks
@@ -313,8 +319,8 @@ dots.GADMWrapper <- function(x, points, color="red",
     P
 }  
 
-propDots <- function(x, data, value, breaks=NULL, range=NULL, labels=NULL, color="red", title="") UseMethod("propDots", x)
-propDots.GADMWrapper <- function(x, data, value, breaks=NULL, range=NULL, labels=NULL, color="red", title="") {
+propDots <- function(x, data, value, breaks=NULL, range=NULL, labels=NULL, color="red", title="", note="") UseMethod("propDots", x)
+propDots.GADMWrapper <- function(x, data, value, breaks=NULL, range=NULL, labels=NULL, color="red", title="", note="") {
   if (x$level == 0) {
     .name <-"ISO"
   } else {
@@ -354,7 +360,9 @@ propDots.GADMWrapper <- function(x, data, value, breaks=NULL, range=NULL, labels
   }
   
   long = lat = group <- NULL
-  ggplot() +
+  note <- gsub('(.{1,90})(\\s|$)', '\\1\n', note)
+  
+  P_ <- ggplot() +
   geom_polygon(data=.map, aes(x=long, y=lat,  group=group),
                  fill=NA, color="black", size = 0.5) +
   
@@ -362,15 +370,16 @@ propDots.GADMWrapper <- function(x, data, value, breaks=NULL, range=NULL, labels
                     aes_string(x="longitude", y="latitude", 
                     size=eval(value)), 
                     fill=.pcolor, colour=color, shape=16, alpha=0.25) +
-
+    xlab(paste("\n\n", note, sep="")) + ylab("") +
   scale_size_area(max_size = 24, breaks=.breaks, limits = .range, labels=.labels) +
     labs(title = .title, fill = "") + 
     theme_bw() +
     theme(panel.border = element_blank()) +
     theme(legend.key = element_blank()) +
     theme(axis.text = element_blank()) +
-    theme(axis.title = element_blank()) +
+#    theme(axis.title = element_blank()) +
     coord_map();
+    P_
 }  
 
 isopleth <- function(x,  data, palette=NULL, title="") UseMethod("isopleth", x)

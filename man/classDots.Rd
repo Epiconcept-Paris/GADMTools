@@ -8,7 +8,7 @@ Plot values as discretized scale circles on a map.
 \usage{
 classDots <- function(x, data, color="red", value = NULL, breaks = NULL,
                       steps = 5, labels = NULL, opacity = 0.5, title="",
-                      legend = NULL)}
+                      note="", legend = NULL)}
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
@@ -26,6 +26,7 @@ classDots <- function(x, data, color="red", value = NULL, breaks = NULL,
   \item{labels}{\bold{vector} of labels}
   \item{opacity}{\bold{float} Background opacity of the filled circles} 
   \item{title}{\bold{Character} The title of the plot}
+  \item{note}{\bold{Character} Add an annotation}
   \item{legend}{\bold{Character} The title of the legend}
 }
 \details{

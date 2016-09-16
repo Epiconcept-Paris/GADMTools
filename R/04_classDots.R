@@ -11,6 +11,7 @@ classDots <- function(x,
                       labels = NULL,
                       opacity = 0.5,
                       title="",
+                      note="",
                       legend = NULL) UseMethod("classDots", x)
 
 classDots.GADMWrapper <- function(
@@ -23,6 +24,7 @@ classDots.GADMWrapper <- function(
   labels = NULL,
   opacity = 0.5,
   title="",
+  note="",
   legend = NULL) {
   
   # Détermination du champs d'extraction des shapefiles
@@ -90,7 +92,10 @@ classDots.GADMWrapper <- function(
                              guide = guide_legend(reverse = T),
                              limits = as.character(c(1:.sizeIndex)),
                              labels=.labels) +
-  labs(title = title) 
+    labs(title = title) 
+  note <- gsub('(.{1,90})(\\s|$)', '\\1\n', note)
+  P = P + xlab(paste("\n\n", note, sep="")) + ylab("")
+    
   
   # Réglage du theme
   # ---------------------------------------------------------
@@ -98,11 +103,11 @@ classDots.GADMWrapper <- function(
     theme(plot.title = element_text(size=20)) +
     theme(legend.text=element_text(size=14)) +
     theme(legend.title=element_text(size=16)) +
-    theme(panel.border = element_blank()) +
-    theme(legend.key = element_blank()) +
-    theme(axis.text = element_blank()) +
-    theme(axis.title = element_blank()) +
-    theme(axis.ticks = element_blank()) +
+   theme(panel.border = element_blank()) +
+   theme(legend.key = element_blank()) +
+   theme(axis.text = element_blank()) +
+#     theme(axis.title = element_blank()) +
+   theme(axis.ticks = element_blank()) +
     coord_map();
   
 }
