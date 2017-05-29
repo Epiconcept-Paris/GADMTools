@@ -37,11 +37,11 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
   \code{\link{listNames}}
 }
 \examples{
-library(GADMTools)
-library(sp)
-France = gadm.loadCountries("FRA", level=1, basefile="./")
-Auvergne = subset(France,regions = "Auvergne", level=1)
-plotmap(Auvergne, title="Auvergne - level 1")
+# library(GADMTools)
+# library(sp)
+# France = gadm.loadCountries("FRA", level=1, basefile="./")
+# Auvergne = subset(France,regions = "Auvergne", level=1)
+# plotmap(Auvergne, title="Auvergne - level 1")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

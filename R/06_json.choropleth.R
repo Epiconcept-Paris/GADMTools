@@ -1,36 +1,8 @@
-# -------------------------------------------------------
-# FUNCTION computeBreaks
-# -------------------------------------------------------
-computeBreaks <- function(x, breaks, steps, labels)
-{
-  if (is.null(breaks)) {
-    if (!is.factor(x)) {
-      .ret <- cut(x, steps)
-    }
-  }
-  else if (length(breaks) > 1) {
-    .ret <- cut(x, breaks=breaks, labels = labels)
-  }
-  else {
-    .type <- c("sd", "equal", "pretty", "quantile", "kmeans",
-               "hclust", "bclust", "fisher", "jenks")
-    if (breaks %in% .type) {
-      XB <- classIntervals(x, n=steps, style=breaks)
-      .ret <- cut(x, breaks=XB$brks, labels = labels)
-    }
-    else {
-      .MSG <- sprintf("%s not in %s", breaks, .type)
-      stop(.MSG)
-    }
-  }
-}  
-  
 json.choropleth <- function(x, data,
                        value=NULL,
                        breaks = NULL,
                        steps = 5,
                        adm.join=NULL,
-                       data.join=NULL,
                        legend = NULL,
                        labels = NULL,
                        palette=NULL,
@@ -42,13 +14,10 @@ json.choropleth.GADMWrapper <- function(x,
                                    breaks = NULL,
                                    steps = 5,
                                    adm.join = NULL,
-                                   data.join=NULL,
                                    legend = NULL,
                                    labels = NULL,
                                    palette=NULL,
                                    title="") {
-  
-  require(stringr)
   
   if (is.null(value)) stop("Unknown value (NULL)\n")
   
@@ -56,7 +25,7 @@ json.choropleth.GADMWrapper <- function(x,
     .name = adm.join
   }
   else {
-    stop("adm.join is NULL! You MUST provide a name.")
+    stop("adm.join is NULL! You MUST provide a value for adm.join.")
   }
   
   .data <- data

@@ -11,7 +11,7 @@ classDots <- function(x,
                       labels = NULL,
                       opacity = 0.5,
                       title="",
-                      note="",
+                      note=NULL,
                       legend = NULL) UseMethod("classDots", x)
 
 classDots.GADMWrapper <- function(
@@ -20,14 +20,16 @@ classDots.GADMWrapper <- function(
   color="red",
   value = NULL,
   breaks = NULL,
-  steps = 3,
+  steps = 5,
   labels = NULL,
   opacity = 0.5,
   title="",
-  note="",
+  note=NULL,
   legend = NULL) {
   
-  # Détermination du champs d'extraction des shapefiles
+  loadNamespace("dplyr")
+  
+  # Build region's name
   # ----------------------------------------------------------
   if (x$level == 0) {
     .name <-"ISO"
@@ -35,7 +37,7 @@ classDots.GADMWrapper <- function(
     .name <- sprintf("NAME_%d", x$level)
   }
   
-  # Variables locales
+  # Locales variables
   # ----------------------------------------------------------
   .map    <- fortify(x$spdf, region=.name);
   .title  <- title
@@ -47,8 +49,10 @@ classDots.GADMWrapper <- function(
   .labels <- labels
   .legend <- legend
   .opacity <- opacity
-  .sizeIndex <- length(.breaks) - 1
- 
+  .sizeIndex <- 1
+
+  longitude <- latitude <- PSIZE <- NULL
+  
   # Test length of breaks
   # -------------------------------------------
   if (.sizeIndex > 5) {
@@ -66,27 +70,28 @@ classDots.GADMWrapper <- function(
   .BRK <- computeBreaks(.points[, .value], breaks = breaks, steps = .steps, labels = labels)
   .BRK <- as.factor(.BRK)
   .points <- .points %>% mutate(PSIZE = factor(as.integer(.BRK)))
-
   # Labels
   # ---------------------------------------------------------
   if (is.null(labels)) {
     .labels <- levels(.BRK)
   }
-  
-  # Tracé de la carte administrative
+
+.sizeIndex <- length(levels(.BRK)) - 1
+
+  # Plot admin map
   # ----------------------------------------------------------
   long = lat = group <- NULL
   P <- ggplot() +
     geom_polygon(data=.map, aes(x=long, y=lat,  group=group),
                  fill="#efefef", color="black", size = 0.5)
   
-  # Plot des points sur la carte
+  # Plot points on map
   # ----------------------------------------------------------
   P <- P + geom_point(data=.points,
                       aes(x=longitude, y=latitude, size = PSIZE),
                       color = "#000000", shape=21, fill = .pcolor,
                       alpha = .opacity)
-  SCALE_VALUES = c("1"=5, "2"=10, "3"=20, "4"=30, "5"=45)
+  SCALE_VALUES = c("1"=5, "2"=10, "3"=20, "4"=30, "5"=45, "6"=60)
   P <- P + scale_size_manual(name = .legend,
                              values = SCALE_VALUES,
                              guide = guide_legend(reverse = T),
@@ -97,7 +102,7 @@ classDots.GADMWrapper <- function(
   P = P + xlab(paste("\n\n", note, sep="")) + ylab("")
     
   
-  # Réglage du theme
+  # Theme tuning
   # ---------------------------------------------------------
   P + theme_bw() +
     theme(plot.title = element_text(size=20)) +

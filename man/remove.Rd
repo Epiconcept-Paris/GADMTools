@@ -1,26 +1,30 @@
-\name{plotmap}
-\alias{plotmap}
+\name{remove}
+\alias{remove}
 
-\title{ Draw a shapefile from a GADMWrapper object }
+\title{ Remove one or more regions from a map in a GADMWrapper object }
 
 \description{
-Given the graphic object of a map, this function will display it with a title.
+Remove the shapes of one or more regions in a GADMWrapper object.
 }
 \usage{
-plotmap(x, title="")
+remove(x, level=NULL, regions=NULL)
 }
 \arguments{
   \item{x}{ \bold{Object} GADMWrapper }
   
-  \item{title}{
-  \bold{String} - Title of the plot. Default is an empty string
-}
+  \item{level}{
+  \bold{Integer} - level from which shapes are removed. If NULL, curent level is used.
+  }
+
+  \item{regions}{
+  \bold{String} - vector of regions to be removed
+  }
 }
 \details{
 ----
 }
 \value{
-    \bold{Object}  ggplot2
+    \bold{Object} - A GADMWrapper object.
 }
 \references{
 ----
@@ -41,7 +45,7 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 # library(GADMTools)
 # library(sp)
 # map <- gadm.loadCountries(c("FRA"), level=1, basefile="./")
-# plotmap(map, title="carte de la France")
+# remove(map, regions="Auvergne")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

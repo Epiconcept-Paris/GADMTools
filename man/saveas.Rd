@@ -41,13 +41,13 @@ Do not specify the rds extension, it is added automatically.
 ----
 }
 \examples{
-library(GADMTools)
-library(sp)
-France = gadm.loadCountries("FRA", level=1, basefile="./")
-Auvergne = subset(France,regions = "Auvergne", level=1)
-saveas(Auvergne, "./AUVERGNE")
-AUV <- gadm.loadCountries("AUVERGNE", level=1, basefile="./")
-plotmap(AUV)
+# library(GADMTools)
+# library(sp)
+# France = gadm.loadCountries("FRA", level=1, basefile="./")
+# Auvergne = subset(France,regions = "Auvergne", level=1)
+# saveas(Auvergne, "./AUVERGNE")
+# AUV <- gadm.loadCountries("AUVERGNE", level=1, basefile="./")
+# plotmap(AUV)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

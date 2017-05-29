@@ -46,12 +46,12 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 ----  
 }
 \examples{
-library(GADMTools)
-library(sp)
-library(ggplot2)
-FR <- gadm.loadCountries("FRA", level=1, basefile="./")
-AU <- subset(FR, regions="Auvergne", level=1)
-vignette(FR, AU)
+# library(GADMTools)
+# library(sp)
+# library(ggplot2)
+# FR <- gadm.loadCountries("FRA", level=1, basefile="./")
+# AU <- subset(FR, regions="Auvergne", level=1)
+# vignette(FR, AU)
 }
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the

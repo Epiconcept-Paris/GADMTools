@@ -7,7 +7,7 @@ Plot values as proportionnal circles on a map.
 }
 \usage{
 propDots(x, data, value, breaks=NULL, range=NULL,
-         labels=NULL, color="red", title="")
+         labels=NULL, color="red", title="", note=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -26,6 +26,7 @@ propDots(x, data, value, breaks=NULL, range=NULL,
   \item{labels}{vector of labels}
   \item{color}{a valid color}
   \item{title}{\bold{Character} The title of the plot}
+  \item{note}{\bold{Character} A note associated with the plot}
 }
 \details{
 ----
@@ -49,14 +50,13 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 ----
 }
 \examples{
-library(GADMTools)
-library(sp)
-data(quakes)
-M <- gadm.loadCountries("FJI", basefile="./")
-colnames(quakes)[1] <- "latitude"
-colnames(quakes)[2] <- "longitude"
-propDots(M, quakes, value="mag")
-
+# library(GADMTools)
+# library(sp)
+# data(quakes)
+# M <- gadm.loadCountries("FJI", basefile="./")
+# colnames(quakes)[1] <- "latitude"
+# colnames(quakes)[2] <- "longitude"
+# propDots(M, quakes, value="mag")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

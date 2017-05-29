@@ -28,9 +28,7 @@ fast.choropleth.GADMWrapper <- function(x,
   .palette <- palette
   .steps <- steps
   
-  require(lattice)
-  
-  
+
   # -------------------------------------------------------
   # Breaks
   # -------------------------------------------------------

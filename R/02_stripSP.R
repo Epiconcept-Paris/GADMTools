@@ -1,22 +1,27 @@
 ## ---------------------------------------------------------------------------
 ## Method : stripSP
-## Return : a data.frame ready to use with ggplot2
+## Return : a GADMWrapper ready to use with ggplot2
 ## ---------------------------------------------------------------------------
-stripSP <- function(x, name=NULL) UseMethod("stripSP", x)
-stripSP.GADMWrapper <- function(x, name=NULL) {
-#   if (is.null(level)) {
-#     level <- x$level 
-#   }
-#   
-#   if (x$level == 0) {
-#     .name <-"ISO"
-#   } else {
-#     .name <- sprintf("NAME_%d", x$level)
-#   }
+stripSP <- function(x, level=NULL) UseMethod("stripSP", x)
+stripSP.GADMWrapper <- function(x, level=NULL) {
 
-  .name <- name
   .level <- x$level
   
+  if (is.null(level)) {
+    if (x$level == 0) {
+      .name <-"ISO"
+    } else {
+      .name <- sprintf("NAME_%d", x$level)
+    }
+  } else {
+      if (level > x$level || level < 0) {
+        .name <- sprintf("NAME_%d", x$level)
+      } else {
+        .name <- sprintf("NAME_%d", level)
+        .level <- level
+      }
+  }
+
   .map <- fortify(x$spdf, region=.name)
   
   # ---- Create GADMWrapper object
@@ -26,6 +31,8 @@ stripSP.GADMWrapper <- function(x, name=NULL) {
                  "stripped" = TRUE),
             class = "GADMWrapper")
 }
+## ===========================================================================
+
 
 gadm.loadStripped <- function(name, level, basefile='./') {
   FILENAME = sprintf("STRIP_%s_adm%d.rds", name,level)

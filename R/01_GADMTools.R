@@ -209,7 +209,7 @@ dots <- function(x, points, color="red",
                  strate = NULL ,
                  title="",
                  legend = NULL,
-                 note="") UseMethod("dots", x)
+                 note=NULL) UseMethod("dots", x)
 
 dots.GADMWrapper <- function(x, points, color="red",
                              value = NULL,
@@ -237,6 +237,8 @@ dots.GADMWrapper <- function(x, points, color="red",
   .labels <- labels
   .strate <- strate
   
+  BREAKSVAL <- NULL
+  
   # Removing missing values
   # -------------------------------------------
   .points <- .points[!is.na(.points[,.value]),]
@@ -248,7 +250,7 @@ dots.GADMWrapper <- function(x, points, color="red",
   }
   
   if (!is.null(.strate)) {
-    .points[,.strate] <- as.factor(.points[,.strate])
+    STRATE <- as.factor(points[,.strate])
   }
 
   # Palettes
@@ -283,7 +285,9 @@ dots.GADMWrapper <- function(x, points, color="red",
   # ----------------------------------------------------------
   
   long = lat = group <- NULL
-  note <- gsub('(.{1,90})(\\s|$)', '\\1\n', note)
+  if (!is.null(note)) {
+    note <- gsub('(.{1,90})(\\s|$)', '\\1\n', note)
+  }
   
 P <- ggplot() +
   geom_polygon(data=.data, aes(x=long, y=lat,  group=group),
@@ -296,31 +300,41 @@ P <- ggplot() +
     # ----------------------------------------------------------
     P <- P + geom_point(data=.points,
                         aes(x=longitude, y=latitude,
-                            color=factor(BREAKSVAL)), 
+                             color=factor(BREAKSVAL)), 
                         size=8, alpha=0.8) +
-      
+      geom_point(data=.points,
+                          aes(x=longitude, y=latitude), 
+                          size=8, alpha=0.8, shape=21) +
+        
       scale_color_manual(legend, values = .palette, 
                         limits=levels(.BRK),
                         labels=.labels,
                         guide = guide_legend(reverse = T)) +
-      labs(title = title) 
-      
-    
-  }
-  else { 
-    longitude = latitude <- NULL
-    P <- P + geom_point(data=points, aes(x=longitude, y=latitude), size=4, color=.pcolor, shape=16) +
-      labs(title = title) + .Theme + coord_map();
+      labs(title = title) +
+    .Theme + coord_map();
     return(P)
   }
-  P <- P + scale_shape_manual(values = c(15:18,65:75)) +
-    .Theme +
-    coord_map();
-    P
+  else {
+    longitude = latitude <- NULL
+    if (is.null(strate)) {
+      print("no stratification\n")
+      P <- P + geom_point(data=points, aes(x=longitude, y=latitude), size=4, color=.pcolor, shape=16) +
+      labs(title = title) + .Theme + coord_map();
+      return(P)
+    }
+    else {
+      print("stratification\n")
+      P <- P + geom_point(data=points, aes(x=longitude, y=latitude, shape=STRATE), size=4, color=.pcolor) +
+        labs(title = title) +
+        scale_shape_manual(values = c(15:18,65:75)) +
+        .Theme + coord_map();
+        return(P)
+     }
+  }
 }  
 
-propDots <- function(x, data, value, breaks=NULL, range=NULL, labels=NULL, color="red", title="", note="") UseMethod("propDots", x)
-propDots.GADMWrapper <- function(x, data, value, breaks=NULL, range=NULL, labels=NULL, color="red", title="", note="") {
+propDots <- function(x, data, value, breaks=NULL, range=NULL, labels=NULL, color="red", title="", note=NULL) UseMethod("propDots", x)
+propDots.GADMWrapper <- function(x, data, value, breaks=NULL, range=NULL, labels=NULL, color="red", title="", note=NULL) {
   if (x$level == 0) {
     .name <-"ISO"
   } else {
@@ -360,7 +374,9 @@ propDots.GADMWrapper <- function(x, data, value, breaks=NULL, range=NULL, labels
   }
   
   long = lat = group <- NULL
-  note <- gsub('(.{1,90})(\\s|$)', '\\1\n', note)
+  if (!is.null(note)) {
+    note <- gsub('(.{1,90})(\\s|$)', '\\1\n', note)
+  }
   
   P_ <- ggplot() +
   geom_polygon(data=.map, aes(x=long, y=lat,  group=group),
@@ -369,7 +385,7 @@ propDots.GADMWrapper <- function(x, data, value, breaks=NULL, range=NULL, labels
   geom_point(data=.data,
                     aes_string(x="longitude", y="latitude", 
                     size=eval(value)), 
-                    fill=.pcolor, colour=color, shape=16, alpha=0.25) +
+                    fill=.pcolor, color="#000000", shape=21, alpha=0.25) +
     xlab(paste("\n\n", note, sep="")) + ylab("") +
   scale_size_area(max_size = 24, breaks=.breaks, limits = .range, labels=.labels) +
     labs(title = .title, fill = "") + 

@@ -3,7 +3,6 @@ choropleth <- function(x, data,
                        breaks = NULL,
                        steps = 5,
                        adm.join=NULL,
-                       data.join=NULL,
                        legend = NULL,
                        labels = NULL,
                        palette=NULL,
@@ -15,7 +14,6 @@ choropleth.GADMWrapper <- function(x,
                                    breaks = NULL,
                                    steps = 5,
                                    adm.join = NULL,
-                                   data.join=NULL,
                                    legend = NULL,
                                    labels = NULL,
                                    palette=NULL,
@@ -69,6 +67,7 @@ choropleth.GADMWrapper <- function(x,
   }
   
   P <- dplyr::left_join(.map, .data)
+  
   if (!is.factor(P[,value])) {
     P[,value] <- as.numeric(P[,value])
   }

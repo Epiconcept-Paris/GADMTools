@@ -47,10 +47,17 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 ----
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--  or do  help(data=index)  for the standard data sets.
+# library(GADMTools)
+# library(sp)
 
+# France = gadm.loadCountries("FRA", level=1, simplify=0.01)
+# W <- read.csv2("wepi.csv")
+# W$lieux_lat <- as.double(as.character(W$lieux_lat))
+# W$lieux_long <- as.double(as.character(W$lieux_long))
+# colnames(W)[1] <- "latitude"
+# colnames(W)[2] <- "longitude"
+# Region = subset(France, regions=c("Ile-de-France","Haute-Normandie"), level=1)
+# isopleth(Region, W)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -6,10 +6,11 @@
 Plot values as discretized scale circles on a map.
 }
 \usage{
-classDots <- function(x, data, color="red", value = NULL, breaks = NULL,
+classDots(x, data, color="red", value = NULL, breaks = NULL,
                       steps = 5, labels = NULL, opacity = 0.5, title="",
-                      note="", legend = NULL)}
-%- maybe also 'usage' for other objects documented here.
+                      note=NULL, legend = NULL)
+}
+
 \arguments{
   \item{x}{
   \bold{Object} GADMWrapper

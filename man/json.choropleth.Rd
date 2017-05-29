@@ -1,17 +1,16 @@
-\name{choropleth}
-\alias{choropleth}
+\name{json.choropleth}
+\alias{json.choropleth}
 
-\title{ Draw a choropleth on selected regions }
+\title{ Create a geojson choropleth of selected regions.}
 
 \description{
 Drawing a choropleth (colored regions based on data values) with GADMTools is straightforward. You just have to select your shape(s) file(s) with \emph{gadm.loadcountries}, load your data from a
-csv file for example, and call the choropleth function with the right arguments.
+csv file for example, and call the json.choropleth function with the right arguments. json.choropleth creaate a GEOJSON file (output.json) that can be used with Leaflet library.
 }
 \usage{
-choropleth (x, data, value=NULL, breaks = NULL, steps = 5, adm.join=NULL,
-            legend = NULL, labels = NULL, palette=NULL,
-            title="")
-
+json.choropleth (x, data, value=NULL, breaks = NULL, steps = 5,
+  adm.join=NULL, legend = NULL, labels = NULL, palette=NULL,
+  title="")
 }
 \arguments{
   \item{x}{ \bold{Object} GADMWrapper }
@@ -22,7 +21,8 @@ choropleth (x, data, value=NULL, breaks = NULL, steps = 5, adm.join=NULL,
   \item{value}{
   \bold{String} - the name of the column in the data.frame we want to plot (eg: an incidence in epidemiology studies)
 }
-  \item{breaks}{\bold{Vector} of breaks values or a \bold{Sring} name of a function from \emph{classIntervals} (one of "sd", "equal", "pretty", "quantile", "kmeans", "hclust", "bclust", "fisher", or "jenks")
+  \item{breaks}{
+%%     ~~Describe \code{regioncolor} here~~
 }
   \item{steps}{ \bold{Integer} - number of breaks. Default = 5. If \emph{breaks} is \bold{NOT NULL} this value is used internally with cut().
 }
@@ -46,7 +46,7 @@ choropleth (x, data, value=NULL, breaks = NULL, steps = 5, adm.join=NULL,
 ----
 }
 \value{
-    \bold{Object}  ggplot2
+    \bold{Object} a lattice plot of class "trellis"
 }
 \references{
 ----
@@ -64,25 +64,9 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 \link{classIntervals}
 }
 \examples{
-# library(GADMTools)
-# library(sp)
-# library(dplyr)
-
-# MAP <- gadm.loadCountries("BEL", level = 3, simplify=0.01)
-# DAT = read.csv2("BE_clamydia_incidence.csv")
-
-# Here is the main trick !
-# -----------------------------------------------------
-# DAT <- rename(DAT, NAME_3 = district)
-
-# choropleth(MAP, DAT,
-#            adm.join = "NAME_3",
-#            value = "rate03",
-#            breaks = "sd",
-#            palette="Oranges",
-#            legend = "Incidence",
-#            title="Chlamydia incidence by Belgian district for 2003)")
-
+##---- Should be DIRECTLY executable !! ----
+##-- ==>  Define data, use random,
+##--	or do  help(data=index)  for the standard data sets.
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

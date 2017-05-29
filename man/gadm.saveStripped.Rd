@@ -6,7 +6,7 @@
 Save a stripped ( with stripSP() ) GADM object for later use it with ggplot2.
 }
 \usage{
-gadm.saveStripped(x,  name, basefile = './')
+gadm.saveStripped(x,fname, basefile = './')
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

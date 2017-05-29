@@ -39,10 +39,10 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 ----
 }
 \examples{
-library(GADMTools)
-library(sp)
-MAP <- gadm.loadCountries("FRA", level=1, basefile="./")
-listNames(MAP, level=1)
+# library(GADMTools)
+# library(sp)
+# MAP <- gadm.loadCountries("FRA", level=1, basefile="./")
+# listNames(MAP, level=1)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

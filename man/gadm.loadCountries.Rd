@@ -21,7 +21,7 @@ gadm.loadCountries(fileNames, level = 0, basefile=GADM_BASE,
 \bold{Character vector} the path of the directory where shapefiles are stored. Default is "./GADM"
 }
   \item{baseurl}{
-\bold{Character vector} The url of GADM files. Default is "http://biogeo.ucdavis.edu/data/gadm2.7/rds/"
+\bold{Character vector} The url of GADM files. Default is "http://biogeo.ucdavis.edu/data/gadm2.8/rds/"
 }
   \item{simplify}{
 \bold{Numeric} Numerical tolerance value to be used by the Douglas-Peuker algorithm. Higher values use less polygon points (and less memory) and lower values use more polygon points (and more memory). We suggest not going higher than 0.01 in order for intra-country boundaries to align.
@@ -74,10 +74,10 @@ See : \url{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3}
 ----
 }
 \examples{
-library(GADMTools)
-library(sp)
-Belgium = gadm.loadCountries("BEL", level=2, basefile="./")
-plotmap(Belgium)
+# library(GADMTools)
+# library(sp)
+# Belgium = gadm.loadCountries("BEL", level=2, basefile="./")
+# plotmap(Belgium)
 }
 \keyword{ ~kwd1 }
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

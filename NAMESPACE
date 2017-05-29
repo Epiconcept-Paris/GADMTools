@@ -1,13 +1,20 @@
 #exportPattern("^[[:alpha:]]+")
 import("ggplot2","RColorBrewer",
-       "classInt",
-       "sp","rgdal","maptools","rgeos")
+       "classInt", "dplyr",
+       "sp","rgdal","maptools")
 #importFrom(dplyr, left_join)
 importFrom(gridExtra, arrangeGrob)
+importFrom("grDevices", "colorRampPalette")
+importFrom("utils", "download.file")
+importFrom("lattice", "trellis.par.set")
+importFrom("jsonlite", "toJSON")
+importFrom("stringr", "str_replace_all")
+importFrom("rgeos", "gSimplify")
+importFrom("ggmap", "theme_nothing")
+
 export(
   choropleth,
   classDots,
-  computeBreaks,
   dots,
   fast.choropleth,
   gadm.loadCountries,

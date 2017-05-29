@@ -13,8 +13,8 @@ stripSP(x, level=NULL)
   \item{x}{
 \bold{Object} GADMWrapper with property 'stripped' == FALSE
 }
-  \item{name}{
-\bold{String} the name of the field to extract (eg NAME_X) 
+  \item{level}{
+\bold{Int} admin level to be stripped/extracted. If NULL, the current level is selected
 }
 }
 
