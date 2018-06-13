@@ -5,7 +5,8 @@ loadNamespace("sp")
 #importFrom(gridExtra, arrangeGrob)
 
 GADM_BASE = "GADM/";
-GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2.8/rds/"
+#GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2.8/rds/"
+GADM_URL  = "https://biogeo.ucdavis.edu/data/gadm3.6/Rsp/"
 
 "%w/o%" <- function(x, y) x[!x %in% y] #--  x without y 
 
@@ -32,7 +33,9 @@ gadm.loadCountries <- function (fileNames,
   loadNamespace("sp")  
   # ---- Load file and change prefix
   loadChangePrefix <- function (fileName, level = 0) {
+    
     FILENAME = sprintf("%s_adm%d.rds", fileName,level)
+    REMOTEFILE = sprintf("gadm36_%s_%d_sp.rds", fileName,level)
     LOCAL_FILE = sprintf("%s%s", basefile, FILENAME)
     if (file.exists(LOCAL_FILE)) {
       gadm <- readRDS(LOCAL_FILE)
@@ -40,8 +43,8 @@ gadm.loadCountries <- function (fileNames,
       theFile
     } else {
       gadm <- NULL
-      REMOTE_FILE = sprintf("%s%s", baseurl, FILENAME)
-      r <- download.file(REMOTE_FILE, LOCAL_FILE)
+      REMOTE_LINK <- sprintf("%s%s", baseurl, REMOTEFILE)
+      r <- download.file(REMOTE_LINK, LOCAL_FILE)
       gadm <- readRDS(LOCAL_FILE)
       if (!is.null(gadm)) {
         saveRDS(gadm, file=LOCAL_FILE)
