@@ -1,7 +1,5 @@
 #exportPattern("^[[:alpha:]]+")
-import("ggplot2","RColorBrewer",
-       "classInt", "dplyr",
-       "sp","rgdal","maptools")
+import("ggplot2","classInt", "dplyr", "sp","rgdal","maptools", "rosm")
 #importFrom(dplyr, left_join)
 importFrom(gridExtra, arrangeGrob)
 importFrom("grDevices", "colorRampPalette")
@@ -11,15 +9,19 @@ importFrom("jsonlite", "toJSON")
 importFrom("stringr", "str_replace_all")
 importFrom("rgeos", "gSimplify")
 importFrom("ggmap", "theme_nothing")
+importFrom("stats", "complete.cases")
 
 export(
   choropleth,
   classDots,
   dots,
   fast.choropleth,
+  gadm.getBackground,
   gadm.loadCountries,
+  gadm.longTo360,
   gadm.loadStripped,
   gadm.saveStripped,
+  gadm.union,
   isopleth,
   json.choropleth,
   listNames,
@@ -46,4 +48,5 @@ S3method(propDots, GADMWrapper)
 S3method(saveas, GADMWrapper)
 S3method(saveAsStripped, GADMWrapper)
 S3method(stripSP, GADMWrapper)
+S3method(subset, GADMWrapper)
 S3method(vignette, GADMWrapper)

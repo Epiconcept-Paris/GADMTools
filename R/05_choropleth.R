@@ -18,6 +18,7 @@ choropleth.GADMWrapper <- function(x,
                                    labels = NULL,
                                    palette=NULL,
                                    title="") {
+  .x <- x
   
   if (is.null(value)) stop("Unknown value (NULL)\n")
   
@@ -28,6 +29,10 @@ choropleth.GADMWrapper <- function(x,
     stop("adm.join is NULL! You MUST provide a name.")
   }
   
+  if (.x$hasBGND == TRUE) {
+    .raster <- x$BGND
+  }
+  
   .data <- data
   .value <- value
   .range <- range
@@ -35,7 +40,7 @@ choropleth.GADMWrapper <- function(x,
   .palette <- palette
   .steps <- steps
   .labels <- labels
-
+  
   # -------------------------------------------------------
   # BREAKS
   # -------------------------------------------------------
@@ -63,6 +68,9 @@ choropleth.GADMWrapper <- function(x,
   if (!is.null(adm.join)) {
     names(.data)[names(.data)==adm.join] <- .name
     .map <- fortify(x$spdf, region=.name)
+    if (x$stripped == FALSE) {
+      .map <- splitShapes(x, .name)
+    }
     names(.map)[names(.map)=="id"] <- .name
   }
   
@@ -74,33 +82,43 @@ choropleth.GADMWrapper <- function(x,
   
   names(P)[names(P)==value] <- "CHPLT_VALUE"
   
-  # -------------------------------------------------------
-  # Palettes
-  # -------------------------------------------------------
+  
+  # Palettes ----------------------------------------------------------------
   if (is.null(palette)) {
-    .palette <- rev(brewer.pal(9, "Spectral"))
+    .palette <- rev(RColorBrewer::brewer.pal(9, "Spectral"))
   }
   else {
     if (length(palette)==1) {
-      .palette <- brewer.pal(9, palette)
+      .palette <- RColorBrewer::brewer.pal(9, palette)
     }
     else {
       .steps <- length(palette)
     }
   }
   
-
+  
   if (is.null(labels)) {
     .labels <- levels(P$CHPLT_VALUE)
   }
   
   if (is.null(legend)) .legend <- value
-  long = lat = group = CHPLT_VALUE <- NULL
-  .P <- ggplot(P, aes(x=long, y=lat, group=group)) +
-  geom_polygon(data=P, 
-               aes(x=long, y=lat, group=group, fill=CHPLT_VALUE),
-               color = "black", size = 0.25) +
   
+  long <- lat <- group <- x <- y <- CHPLT_VALUE <- NULL
+  
+  
+  # Plot map ----------------------------------------------------------------
+  .P <- ggplot()
+  
+  # Draw background if exists -----------------------------------------------
+  if (.x$hasBGND) {
+    .P <- .P + geom_raster(data=.raster, aes(x, y), fill=.raster$rgb)
+  }
+  
+  # Draw the shapefile ------------------------------------------------------
+  .P <- .P + geom_polygon(data=P, 
+                          aes(x=long, y=lat, group=group, fill=CHPLT_VALUE),
+                          color = "black", size = 0.25) +
+    
     scale_fill_manual(.legend, values = .palette, 
                       limits=levels(P$CHPLT_VALUE),
                       labels=.labels,
@@ -113,10 +131,10 @@ choropleth.GADMWrapper <- function(x,
     theme(axis.text = element_blank()) +
     theme(axis.title = element_blank()) +
     theme(axis.ticks = element_blank()) +
-    coord_map();
-    if (.legend == FALSE) {
-      .P <- .P + theme(legend.position="none")
-    }
+    coord_quickmap();
+  if (.legend == FALSE) {
+    .P <- .P + theme(legend.position="none")
+  }
   .P
 }
 

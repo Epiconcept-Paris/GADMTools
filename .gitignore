@@ -1,5 +1,8 @@
+Meta
+doc
 .Rproj.user
 .Rhistory
 .RData
 test/
 
+inst/doc

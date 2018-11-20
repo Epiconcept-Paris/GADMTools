@@ -1,3 +1,29 @@
+GADMTools v3.0-1 (Release date: 2018-11-15)
+===========================================
+
+Changes :
+
+* BUGFIX - loading .rds file fail with Windows
+
+* Add function gadm.getBackground
+* Add function gadm.union
+* Add function gadm.longTo360
+
+GADMTools v2.2-2 (Release date: 2018-07-04)
+===========================================
+
+Changes :
+
+* BUGFIX -Graphics did not work because of internals changes of .Rds files from GADM DB.
+
+GADMTools v2.2-1 (Release date: 2018-11-15)
+===========================================
+
+Changes :
+
+* Compatibility with GADM 3.6 Database
+
+
 GADMTools v2.1-1 (Release date: 2017-04-25)
 ===========================================
 
@@ -5,5 +31,4 @@ Changes :
 
 * Add a vignette : Using_GADMTools.pdf
 * Add an example in man of many functions()
-
 

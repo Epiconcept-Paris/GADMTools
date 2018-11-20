@@ -8,7 +8,7 @@ Drawing an isopleth (also known as heat maps) with GADMTools is straightforward.
 csv file for example, and call the isoopleth function with the right arguments.
 }
 \usage{
-isopleth(x, data, palette=NULL, title="")
+isopleth(x, data, palette=NULL, title="", subtitle = "", caption = "")
 }
 \arguments{
   \item{x}{ \bold{Object} GADMWrapper }
@@ -21,9 +21,9 @@ isopleth(x, data, palette=NULL, title="")
   \bold{String} - An RColorBrewer palette name or a \bold{String vector} 
   vector of colors. Default \bold{NULL}.
 }
-  \item{title}{
-  \bold{String} - Plot title. Default is an empty string.
-}
+  \item{title}{  \bold{String} - Plot title. Default is an empty string.}
+  \item{subtitle}{  \bold{String} - Plot subtitle. Default is an empty string.}
+  \item{caption}{  \bold{String} - Plot caption. Default is an empty string.}
 }
 \details{
 ----

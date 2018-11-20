@@ -42,11 +42,11 @@ json.choropleth.GADMWrapper <- function(x,
   # Palettes
   # -------------------------------------------------------
   if (is.null(palette)) {
-    .palette <- rev(brewer.pal(.steps, "Spectral"))
+    .palette <- rev(RColorBrewer::brewer.pal(.steps, "Spectral"))
   }
   else {
     if (length(palette)==1) {
-      .palette <- brewer.pal(.steps, palette)
+      .palette <- RColorBrewer::brewer.pal(.steps, palette)
     }
     else {
       .steps <- length(palette)

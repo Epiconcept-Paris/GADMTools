@@ -15,4 +15,5 @@ LaTeX: pdfLaTeX
 BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
-PackageBuildArgs: --compact-vignettes
+PackageBuildArgs: --compact-vignettes=gs
+PackageCheckArgs: --compact-vignettes="qpdf"

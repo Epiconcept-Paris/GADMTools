@@ -6,7 +6,7 @@
 Plot points on a map with different colors and shapes.
 }
 \usage{
-dots(x, points, color="red", value = NULL,
+dots(x, points, color="red", size = 8, value = NULL,
     breaks = NULL, steps = 5, palette = NULL, labels = NULL, strate = NULL,
     title="", legend = NULL, note=NULL)
 
@@ -18,6 +18,7 @@ dots(x, points, color="red", value = NULL,
   \bold{Object} data.frame with columns 'latitude' and 'longitude'
 }
   \item{color}{ a valid color}
+  \item{size}{ \bold{integer} size of point}
   \item{value}{
   \bold{Character} Name of a column in the data.frame. If is not null, colored dots are displayed according to the value. 
 }

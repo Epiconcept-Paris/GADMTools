@@ -6,13 +6,14 @@
 With subset you can extract one or more regions from a country at the current level.
 }
 \usage{
-subset(x, level = NULL, regions = NULL)
+subset(x, level = NULL, regions = NULL, usevar = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{ \bold{Object} GADMWrapper }
   \item{level}{ \bold{Integer} the level at which the regions are extracted from }
-  \item{regions}{ \bold{String vector} of named regions }
+  \item{regions}{ \bold{character vector} of named regions }
+  \item{usevar}{ \bold{character} name of an other var of spdf@data }
 }
 \details{
 ----

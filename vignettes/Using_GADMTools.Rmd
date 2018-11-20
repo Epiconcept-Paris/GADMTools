@@ -171,7 +171,7 @@ library(sp)
 
 # Assemble administrative boundaries (country level = 0)
 # -----------------------------------------------------------------
-map <- gadm.loadCountries(c("BEL","LUX","NLD"))
+map <- gadm.loadCountries(c("BEL","LUX","NLD"),  basefile = "./")
 plotmap(map, title="Bénélux")
 ```
 
@@ -208,7 +208,9 @@ Parameter | Description
 
        level = NULL,
 
-       regions = NULL
+       regions = NULL,
+       
+       usevar = NULL
 
       )
 
@@ -218,6 +220,7 @@ Parameter | Description
 **x** | **Object** GADMWrapper
 **level** | **Integer** the level at which the regions are extracted from
 **regions** | **String vector** of named regions
+**usevar** | **String vector** name of an other var of spdf@data @ an other level
 
 \newpage
 ### Example
@@ -228,7 +231,7 @@ Parameter | Description
 library(GADMTools)
 library(sp)
 
-FR = gadm.loadCountries("FRA", level=2)
+FR = gadm.loadCountries("FRA", level=2, basefile = "./")
 listNames(FR, level=2)
 AV = subset(FR, regions=c("Allier", "Cantal",
             "Haute-Loire","Puy-de-Dôme"))
@@ -263,10 +266,73 @@ plotmap(AV)
 
 ![extracting (subset) some departments in France @ level = 2](Rplot05.png)
 
----------------------------
+
+
 
 
 \newpage
+## Merging regions
+
+### gadm.union()
+
+*gadm.union*( x )
+
+Parameter | Description                  
+--------- | ---------------------------------------------------------------------------------  
+**x** | **Object** GADMWrapper
+
+### Example
+
+```{r eval=FALSE}
+library(GADMTools)
+library(sp)
+
+FR = gadm.loadCountries("FRA", level=2, basefile = "./")
+AV = subset(FR, regions=c("Allier", "Cantal",
+            "Haute-Loire","Puy-de-Dôme"))
+AV <- gadm.union(AV)
+plotmap(AV)
+
+```
+
+![merging 4 departments of Auvergne @ level = 2](Rplot05.5.png)
+
+
+
+
+\newpage
+## Converting longitudes to 0 - 360
+
+### gadm.longTo360()
+
+*gadm.longTo360*( x )
+
+Parameter | Description                  
+--------- | ---------------------------------------------------------------------------------  
+**x** | **Object** GADMWrapper
+
+### Example
+
+```{r eval=FALSE}
+library(GADMTools)
+library(GADMTools)
+FJI = gadm.loadCountries("FJI", 1, basefile = "./")
+# Fig. 6
+plotmap(FJI, title = "Fidji Island with bad coordinates")
+```
+
+![BAD](Rplot_8.8.png)
+
+```{r eval=FALSE}
+FJI = gadm.longTo360(FJI)
+# Fig. 7
+plotmap(FJI, title = "Fidji Island with 0 - 360 coordinates")
+```
+
+![GOOD](Rplot_8.9.png)
+
+\newpage
+
 ## Removing regions
 
 ### remove()
@@ -293,10 +359,10 @@ Parameter | Description
 library(GADMTools)
 library(sp)
 
-FR = gadm.loadCountries("FRA", level=1)
+FR = gadm.loadCountries("FRA", level=1, basefile = "./")
 plotmap(FR)
 listNames(FR, level=1)
-FR2 = remove(FR, level = 1, regions = c("Alsace", "Lorraine"))
+FR2 = remove(FR, level = 1, regions = c("Grand Est"))
 plotmap(FR2)
 ```
 
@@ -314,10 +380,40 @@ plotmap(FR2)
 
 ![removing 2 regions from France @ level = 1](Rplot6_7.png)
 
+-----------------------------------------------------------
 
 \newpage
 # Graphics
 
+## Adding a background image from OpenstreetMap
+
+### gadm.getBackground()
+
+*gadm.getBackground*( x, name, type = "osm", clip = TRUE )
+
+Parameter | Description                  
+--------- | ---------------------------------------------------------------------------------  
+**x** | **Object** GADMWrapper - the region that you want to add a background.
+**name** | **Object** the name of the TIFF file withhout extension
+**type** | **Character** type (default "osm') of the map provided by *osm.types()*.
+**clip** | **Character** if TRUE (the default), background is clipped by the the external border of the spatial object.
+
+### Examples
+```{r eval=FALSE}
+library(GADMTools)
+library(rosm)
+FRA = gadm.loadCountries("FRA", 2, basefile = "./")
+BRE = GADMTools::subset(FRA, level=1, regions=c("Bretagne"))
+BRE2 <- gadm.getBackground(BRE, "BRE", "osm")
+plotmap(BRE2, title = "Map of Bretagne (FRANCE)")
+```
+
+
+![map of Bretagne with background from OSM @ level = 2](Rplot_7.7.png)
+
+----------------------------------------
+
+\newpage
 ## Plotting dots on a map
 
 ### dots()
@@ -377,7 +473,7 @@ For these examples we are using this data.frame
 library(GADMTools)
 library(sp)
 
-map = gadm.loadCountries("FRA", level=1, simplify=0.01)
+map = gadm.loadCountries("FRA", level=1, simplify=0.01,  basefile = "./")
 map = subset(map, level=1, regions=c("Île-de-France","Haute-Normandie"))
 
 W <- read.csv2("wepi.csv", stringsAsFactors = FALSE)
@@ -469,7 +565,7 @@ Parameter | Description
 library(GADMTools)
 library(sp)
 
-France = gadm.loadCountries("FRA", level=1, simplify=0.01)
+France = gadm.loadCountries("FRA", level=1, simplify=0.01, basefile = "./")
 Region = subset(France, regions=c("Île-de-France","Haute-Normandie"), level=1)
 
 W <- read.csv2("wepi.csv")
@@ -561,7 +657,7 @@ Parameter | Description
 library(GADMTools)
 library(sp)
 
-France = gadm.loadCountries("FRA", level=1, simplify=0.01)
+France = gadm.loadCountries("FRA", level=1, simplify=0.01,   basefile = "./")
 Region = subset(France, regions=c("Île-de-France","Haute-Normandie"), level=1)
 
 W <- read.csv2("wepi.csv")
@@ -612,7 +708,7 @@ Parameter | Description
 library(GADMTools)
 library(sp)
 
-France = gadm.loadCountries("FRA", level=1, simplify=0.01)
+France = gadm.loadCountries("FRA", level=1, simplify=0.01,   basefile = "./")
 W <- read.csv2("wepi.csv")
 W$lieux_lat <- as.double(as.character(W$lieux_lat))
 W$lieux_long <- as.double(as.character(W$lieux_long))
