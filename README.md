@@ -1,4 +1,4 @@
-# GADMTools [![rpackages.io rank](https://www.rpackages.io/badge/GADMTools.svg)](https://www.rpackages.io/package/GADMTools) [![](https://cranlogs.r-pkg.org/badges/GADMTools)](https://cran.rstudio.com/web/packages/GADMTools/index.html)
+# GADMTools [![rpackages.io rank](https://www.rpackages.io/badge/GADMTools.svg)](https://www.rpackages.io/package/GADMTools) [![](https://cranlogs.r-pkg.org/badges/GADMTools)](https://cran.rstudio.com/web/packages/GADMTools/index.html) [![Rdoc](http://www.rdocumentation.org/badges/version/GADMTools)](http://www.rdocumentation.org/packages/GADMTools)
 
 GADMTools is an R package to manipulate shapefiles from GADM and to make geo-statistical representations easily.
 
