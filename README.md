@@ -1,5 +1,4 @@
-# GADMTools 
-[![cran checks](https://cranchecks.info/badges/worst/GADMTools)](https://cran.r-project.org/web/checks/check_results_GADMTools.html)
+# GADMTools [![CRAN](http://www.r-pkg.org/badges/version/GADMTools)](https://cran.r-project.org/package=GADMTools) [![cran checks](https://cranchecks.info/badges/worst/GADMTools)](https://cran.r-project.org/web/checks/check_results_GADMTools.html)
 
 [![rpackages.io rank](https://www.rpackages.io/badge/GADMTools.svg)](https://www.rpackages.io/package/GADMTools) [![](https://cranlogs.r-pkg.org/badges/GADMTools)](https://cran.rstudio.com/web/packages/GADMTools/index.html) [![Rdoc](http://www.rdocumentation.org/badges/version/GADMTools)](http://www.rdocumentation.org/packages/GADMTools)
 
