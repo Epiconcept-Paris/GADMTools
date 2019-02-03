@@ -1,24 +1,24 @@
-\name{saveas}
+\name{saveAs}
+\alias{saveAs}
 \alias{saveas}
 
-\title{ Save your own GADM shapefile as an rds  file}
+\title{ Save your own GADM shapefile as an rds file}
 \description{
 Save a GADM shapefile (.rds)
 }
 \usage{
-saveas(x, name = NULL)
+saveAs(x, name = NULL, directory = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
 \bold{Object} - GADMWWrapper
 }
-  \item{name}{
-\bold{String} - File path
-}
+  \item{name}{\bold{String} - filename}
+  \item{directory}{\bold{String} - path to an alternative directory}
 }
 \details{
-----
+If directory is NULL (default), the file is stored in the same directory as specified in basefile parameter of gadm.loadCountries or gt2.loadCountries
 }
 
 \value{
@@ -51,5 +51,5 @@ Do not specify the rds extension, it is added automatically.
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~documentation }
+\keyword{ ~utilities }% __ONLY ONE__ keyword per line

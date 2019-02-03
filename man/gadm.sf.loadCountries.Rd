@@ -1,23 +1,28 @@
-\name{gadm.loadStripped}
-\alias{gadm.loadStripped}
+\name{gadm.sf.loadCountries}
+\alias{gadm.sf.loadCountries}
+\alias{gt2.loadCountries}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Load one GADM stripped shapefile}
+\title{Load one or more GADM shapefiles}
 \description{
-Load one GADM stripped shapefiles from a local path for use with ggplot2.
+Load one or more GADM shapefiles as Simple Features (SF) format from a local path or from a remote repository.
 }
 \usage{
-gadm.loadStripped(name, level, basefile='./')
+gadm.sf.loadCountries(fileNames, level = 0, basefile=GADM_BASE,
+                  baseurl=GADM_SF_URL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{name}{
-\bold{Character vector} of a named region. An ISO-3166-1 code or a custom name. You don't have to specify the suffix (admX) nor the file extension (.rds).
+  \item{fileNames}{
+\bold{Character vector} of named regions. An ISO-3166-1 code or a custom name. You don't have to specify the suffix (admX) nor the file extension (.rds).
 }
   \item{level}{
 \bold{Integer} the level of the administrative boundaries (0 is the country, higher values equal finer divisions) 
 }
   \item{basefile}{
-\bold{Character vector} the path of the directory where shapefiles are stored. Default is "./"
+\bold{Character vector} the path of the directory where shapefiles are stored. Default is "./GADM"
+}
+  \item{baseurl}{
+\bold{Character vector} The url of GADM files. Default is "http://biogeo.ucdavis.edu/data/gadm2.8/rds/"
 }
 
 }
@@ -55,7 +60,7 @@ See : \url{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3}
 
 }
 
-\value{ \bold{Object} GADMWrapper with stripped properties == TRUE}
+\value{ \bold{Object} GADMWrapper }
 \references{
 ----}
 \author{Jean Pierre Decorps <jp.decorps@epiconcept.fr>}
@@ -64,13 +69,13 @@ See : \url{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3}
 }
 
 \seealso{
-----
+\code{\link{gadm.sp.loadCountries}}
 }
 \examples{
 # library(GADMTools)
 # library(sp)
-# BE <- gadm.loadStripped('BEL', level=2)
-# plotmap(BE)
+# Belgium = gadm.sf.loadCountries("BEL", level=2, basefile="./")
+# plotmap(Belgium)
 }
 \keyword{ ~documentation }
 \keyword{ ~utilities }% __ONLY ONE__ keyword per line

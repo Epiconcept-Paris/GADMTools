@@ -31,5 +31,5 @@ gadm.longTo360(x)
 # MAP <- gadm.longTo360(MAP)
 # plotmap(MAP)
 }
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~documentation }
+\keyword{ ~utilities }% __ONLY ONE__ keyword per line

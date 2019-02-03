@@ -10,7 +10,7 @@ csv file for example, and call the choropleth function with the right arguments.
 \usage{
 choropleth (x, data, value=NULL, breaks = NULL, steps = 5, adm.join=NULL,
             legend = NULL, labels = NULL, palette=NULL,
-            title="")
+            title="", subtitle = NULL, caption = NULL)
 
 }
 \arguments{
@@ -38,9 +38,9 @@ choropleth (x, data, value=NULL, breaks = NULL, steps = 5, adm.join=NULL,
   \bold{String} - An RColorBrewer palette name or a \bold{String vector} 
   vector of colors. Default \bold{NULL}.
 }
-  \item{title}{
-  \bold{String} - Title of the plot. Default is an empty string.
-}
+  \item{title}{ \bold{String} - Title of the plot. Default is an empty string.}
+  \item{subtitle}{ \bold{String} - subtitle of the plot. Default is NULL.}
+  \item{caption}{ \bold{String} - caaption of the plot. Default is NULL.}
 }
 \details{
 ----
@@ -86,5 +86,5 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~documentation }
+\keyword{ ~hplot }% __ONLY ONE__ keyword per line

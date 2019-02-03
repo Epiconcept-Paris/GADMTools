@@ -1,12 +1,3 @@
-choropleth <- function(x, data,
-                       value=NULL,
-                       breaks = NULL,
-                       steps = 5,
-                       adm.join=NULL,
-                       legend = NULL,
-                       labels = NULL,
-                       palette=NULL,
-                       title="") UseMethod("choropleth", x)
 
 choropleth.GADMWrapper <- function(x,
                                    data,
@@ -17,8 +8,13 @@ choropleth.GADMWrapper <- function(x,
                                    legend = NULL,
                                    labels = NULL,
                                    palette=NULL,
-                                   title="") {
+                                   title="",
+                                   subtitle = NULL,
+                                   caption  = NULL) {
   .x <- x
+  .subtitle <- subtitle
+  .caption <- caption
+  .titles <- title
   
   if (is.null(value)) stop("Unknown value (NULL)\n")
   
@@ -44,6 +40,7 @@ choropleth.GADMWrapper <- function(x,
   # -------------------------------------------------------
   # BREAKS
   # -------------------------------------------------------
+  # .data <- internal.gt2.getBreaks(.data, .value, breaks, .steps, .labels)
   if (is.null(breaks)) {
     if (!is.factor(.data[,.value])) {
       .data[,.value] <- cut(.data[,.value],.steps)
@@ -124,8 +121,14 @@ choropleth.GADMWrapper <- function(x,
                       labels=.labels,
                       guide = guide_legend(reverse = TRUE)) +
     
-    labs(title = title, fill = "") + 
+    labs(title = .titles,
+         subtitle = .subtitle,
+         caption = .caption,
+         fill = "") + 
     theme_bw() +
+    theme(plot.title = element_text(hjust=0.5),
+          plot.subtitle = element_text(hjust=0.5),
+          plot.caption = element_text(hjust=0))+
     theme(panel.border = element_blank()) +
     theme(legend.key = element_blank()) +
     theme(axis.text = element_blank()) +

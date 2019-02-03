@@ -1,6 +1,10 @@
-gadm.getBackground.GADMWrapper <- function(x, name, type="osm", clip=TRUE) {
+gadm.getBackground.GT2 <- function(x, name, type="osm", clip=TRUE) {
+  
   # Settings ----------------------------------------------------------------
   .shapeBoundaries <- gadm.union(x)
+  # .sp$spdf  <- as(x$spdf, "Spatial")
+  .shapeBoundaries$spdf  <- as(.shapeBoundaries$spdf, "Spatial")
+  # .shapeBoundaries <- gadm.union(.sp)
   .filename <- sprintf("%s.tif", name)
   if (type %in% rosm::osm.types()) {
     .type <- type
@@ -8,13 +12,13 @@ gadm.getBackground.GADMWrapper <- function(x, name, type="osm", clip=TRUE) {
     .msg <- sprintf("Unknown type '%s'", type)
     stop(.msg)
   }
-  
+
   # Get tiles & create tiff file --------------------------------------------
   if (!file.exists(.filename)) {
     .osmRaster <- rosm::osm.raster(.shapeBoundaries$spdf, type = .type)
     rosm::osm.raster(.osmRaster, filename = .filename, overwrite = TRUE)
   }
-  
+
 
   # Cropping and Cliping ----------------------------------------------------
   if (file.exists(.filename)) {
@@ -27,8 +31,8 @@ gadm.getBackground.GADMWrapper <- function(x, name, type="osm", clip=TRUE) {
       .map <- .r1
     }
   }
-  
-  
+
+
   # Creates a RGB data.frame for ggplot2 -----------------------------------
   .map <- .map / raster::maxValue(.map)
   .df <- raster::as.data.frame(.map, xy = TRUE)
@@ -36,7 +40,7 @@ gadm.getBackground.GADMWrapper <- function(x, name, type="osm", clip=TRUE) {
   colnames(.df) <- c("x", "y", "r", "g", "b")
   .df$rgb <- with(.df, rgb(r, g, b,1))
   .df <- .df[, c(1,2,6)]
-  
+
   # Create GADMWrapper object -----------------------------------------------
   structure(list("basename" = x$basename,
                  "spdf"     = x$spdf,
@@ -45,6 +49,6 @@ gadm.getBackground.GADMWrapper <- function(x, name, type="osm", clip=TRUE) {
                  "stripped" = x$stripped,
                  "hasBGND"  = TRUE,
                  "BGND"     = .df),
-              class = "GADMWrapper")
-  
-}  
+              class = "GT2")
+
+}

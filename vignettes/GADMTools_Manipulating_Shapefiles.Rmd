@@ -1,10 +1,10 @@
 ---
-title: "Using GADMTools"
+title: "GADMTools - Manipulating Shapefiles"
 author: "Jean Pierre Decorps - Epiconcept"
 date: "`r Sys.Date()`"
 output: rmarkdown::pdf_document
 vignette: >
-  %\VignetteIndexEntry{Using GADMTools}
+  %\VignetteIndexEntry{GADMTools - Manipulating Shapefiles}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -58,19 +58,45 @@ The GADM website and data repository is hosted at UC Davis in the Hijmans Lab. T
 
 # What is GADMTools?
 
-GADMTools is an R package to manipulate shapefiles from GADM and to make geo-statistical representations easily.
+**GADMTools** is an R package to manipulate shapefiles from GADM and to make geo-statistical representations easily.
+
+**GADMTools** can use 2 shapefile formats, *SpatialPolyonsDataFrame (SP)* and *Simple Features (SF)*, both provided by GADM as .rds files.
+
+**NB**: the SF format is supported only from version 3.5 of GADMTools.
+
 
 ****************
 
 \newpage
 # Manipulating shapefiles
+## functions
 
-## gadm.loadCountries()
+SpatialPolygons | Simple Features | Description 
+:------------------- | :------------------- | :--------------------------------
+gadm.loadCountries |  | [deprecated] use *gadm.sp.loadCountries* function instead 
+gadm.sp.loadCountries | gadm.sf.loadCountries | downloads or loads one or more shapefiles
+gadm.getBackground | gadm.getBackground | Gets tiles with 'rosm' from OpenStreetMap
+gadm.loadStripped |  | Load a GADM stripped shapefile
+gadm.remove | gadm.remove | Removes one or more regions from a map in a GADMWrapper/GT2 object
+gadm.removeBackground | gadm.removeBackground | Removes the background of a map
+gadm.saveStripped | | Save a stripped GADM object
+gadm.subset | gadm.subset | Extract regions. "subset" does not work since release 3.5-1
+gadm.union | gadm.union | Merges regions
+listNames | listNames | List the region names for an administrative level
+saveAs | saveAs | Save your own GADM shapefile as a .rds file
+stripSP |  | Strip a GADMWrapper object
 
-This is the main function of GADMTools, with it, you can load or download one or more shapefiles. If you load many shapefiles, the function assembles the shapefiles into one.
+\newpage
+## Format SP : gadm.sp.loadCountries() / gadm.load.countries
+
+This is the main function of GADMTools, with it, you can load or download one or more shapefiles. If you load many shapefiles, the function assembles the shapefiles into one. 
 
 
-gadm.loadCountries(
+
+The old function *gadm.loadCountries* is deprecated.
+
+
+*gadm.sp.loadCountries*(
 
                    fileNames,
                    
@@ -93,6 +119,8 @@ Parameter | Description
 **baseurl** | **Character** - the url of GADM files. Default is <http://biogeo.ucdavis.edu/data/gadm2.8/rds/>
 **simplify** | **Numeric** numerical tolerance value to be used by the Douglas-Peuker algorithm. Higher values use less polygon points (and less memory) and lower values use more polygon points (and more memory). We suggest not going higher than 0.01 in order for intra-country boundaries to align.
 
+
+**Return**: Object *GADMWrapper*
 
 \newpage
 
@@ -139,14 +167,66 @@ library(sp)
 
 # Loading country border (level=0 [default])
 # -----------------------------------------------------------------
-map <- gadm.loadCountries("FRA", basefile = "./")
+map <- gadm.sp.loadCountries("FRA", basefile = "./")
 plotmap(map)
 ```
+
+----------------------
 
 ![loading a single country (France) @ level = 0](Rplot01.png)
 
 \newpage
-### Loading an administrative level
+## Format SF : gadm.sf.loadCountries()
+
+This is the main function of GADMTools, with it, you can load or download one or more shapefiles. If you load many shapefiles, the function assembles the shapefiles into one. 
+
+
+*gadm.sf.loadCountries*(
+
+                   fileNames,
+                   
+                   level = 0, 
+                   
+                   basefile=GADM_BASE,
+                   
+                   baseurl=GADM_URL,
+                   
+                  )
+
+
+
+Parameter | Description                  
+--------- | ---------------------------------------------------------------------------------                 
+**fileNames**    | **Character vector** of named regions. An ISO-3166-1 code or a custom name. You don't have to specify the suffix (admX) nor the file extension (.rds).
+**level** | **Integer** - the level of the administrative boundaries (0 is the country, higher values equal finer divisions)
+**basefile** | **Character** - the path of the directory where shapefiles are stored. Default is "./GADM"
+**baseurl** | **Character** - the url of GADM files. Default is <http://biogeo.ucdavis.edu/data/gadm2.8/rds/>
+
+**NB**: parameter simplify is not yet implemented for SF format
+
+**Return**: Object *GT2*
+
+
+\newpage
+
+### Loading a shapefile
+
+```{r eval=FALSE}
+library(GADMTools)
+
+# Loading country border (level=0 [default])
+# -----------------------------------------------------------------
+map <- gadm.sf.loadCountries("FRA", basefile = "./")
+plotmap(map)
+```
+
+----------------------
+
+![loading a single country (France) @ level = 0](Rplot.sf.01.jpeg)
+
+
+\newpage
+## Loading an administrative level
 
 ```{r eval=FALSE}
 library(GADMTools)
@@ -154,15 +234,16 @@ library(sp)
 
 # Loading regions @ level = 2])
 # -----------------------------------------------------------------
-map <- gadm.loadCountries(c("FRA"), level=2, basefile = "./")
+map <- gadm.sp.loadCountries(c("FRA"), level=2, basefile = "./")
 plotmap(map)
 ```
 
 ![loading regions of a country (France) @ level = 2](Rplot02.png)
 
+**NB**: you can use *gadm.sf.loadCountries* instead of *gadm.sp.loadCountries*
 
 \newpage
-### Assembling many shapefiles
+## Assembling many shapefiles
 
 
 ```{r eval=FALSE}
@@ -171,12 +252,13 @@ library(sp)
 
 # Assemble administrative boundaries (country level = 0)
 # -----------------------------------------------------------------
-map <- gadm.loadCountries(c("BEL","LUX","NLD"),  basefile = "./")
+map <- gadm.sp.loadCountries(c("BEL","LUX","NLD"),  basefile = "./")
 plotmap(map, title="Bénélux")
 ```
 
 ![Benelux = Belgium + Luxembourg + Netherlands @ level = 0](Rplot04.png)
 
+**NB**: you can use *gadm.sf.loadCountries* instead of *gadm.sp.loadCountries*
 
 
 \newpage
@@ -197,12 +279,12 @@ In order to extract some regions of a map we need to know them. The listNames fu
 
 Parameter | Description                  
 --------- | ---------------------------------------------------------------------------------                 
-**x** | **Object** - a GADMWrapper object (a map)
+**x** | **Object** - *GADMWrapper* or *GT2*
 **level** | **Integer** - the value of the administration level to list. Attention: only the administrative levels that have been loaded in the loadCountries object can be listed. Names are given in the country's language or English.
 
 ### subset()
 
-*subset*(
+*gadm.subset*(
 
        x,
 
@@ -217,7 +299,7 @@ Parameter | Description
 
 Parameter | Description                  
 --------- | ---------------------------------------------------------------------------------                 
-**x** | **Object** GADMWrapper
+**x** | **Object** *GADMWrapper* or *GT2*
 **level** | **Integer** the level at which the regions are extracted from
 **regions** | **String vector** of named regions
 **usevar** | **String vector** name of an other var of spdf@data @ an other level
@@ -231,9 +313,9 @@ Parameter | Description
 library(GADMTools)
 library(sp)
 
-FR = gadm.loadCountries("FRA", level=2, basefile = "./")
+FR = gadm.sp.loadCountries("FRA", level=2, basefile = "./")
 listNames(FR, level=2)
-AV = subset(FR, regions=c("Allier", "Cantal",
+AV = gadm.subset(FR, regions=c("Allier", "Cantal",
             "Haute-Loire","Puy-de-Dôme"))
 plotmap(AV)
 ```
@@ -267,8 +349,7 @@ plotmap(AV)
 ![extracting (subset) some departments in France @ level = 2](Rplot05.png)
 
 
-
-
+\newpage
 
 \newpage
 ## Merging regions
@@ -279,7 +360,7 @@ plotmap(AV)
 
 Parameter | Description                  
 --------- | ---------------------------------------------------------------------------------  
-**x** | **Object** GADMWrapper
+**x** | **Object** *GADMWrapper* or *GT2*
 
 ### Example
 
@@ -288,16 +369,15 @@ library(GADMTools)
 library(sp)
 
 FR = gadm.loadCountries("FRA", level=2, basefile = "./")
-AV = subset(FR, regions=c("Allier", "Cantal",
+AV = gadm.subset(FR, regions=c("Allier", "Cantal",
             "Haute-Loire","Puy-de-Dôme"))
 AV <- gadm.union(AV)
 plotmap(AV)
 
 ```
 
+
 ![merging 4 departments of Auvergne @ level = 2](Rplot05.5.png)
-
-
 
 
 \newpage
@@ -316,7 +396,7 @@ Parameter | Description
 ```{r eval=FALSE}
 library(GADMTools)
 library(GADMTools)
-FJI = gadm.loadCountries("FJI", 1, basefile = "./")
+FJI = gadm.sp.loadCountries("FJI", 1, basefile = "./")
 # Fig. 6
 plotmap(FJI, title = "Fidji Island with bad coordinates")
 ```
@@ -349,7 +429,7 @@ plotmap(FJI, title = "Fidji Island with 0 - 360 coordinates")
 
 Parameter | Description                  
 --------- | ---------------------------------------------------------------------------------  
-**x** | **Object** GADMWrapper
+**x** | **Object** *GADMWrapper* or *GT2*
 **level** | **Integer** - level from which shapes are removed. If NULL, curent level is used.
 **regions** | **String vector** of regions to be removed
 
@@ -383,8 +463,6 @@ plotmap(FR2)
 -----------------------------------------------------------
 
 \newpage
-# Graphics
-
 ## Adding a background image from OpenstreetMap
 
 ### gadm.getBackground()
@@ -393,7 +471,7 @@ plotmap(FR2)
 
 Parameter | Description                  
 --------- | ---------------------------------------------------------------------------------  
-**x** | **Object** GADMWrapper - the region that you want to add a background.
+**x** | **Object** *GADMWrapper* or *GT2* - the region that you want to add a background.
 **name** | **Object** the name of the TIFF file withhout extension
 **type** | **Character** type (default "osm') of the map provided by *osm.types()*.
 **clip** | **Character** if TRUE (the default), background is clipped by the the external border of the spatial object.
@@ -402,8 +480,8 @@ Parameter | Description
 ```{r eval=FALSE}
 library(GADMTools)
 library(rosm)
-FRA = gadm.loadCountries("FRA", 2, basefile = "./")
-BRE = GADMTools::subset(FRA, level=1, regions=c("Bretagne"))
+FRA = gadm.sp.loadCountries("FRA", 2, basefile = "./")
+BRE = gadm.subset(FRA, level=1, regions=c("Bretagne"))
 BRE2 <- gadm.getBackground(BRE, "BRE", "osm")
 plotmap(BRE2, title = "Map of Bretagne (FRANCE)")
 ```
@@ -411,429 +489,18 @@ plotmap(BRE2, title = "Map of Bretagne (FRANCE)")
 
 ![map of Bretagne with background from OSM @ level = 2](Rplot_7.7.png)
 
-----------------------------------------
 
 \newpage
-## Plotting dots on a map
+## Remove a background previously loaded with gadm.getBackground
 
-### dots()
+### gadm.removeBackground()
 
-*dots*(
-
-       x, points, color="red", value = NULL,
-    
-       breaks = NULL, steps = 5, palette = NULL, labels = NULL, strate = NULL,
-
-       title="", legend = NULL, note=NULL
-    
-    )
+*gadm.removeBackground*( x )
 
 Parameter | Description                  
 --------- | ---------------------------------------------------------------------------------  
-**x** | **Object** GADMWrapper
-**points** | **Object** data.frame with columns 'latitude' and 'longitude'
-**color** | a valid color
-**value** |	**Character** Name of a column in the data.frame. If is not null, colored dots are displayed according to the value.
-**breaks** | **vector** of breaks
-**steps** |	**Integer** Number of breaks for the value field.
-**palette** | a valid palette
-**labels** | **vector** of labels
-**strate** | **Character** name of a column in the data.frame. If is not null, display dots with different shapes according to the value.
-**title** |	**Character** The title of the plot
-**legend** | **Character** The title of the legend
-**note** | **Character** Add an annotation
+**x** | **Object** *GADMWrapper* or *GT2*
 
-### Examples
 
-For these examples we are using this data.frame
 
-| lieu_lat| lieu_long|type   | comptage|nocif       | id_data| identifier|
-|--------:|---------:|:------|--------:|:-----------|-------:|----------:|
-| 49.55895|  1.384277|Type B |       45|ne sait pas |       1|          1|
-| 48.86664|  2.636719|Type A |       21|Oui         |       2|          2|
-| 48.60579|  1.933594|Type B |       12|Non         |       3|          3|
-| 48.90998|  2.482910|Type B |       61|ne sait pas |       4|          4|
-| 48.97493|  2.208252|Type C |       14|Oui         |       5|          5|
-| 49.06859|  3.054199|Type B |       14|Oui         |       6|          6|
-| 48.82326|  1.614990|Type A |       55|Non         |       7|          7|
-| 48.87387|  2.307129|Type D |        7|ne sait pas |       9|          9|
-| 48.99656|  2.156067|Type B |       19|Oui         |      10|         10|
-| 49.03259|  2.834473|Type D |       12|Non         |      11|         11|
-| 49.10792|  2.351074|Type C |        6|Oui         |      12|         12|
-| 48.56219|  2.438965|Type B |       65|Oui         |      13|         13|
-| 48.71465|  2.169800|Type A |       22|Non         |      14|         14|
 
-
--------------------------------------------------------------------------------------------------------------
-**Note : ** with this data.frame, we have to rename *lieu_lat* and *lieu_long* to respectively *latitude* and *longitude*
--------------------------------------------------------------------------------------------------------------
-
-
-```{r eval=FALSE}
-library(GADMTools)
-library(sp)
-
-map = gadm.loadCountries("FRA", level=1, simplify=0.01,  basefile = "./")
-map = subset(map, level=1, regions=c("Île-de-France","Haute-Normandie"))
-
-W <- read.csv2("wepi.csv", stringsAsFactors = FALSE)
-W$lieux_lat <- as.double(W$lieux_lat)
-W$lieux_long <- as.double(W$lieux_long)
-colnames(W)[1] <- "latitude"
-colnames(W)[2] <- "longitude"
-
-# Simple dots
-#--------------------------------------------------------------------
-dots(map, points = W, title="Cases 2015", note="Data from Wepi")
-
-
-```
-
-![simple points](Rplot40.png)
-
-\newpage
-```{r eval=FALSE}
-
-# Classified dots
-#--------------------------------------------------------------------
-dots(map, points = W, 
-     palette = "Reds",
-     value="comptage",
-     title="Classified Cases 2015", note="Data from Wepi")
-
-```
-![colored points (classification)](Rplot41.png)
-
-
-\newpage
-```{r eval=FALSE}
-# Typed points
-#--------------------------------------------------------------------
-dots(map, points = W, 
-     color = "#ee00ee",
-     strate="type", 
-     title="Typed Cases 2015", note="Data from Wepi")
-```
-![typed points (stratification)](Rplot42.png)
-
-
-\newpage
-## Plotting proportionals dots
-
-### propDots()
-
-*propDots*( 
-
-            x, 
-            
-            data,
-            
-            value,
-            
-            breaks=NULL,
-            
-            range=NULL,
-            
-            labels=NULL,
-            
-            color="red",
-            
-            title="",
-            
-            note=NULL
-          
-          )
-          
-
-Parameter | Description                  
---------- | ---------------------------------------------------------------------------------  
-**x**	 | **Object** GADMWrapper
-**data** | **Object** data.frame with columns 'latitude' and 'longitude'
-**value** | **Character** Name of a column of the data.frame.
-**breaks** | **vector** of breaks
-**range**  | **vector** min, max
-**labels** | **vector** of labels
-**color** | a valid color
-**title** | **Character** The title of the plot
-**note** | **Character** A note associated with the plot
-
-\newpage
-### Examples
-
-
-```{r eval=FALSE}
-library(GADMTools)
-library(sp)
-
-France = gadm.loadCountries("FRA", level=1, simplify=0.01, basefile = "./")
-Region = subset(France, regions=c("Île-de-France","Haute-Normandie"), level=1)
-
-W <- read.csv2("wepi.csv")
-W$lieux_lat <- as.double(as.character(W$lieux_lat))
-W$lieux_long <- as.double(as.character(W$lieux_long))
-W <- rename(W, latitude = lieux_lat, longitude = lieux_long)
-
-
-# Test of propDots with default parameters
-# ------------------------------------------------------------------------------
-propDots( Region, 
-          data = W, 
-          value = "comptage", 
-          color="blue", 
-          note="Test of propDots with default parameters")
-```
-![proportional dots with default parameters](Rplot43.jpg)
-
-\newpage
-```{r eval=FALSE}
-# Test of propDots with default parameters
-# ------------------------------------------------------------------------------
-propDots(Region, data = W, value = "comptage", color="orange",
-         breaks=c(30, 40, 50, 70, 100),
-         title="Cases 2015",
-         note="Test of propDots with defined breaks")
-```
-
-![proportional dots with provided breaks](Rplot44.jpg)
-
-\newpage
-```{r eval=FALSE}
-propDots(Region, data = W, value = "comptage", color="green",
-         range=c(30,70),
-         breaks=c(30, 40, 50, 70, 100),
-         title="Cases 2015",
-         note="Test of propDots with forced range of breaks",
-         labels = c("< 30", "30 - 40", "40 - 50", "50 -70", "70 - 100"))
-```
-![proportional dots with with forced range of breaks](Rplot45.jpg)
-
-\newpage
-## Plotting dots with classified size
-
-### classDots()
-
-*classDots*(
-
-            x, 
-            
-            data, color="red", 
-            
-            value = NULL, 
-            
-            breaks = NULL,
-            
-            steps = 5, 
-            
-            labels = NULL, 
-            
-            opacity = 0.5, 
-            
-            title="",
-            
-            note=NULL, 
-            
-            legend = NULL
-            
-           )
-
-
-Parameter | Description                  
---------- | --------------------------------------------------------------------------------- 
-**x**  | **Object** GADMWrapper
-**data** |  **Object** data.frame with columns 'latitude' and 'longitude'
-**color** |	a valid color
-**value** |	**Character** Name of a column in the data.frame.
-**breaks** | vector of breaks
-**steps** |	unused
-**labels** | **Character vector** of labels
-**opacity** | **float** Background opacity of the filled circles
-**title** | **Character** The title of the plot
-**note** | **Character** Add an annotation
-**legend** | **Character** The title of the legend
-
-\newpage
-### Exemple
-```{r eval=FALSE}
-library(GADMTools)
-library(sp)
-
-France = gadm.loadCountries("FRA", level=1, simplify=0.01,   basefile = "./")
-Region = subset(France, regions=c("Île-de-France","Haute-Normandie"), level=1)
-
-W <- read.csv2("wepi.csv")
-W$lieux_lat <- as.double(as.character(W$lieux_lat))
-W$lieux_long <- as.double(as.character(W$lieux_long))
-W <- rename(W, latitude = lieux_lat, longitude = lieux_long)
-
-classDots(Region,               # Polygons
-          data = W,             # Dataset
-          value = "comptage",   # Varname
-          color="#ff9900",
-          breaks=c(1, 10, 30, 50, 60, 100),
-          legend = "Emergency",
-          title = "Classes of points",
-          opacity = 0.6,
-          note = "Cases 2015"
-)
-
-```
-![classified dots size](Rplot46.jpg)
-
-\newpage
-## Plotting density
-
-### isopleth()
-
-*isopleth*(
-           x,
-           
-           data,
-           
-           palette=NULL,
-           
-           title=""
-          )
-
-
-Parameter | Description                  
---------- | --------------------------------------------------------------------------------- 
-**x** |	**Object** GADMWrapper
-**data** | **data.frame** - data to plot
-**palette** | **String** - An RColorBrewer palette name or a String vector vector of colors. Default NULL.
-**title** | **String** - Plot title. Default is an empty string.
-
-\newpage
-### Example
-```{r eval=FALSE}
-library(GADMTools)
-library(sp)
-
-France = gadm.loadCountries("FRA", level=1, simplify=0.01,   basefile = "./")
-W <- read.csv2("wepi.csv")
-W$lieux_lat <- as.double(as.character(W$lieux_lat))
-W$lieux_long <- as.double(as.character(W$lieux_long))
-colnames(W)[1] <- "latitude"
-colnames(W)[2] <- "longitude"
-Region = subset(France, regions=c("Île-de-France","Haute-Normandie"), level=1)
-isopleth(Region, W)
-```
-![a density plot (isopleth)](Rplot47.png)
-
-\newpage
-## Plotting a choropleth
-
-### choropleth()
-
-*choropleth*(
-
-             x, data, value=NULL, breaks = NULL, steps = 5,
-
-             adm.join=NULL, legend = NULL, 
-             
-             labels = NULL, palette=NULL, title=""
-             
-             )
-
-
-Parameter | Description                  
---------- | --------------------------------------------------------------------------------- 
-**x** | **Object** GADMWrapper
-**data** | **data.frame** - data to plot
-**value** | **String** - the name of the column in the data.frame we want to plot (eg: an incidence in epidemiology studies)
-**breaks** | **Vector** of breaks values or a **Sring** name of a function from *classIntervals* (one of "sd", "equal", "pretty", "quantile", "kmeans", "hclust", "bclust", "fisher", or "jenks").
-**steps** | **Integer** - number of breaks. Default = 5. If breaks is NOT NULL this value is used internally with cut().
-**adm.join** | **String** - the name in GADM spdf dataset which will be joined with a column of the data.
-**legend** | **String** - legend title. Default NULL.
-**labels** | **String** vector labels for the legend. Default NULL
-**palette** | **String** - An RColorBrewer palette name or a String vector vector of colors. Default NULL.
-**title** | **String** - Title of the plot. Default is an empty string.
-
-\newpage
-### Example
-```{r eval=FALSE}
-library(GADMTools)
-library(sp)
-library(dplyr)
-
-MAP <- gadm.loadCountries("BEL", level = 3, simplify=0.01)
-DAT = read.csv2("BE_clamydia_incidence.csv")
-
-# Rewriting District names
-# ------------------------
-DAT$district <- as.character(DAT$district)
-DAT[7,1] = "Brussel"
-DAT[20,1] <- "Liège"
-DAT[22,1] = "Marche-en-Famenne"
-DAT[27,1] = "Neufchâteau"
-
-# Here is the main trick !
-# -----------------------------------------------------
-DAT <- rename(DAT, NAME_3 = district)
-
-choropleth(MAP, DAT,
-           adm.join = "NAME_3",
-           value = "rate03",
-           breaks = "sd",
-           palette="Oranges", legend = "Incidence",
-           title="Chlamydia incidence by Belgian district for 2003)")
-```
-![drawing a choropleth](Rplot48.jpg)
-
-\newpage
-### fast.choropleth()
-
-*fast.choropleth*(
-
-                  x, data, value=NULL,
-                  
-                  breaks = NULL, steps = 5,
-  
-                  adm.join=NULL, legend = NULL,
-                  
-                  labels = NULL,
-                  
-                  palette=NULL, title=""
-                  
-                 )
-                 
-Parameter | Description                  
---------- | --------------------------------------------------------------------------------- 
-**x**	| **Object** GADMWrapper
-**data**	| **data.frame** - data to plot
-**value**	| **String** - the name of the column in the data.frame we want to plot (eg: an incidence in epidemiology studies)
-**breaks**	| 
-**steps**	| **Integer** - number of breaks. Default = 5. If breaks is NOT NULL this value is used internally with cut().
-**adm.join**	| **String** - the name in GADM spdf dataset which will be joined with a column of the data.
-**legend**	| **String** - legend title. Default NULL.
-**labels**	| **String vector** labels for the legend. Default NULL
-**palette**	| **String** - An RColorBrewer palette name or a String vector vector of colors. Default NULL.
-**title**	| **String** - Title of the plot. Default is an empty string.
-
-\newpage
-### Example
-```{r eval=FALSE}
-MAP <- gadm.loadCountries("BEL", level = 3, simplify=0.01)
-DAT = read.csv2("BE_clamydia_incidence.csv")
-
-# Rewriting District names
-# ------------------------
-DAT$district <- as.character(DAT$district)
-DAT[7,1] = "Brussel"
-DAT[20,1] <- "Liège"
-DAT[22,1] = "Marche-en-Famenne"
-DAT[27,1] = "Neufchâteau"
-DAT <- rename(DAT, NAME_3 = district)
-
-
-fast.choropleth(MAP, DAT,
-                adm.join = "NAME_3",
-                value = "rate03",
-                steps = 4,
-                breaks = "jenks",
-                palette="Greens",
-                legend = "Incidence",
-                title="Chlamydia incidence by Belgian district (2003)")
-```
-![drawing a fast.choropleth](Rplot49.jpg)
-
-              

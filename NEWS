@@ -1,3 +1,17 @@
+GADMTools v3.5-1 (Release date: 2019-02-02)
+===========================================
+
+Changes :
+
+* Add support for Simple Features. Use gadm.sf.loadCountries for loading SF
+  shapefiles from GADM database or from a local file.
+  WARNING: gadm.sf.loadCountries does not have 'simplify' parameter yet.
+
+* gadm.loadCountries is deprecated. Use gadm.sp.loadCountries instead 
+  for loading SP shapefiles from GADM database or from a local file
+
+* Replace method "susbset()" by gadm.subset() 
+
 GADMTools v3.0-1 (Release date: 2018-11-15)
 ===========================================
 

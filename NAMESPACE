@@ -1,5 +1,5 @@
 #exportPattern("^[[:alpha:]]+")
-import("ggplot2","classInt", "dplyr", "sp","rgdal","maptools", "rosm")
+import("classInt", "sp","rgdal","maptools", "rosm", "ggspatial", "sf", "ggplot2", "tidyverse")
 #importFrom(dplyr, left_join)
 importFrom(gridExtra, arrangeGrob)
 importFrom("grDevices", "colorRampPalette")
@@ -10,6 +10,7 @@ importFrom("stringr", "str_replace_all")
 importFrom("rgeos", "gSimplify")
 importFrom("ggmap", "theme_nothing")
 importFrom("stats", "complete.cases")
+importFrom("methods", "as")
 
 export(
   choropleth,
@@ -18,35 +19,73 @@ export(
   fast.choropleth,
   gadm.getBackground,
   gadm.loadCountries,
+  gadm.sp.loadCountries,
   gadm.longTo360,
   gadm.loadStripped,
+  gadm.remove,
   gadm.saveStripped,
   gadm.union,
+  gadm.subset,
   isopleth,
   json.choropleth,
   listNames,
   plotmap,
   propDots,
-  remove,
   stripSP,
-  subset,
   saveas,
+  saveAs,
   saveAsStripped,
   strippedExists,
   grid.map,
-  vignette
+  vignette,
+  gadm.sf.loadCountries,
+  gadm.removeBackground
 )
+
+# choropleth ----------------------------------
 S3method(choropleth, GADMWrapper)
-S3method(json.choropleth, GADMWrapper)
+S3method(choropleth, GT2)
+# classDots -----------------------------------
 S3method(classDots, GADMWrapper)
+S3method(classDots, GT2)
+# dots ----------------------------------------
 S3method(dots, GADMWrapper)
+S3method(dots, GT2)
+# ---------------------------------------------
 S3method(fast.choropleth, GADMWrapper)
+# gadm.getBackground --------------------------
+S3method(gadm.getBackground, GADMWrapper)
+S3method(gadm.getBackground, GT2)
+# gadm.remove ---------------------------------
+S3method(gadm.remove, GADMWrapper)
+S3method(gadm.remove, GT2)
+# gadm.removeBackground -----------------------
+S3method(gadm.removeBackground, GADMWrapper)
+S3method(gadm.removeBackground, GT2)
+# gadm.union ----------------------------------
+S3method(gadm.union, GADMWrapper)
+S3method(gadm.union, GT2)
+# gadm.union ----------------------------------
+S3method(gadm.subset, GADMWrapper)
+S3method(gadm.subset, GT2)
+# isopleth ------------------------------------
 S3method(isopleth, GADMWrapper)
+S3method(isopleth, GT2)
+# lisNames ------------------------------------
 S3method(listNames, GADMWrapper)
+S3method(listNames, GT2)
+# plotmap -------------------------------------
 S3method(plotmap, GADMWrapper)
+S3method(plotmap, GT2)
+# propDots -------------------------------------
 S3method(propDots, GADMWrapper)
-S3method(saveas, GADMWrapper)
+S3method(propDots, GT2)
+# saveas --------------------------------------
+S3method(saveAs, GADMWrapper)
+S3method(saveAs, GT2)
+# ---------------------------------------------
 S3method(saveAsStripped, GADMWrapper)
 S3method(stripSP, GADMWrapper)
-S3method(subset, GADMWrapper)
 S3method(vignette, GADMWrapper)
+S3method(json.choropleth, GADMWrapper)
+

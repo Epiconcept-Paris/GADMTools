@@ -44,5 +44,5 @@ gadm.getBackground(x, name, type="osm", clip=TRUE)
 # BRE2 <- gadm.getBackground(BRE, "BRE", "osm")
 # plotmap(BRE2, title = "Map of Bretagne (FRANCE)")
 }
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~documentation }
+\keyword{ ~utilities }% __ONLY ONE__ keyword per line

@@ -1,10 +1,14 @@
 loadNamespace("sp")  
+loadNamespace("raster")  
 
 GADM_BASE = "GADM/";
 #GADM_URL  = "http://biogeo.ucdavis.edu/data/gadm2.8/rds/"
 GADM_URL  = "https://biogeo.ucdavis.edu/data/gadm3.6/Rsp/"
 
 "%w/o%" <- function(x, y) x[!x %in% y] #--  x without y 
+
+
+
 
 splitShapes <- function(x, name) {
   .map <- fortify(x$spdf, region = name)
@@ -44,7 +48,7 @@ gadm.getLevelName <- function(x, level=NULL) {
   } else {
     .name <- sprintf("NAME_%d", .L)
   }
-  
+  return(.name)
 }
 ## ---------------------------------------------------------------------------
 ## Function : gadm.loadtCountries (constructor)
@@ -58,12 +62,12 @@ gadm.getLevelName <- function(x, level=NULL) {
 ##          SpatialPolygonsDataFrame object that contains all maps you 
 ##          specify in "fileNames".
 ## ---------------------------------------------------------------------------
-gadm.loadCountries <- function (fileNames, 
-                                level = 0, 
-                                basefile=GADM_BASE, 
-                                baseurl=GADM_URL,
-                                simplify=NULL)
-  {
+gadm.sp.loadCountries <- gadm.loadCountries <- function (fileNames, 
+                                                         level = 0, 
+                                                         basefile=GADM_BASE, 
+                                                         baseurl=GADM_URL,
+                                                         simplify=NULL)
+{
   loadNamespace("sp")  
 
   # Load file and change Prefix ---------------------------------------------
@@ -71,10 +75,10 @@ gadm.loadCountries <- function (fileNames,
     FILENAME = sprintf("%s_adm%d.rds", fileName,level)
     LOCAL_FILE = sprintf("%s%s", basefile, FILENAME)
     if (!file.exists(LOCAL_FILE)) {
-      .OS <- Sys.info()["sysname"]
+      .OS <- toupper(Sys.info()["sysname"])
       REMOTEFILE = sprintf("gadm36_%s_%d_sp.rds", fileName,level)
       REMOTE_LINK <- sprintf("%s%s", baseurl, REMOTEFILE)
-      if (.OS == "windows") {
+      if (.OS == "WINDOWS") {
         download.file(REMOTE_LINK, LOCAL_FILE, method="wininet",mode="wb")
       } else {
         download.file(REMOTE_LINK, LOCAL_FILE, method = 'auto')
@@ -109,7 +113,7 @@ gadm.loadCountries <- function (fileNames,
 
 
 # union -------------------------------------------------------------------
-gadm.union <- function(x) {
+gadm.union.GADMWrapper <- function(x, gid = "XYZ", name = "UNKNOWN") {
   
   if (x$stripped == FALSE) {
     .name <- gadm.getLevelName(x)
@@ -136,12 +140,7 @@ gadm.union <- function(x) {
   }
 }                              
 
-## ---------------------------------------------------------------------------
-## Method : subset
-## Return : a new object GADMWrapper with the selected regions
-## ---------------------------------------------------------------------------
-subset <- function(x, level=NULL, regions=NULL, usevar=NULL) UseMethod("subset", x)
-subset.GADMWrapper <- function(x, level=NULL, regions=NULL, usevar=NULL) {
+gadm.subset.GADMWrapper <- function(x, level=NULL, regions=NULL, usevar=NULL) {
   if (is.null(level)) {
     level <- x$level 
   }
@@ -173,8 +172,7 @@ subset.GADMWrapper <- function(x, level=NULL, regions=NULL, usevar=NULL) {
 ## Method : remove
 ## Return : a new object GADMWrapper without the selected regions
 ## ---------------------------------------------------------------------------
-remove <- function(x, level=NULL, regions=NULL) UseMethod("remove", x)
-remove <- function(x, level=NULL, regions=NULL) {
+gadm.remove.GADMWrapper <- function(x, level=NULL, regions=NULL) {
   if (is.null(level)) {
     level <- x$level 
   }
@@ -188,7 +186,9 @@ remove <- function(x, level=NULL, regions=NULL) {
   structure(list("basename"=x$basename,
                  "spdf"=df2,
                  "level"=x$level,
-                 "stripped"=FALSE),
+                 "L360" = x$L360,
+                 "stripped"=FALSE,
+                 "hasBGND"  = FALSE),
             class = "GADMWrapper")  
 }
 
@@ -198,28 +198,30 @@ remove <- function(x, level=NULL, regions=NULL) {
 ## ---------------------------------------------------------------------------
 listNames <- function(x, level=0) UseMethod("listNames", x)
 listNames.GADMWrapper <- function(x, level=0) {
+
   if (level > x$level) {
     cat(sprintf("Warning: max level=%d\n", x$level))
     level = x$level
   }
-  # if (x$level == 0) {
-  #   name <-"NAME_ISO"
-  # } else {
-    name <- sprintf("NAME_%d", level)
-  # }
-  unique(x$spdf@data[, name])
+  name <- sprintf("NAME_%d", level)
+
+  ret <- dplyr::distinct(as.data.frame(x$spdf), get(name))
+  ret[,1]
+  
 }
 
 ## ---------------------------------------------------------------------------
 ## Method : saveas
 ## Return : the name of the saved file
 ## ---------------------------------------------------------------------------
-saveas <- function(x, name=NULL) UseMethod("saveas", x)
-saveas.GADMWrapper <- function(x, name=NULL) {
+saveAs.GADMWrapper <- function(x, name=NULL, directory=NULL) {
+  if (is.null(directory)) {
+    directory <- x$basename
+  }
   if (is.null(name)) {
     stop("You have to provide a name.")
   }
-  FName <- sprintf("%s%s_adm%d.rds", x$basename, name, x$level)
+  FName <- sprintf("%s%s_adm%d.rds", directory, name, x$level)
   gadm = x$spdf
   saveRDS(gadm, file=FName);
   FName
@@ -281,7 +283,6 @@ vignette.GADMWrapper <- function(main, region,
 
 
 
-plotmap <- function(x, title="") UseMethod("plotmap", x)
 plotmap.GADMWrapper <- function(x, title="") {
 
   .x <- x

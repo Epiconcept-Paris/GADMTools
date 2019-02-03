@@ -7,7 +7,8 @@ Plot values as proportionnal circles on a map.
 }
 \usage{
 propDots(x, data, value, breaks=NULL, range=NULL,
-         labels=NULL, color="red", title="", note=NULL)
+         labels=NULL, color="red", title="", 
+         subtitle = "", caption = "", note=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -25,7 +26,9 @@ propDots(x, data, value, breaks=NULL, range=NULL,
   \item{range}{ vector min, max}
   \item{labels}{vector of labels}
   \item{color}{a valid color}
-  \item{title}{\bold{Character} The title of the plot}
+  \item{title}{\bold{Character} title of the plot}
+  \item{subtitle}{\bold{Character} subtitle of the plot}
+  \item{caption}{\bold{Character} caption of the plot}
   \item{note}{\bold{Character} A note associated with the plot}
 }
 \details{
@@ -60,5 +63,5 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~documentation }
+\keyword{ ~hplot }% __ONLY ONE__ keyword per line

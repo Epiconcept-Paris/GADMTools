@@ -42,5 +42,5 @@ saveAsStripped(x, fname, name= NULL, basefile = './')
 # BE <- gadm.loadCountries('BEL', level=2)
 # saveAsStripped(BE, "BEL", level=1)
 }
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~documentation }
+\keyword{ ~utilities }% __ONLY ONE__ keyword per line

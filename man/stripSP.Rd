@@ -36,5 +36,5 @@ stripSP(x, level=NULL)
 # BE <- gadm.loadCountries('BEL', level=2)
 # Belgique <- stripSP(BE, level=2)
 }
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~documentation }
+\keyword{ ~utilities }% __ONLY ONE__ keyword per line

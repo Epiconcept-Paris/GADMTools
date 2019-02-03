@@ -1,20 +1,21 @@
 
-dots.GADMWrapper <- function(x, points, 
-                             color="red",
-                             size = 8,
-                             value = NULL,
-                             breaks = NULL,
-                             steps = 5,
-                             palette = NULL,
-                             labels = NULL,
-                             strate = NULL ,
-                             title    = "",
-                             subtitle = "",
-                             caption  = "",
-                             legend = NULL,
-                             note="") {
+dots.GT2 <- function(x, points, 
+                     color="red",
+                     size = 8,
+                     value = NULL,
+                     breaks = NULL,
+                     steps = 5,
+                     palette = NULL,
+                     labels = NULL,
+                     strate = NULL ,
+                     title    = "",
+                     subtitle = "",
+                     caption  = "",
+                     legend = NULL,
+                     note="") {
   
   .x <- x
+  .map <- x$spdf
   .subtitle <- subtitle
   .caption <- caption
   .titles <- title
@@ -26,10 +27,7 @@ dots.GADMWrapper <- function(x, points,
     .raster <- x$BGND
   } 
   
-  if (x$stripped == FALSE) {
-    .data <- splitShapes(x, .name)
-  }
-  
+
   .title <- title
   .pcolor <- color
   .value <- value
@@ -102,11 +100,12 @@ dots.GADMWrapper <- function(x, points,
     P <- P + geom_raster(data=.raster, aes(x, y), fill=.raster$rgb)
   }
   
+
   P <- P + 
-    geom_polygon(data=.data, aes(x=long, y=lat,  group=group),
-                 fill=NA, color="black", size = 0.5) +
+    geom_sf(data=.map, fill=NA, color="black", size = 0.5) +
     xlab(paste("\n\n", note, sep="")) + ylab("")
   
+  P <-  internal_getNorthScaleBar(P)
   
   if (!is.null(.value)) {
     # Colored dots from breaks
@@ -127,7 +126,7 @@ dots.GADMWrapper <- function(x, points,
            subtitle = .subtitle,
            caption = .caption,
            fill = "") + 
-      .Theme + coord_quickmap();
+      .Theme + coord_sf();
     return(P)
   }
   else {
@@ -139,7 +138,7 @@ dots.GADMWrapper <- function(x, points,
              subtitle = .subtitle,
              caption = .caption,
              fill = "") + 
-        .Theme + coord_quickmap();
+        .Theme + coord_sf();
       return(P)
     }
 
@@ -153,7 +152,7 @@ dots.GADMWrapper <- function(x, points,
              fill = "") + 
         
         scale_shape_manual(values = c(15:18,65:75)) +
-        .Theme + coord_quickmap();
+        .Theme + coord_sf();
       return(P)
     }
   }

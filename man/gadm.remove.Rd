@@ -1,5 +1,5 @@
-\name{remove}
-\alias{remove}
+\name{gadm.remove}
+\alias{gadm.remove}
 
 \title{ Remove one or more regions from a map in a GADMWrapper object }
 
@@ -7,7 +7,7 @@
 Remove the shapes of one or more regions in a GADMWrapper object.
 }
 \usage{
-remove(x, level=NULL, regions=NULL)
+gadm.remove(x, level=NULL, regions=NULL)
 }
 \arguments{
   \item{x}{ \bold{Object} GADMWrapper }
@@ -49,5 +49,5 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~documentation }
+\keyword{ ~utilities }% __ONLY ONE__ keyword per line

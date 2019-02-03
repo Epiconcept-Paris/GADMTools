@@ -8,12 +8,12 @@ Plot points on a map with different colors and shapes.
 \usage{
 dots(x, points, color="red", size = 8, value = NULL,
     breaks = NULL, steps = 5, palette = NULL, labels = NULL, strate = NULL,
-    title="", legend = NULL, note=NULL)
+    title="", subtitle = "", caption  = "", legend = NULL, note=NULL)
 
 }
 
 \arguments{
-  \item{x}{ \bold{Object} GADMWrapper}
+  \item{x}{ \bold{Object} GADMWrapper or GT2}
   \item{points}{ 
   \bold{Object} data.frame with columns 'latitude' and 'longitude'
 }
@@ -33,7 +33,9 @@ dots(x, points, color="red", size = 8, value = NULL,
   \bold{Character} name of a column in the data.frame. If is not null,
   display dots with different shapes according to the value.
 }
-  \item{title}{\bold{Character} The title of the plot}
+  \item{title}{\bold{Character} title of the plot}
+  \item{subtitle}{\bold{Character} subtitle of the plot}
+  \item{caption}{\bold{Character} caption of the plot}
   \item{legend}{\bold{Character} The title of the legend}
   \item{note}{\bold{Character} Add an annotation}
 }
@@ -69,5 +71,5 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~documentation }
+\keyword{ ~hplot }% __ONLY ONE__ keyword per line

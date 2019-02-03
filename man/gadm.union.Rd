@@ -6,14 +6,13 @@
 This function merges regions by removing common borders.
 }
 \usage{
-gadm.union(x)
+gadm.union(x, gid = "XYZ", name = "UNKNOWN")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-\bold{GADMWrapper Object} containing regions.
-}
-
+  \item{x}{\bold{GADMWrapper or GT2 Object} containing regions.}
+  \item{gid}{\bold{character} alternative GID.}
+  \item{name}{\bold{character} alternative name.}
 }
 
 
@@ -29,5 +28,5 @@ gadm.union(x)
 # BRE <- gadm.union(BRE)
 # plotmap(BRE)
 }
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~documentation }
+\keyword{ ~utilities }% __ONLY ONE__ keyword per line

@@ -1,14 +1,16 @@
 \name{gadm.loadCountries}
 \alias{gadm.loadCountries}
+
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Load one or more GADM shapefiles}
+\title{[deprecated] Load one or more GADM shapefiles}
 \description{
-Load one or more GADM shapefiles from a local path or from a remote repository.
+Load one or more GADM shapefiles as SpatialPolygonsDataFrame from a local path or from a remote repository. This function is deprecated, please use \code{\link{gadm.sp.loadCountries}}
 }
 \usage{
 gadm.loadCountries(fileNames, level = 0, basefile=GADM_BASE,
                   baseurl=GADM_URL, simplify=NULL)
 }
+
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{fileNames}{
@@ -28,6 +30,8 @@ gadm.loadCountries(fileNames, level = 0, basefile=GADM_BASE,
 }
 
 }
+
+\details{This function is deprecated. please use \code{\link{gadm.sp.loadCountries}}}
 
 \section{ISO-3166-1 }{
 
@@ -70,8 +74,8 @@ See : \url{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3}
 ----
 }
 
-\seealso{
-----
+\seealso{\code{\link{gadm.sp.loadCountries}} and 
+\code{\link{gadm.sf.loadCountries}} for Simple Features support.
 }
 \examples{
 # library(GADMTools)
@@ -79,5 +83,5 @@ See : \url{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3}
 # Belgium = gadm.loadCountries("BEL", level=2, basefile="./")
 # plotmap(Belgium)
 }
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~documentation }
+\keyword{ ~utilities }% __ONLY ONE__ keyword per line

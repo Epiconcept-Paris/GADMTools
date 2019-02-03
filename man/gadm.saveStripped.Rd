@@ -40,5 +40,5 @@ gadm.saveStripped(x,fname, basefile = './')
 # S_BE <- stripSP(BE)
 # gadm.saveStripped(S_BE, "BEL")
 }
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ ~documentation }
+\keyword{ ~utilities }% __ONLY ONE__ keyword per line

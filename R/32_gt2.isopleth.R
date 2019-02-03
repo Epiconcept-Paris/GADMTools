@@ -1,26 +1,24 @@
-isopleth <- function(x,  data, palette=NULL, title="", subtitle="", caption="") UseMethod("isopleth", x)
-isopleth.GADMWrapper <- function(x, 
-                                 data, 
-                                 palette=NULL, 
-                                 title="", 
-                                 subtitle="", 
-                                 caption="") {
+# isopleth <- function(x,  data, palette=NULL, title="", subtitle="", caption="") UseMethod("isopleth", x)
+isopleth.GT2 <- function(x, 
+                         data, 
+                         palette=NULL, 
+                         title="", 
+                         subtitle="", 
+                         caption="") {
   
   .x <- x
+  .map <- x$spdf
   .subtitle <- subtitle
   .caption <- caption
   
   # Select a name to fortify it (for ggplot2) -------------------------------
-  .name <- gadm.getLevelName(x)
+  # .name <- gadm.getLevelName(x)
   
   if (.x$hasBGND == TRUE) {
     .raster <- x$BGND
   } 
   
-  if (x$stripped == FALSE) {
-    .map <- splitShapes(x, .name)
-  }
-  
+
   .data <- data
   .titles <- title
   .palette <- palette
@@ -34,6 +32,12 @@ isopleth.GADMWrapper <- function(x,
   
   long = lat = longitude = latitude = x = y = group = ..level.. = NULL
   
+  bb <- sf::st_bbox(.x$spdf)
+  Xmin <- bb[[1]]
+  Xmax <- bb[[3]]
+  Ymin <- bb[[2]]
+  Ymax <- bb[[4]]
+  
   
   P <- ggplot()
   
@@ -44,11 +48,20 @@ isopleth.GADMWrapper <- function(x,
   
   # Draw the shapefile ------------------------------------------------------
   
-  P <- P + geom_polygon(data=.map, aes(x=long, y=lat,  group=group),
-                        fill=NA, color="black", size = 0.5) +
-  stat_density2d(aes(x = longitude, y = latitude, fill = ..level..), 
-                   alpha=0.5, size = 10, bins = 10, data = .data, geom = "polygon")+
+  P <- P + geom_sf(data=.map, fill=NA, color="black", size = 0.5) +
+    geom_point(data = .data, aes(x=longitude, y=latitude)) +
+    xlim(Xmin, Xmax) + ylim(Ymin, Ymax)
+  
+  P <-  internal_getNorthScaleBar(P)
+    
+  P <- P + geom_density_2d(data = .data, aes(x=longitude, y=latitude)) +
+    
+    stat_density_2d(data = .data,
+                    aes(x = longitude, y = latitude, 
+                        fill = ..level.., alpha = ..level..), 
+                    size = 10, bins = 10, geom = "polygon")+
     scale_fill_gradientn(colours = .palette(100)) +
+    scale_alpha(guide = 'none') +
     labs(title = .titles,
          subtitle = .subtitle,
          caption = .caption,
@@ -62,7 +75,7 @@ isopleth.GADMWrapper <- function(x,
     theme(axis.text = element_blank()) +
     theme(axis.title = element_blank()) +
     theme(axis.ticks = element_blank()) +
-    coord_quickmap();
+    coord_sf();
   P
 }
 
