@@ -1,4 +1,4 @@
-gadm.removeBackground.GT2 <- function(x) {
+gadm_removeBackground.gadm_sf <- function(x) {
   if (x$hasBGND == FALSE) {
     warning("Map has no background.")
     return(x)
@@ -10,7 +10,7 @@ gadm.removeBackground.GT2 <- function(x) {
   x
 }
 
-gadm.removeBackground.GADMWrapper <- function(x) {
+gadm_removeBackground.gadm_sp <- function(x) {
   if (x$hasBGND == FALSE) {
     warning("Map has no background.")
     return(x)

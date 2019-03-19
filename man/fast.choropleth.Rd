@@ -4,7 +4,7 @@
 \title{ Draw a choropleth on selected regions with lattice.}
 
 \description{
-Drawing a choropleth (colored regions based on data values) with GADMTools is straightforward. You just have to select your shape(s) file(s) with \emph{gadm.loadcountries}, load your data from a
+Drawing a choropleth (colored regions based on data values) with GADMTools is straightforward. You just have to select your shape(s) file(s) with \emph{gadm_loadcountries}, load your data from a
 csv file for example, and call the fast.choropleth function with the right arguments. fast.choropleth does not use ggplot2 but lattice, so it is very fast.
 }
 \usage{
@@ -14,7 +14,7 @@ fast.choropleth (x, data, value=NULL, breaks = NULL, steps = 5,
 
 }
 \arguments{
-  \item{x}{ \bold{Object} GADMWrapper }
+  \item{x}{ \bold{Object} gadm_sp }
   
   \item{data}{
 \bold{data.frame} - data to plot
@@ -65,7 +65,7 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 \link{classIntervals}
 }
 \examples{
-# MAP <- gadm.loadCountries("BEL", level = 3, simplify=0.01)
+# MAP <- gadm_loadCountries("BEL", level = 3, simplify=0.01)
 # DAT = read.csv2("BE_clamydia_incidence.csv")
 
 # DAT <- rename(DAT, NAME_3 = district)

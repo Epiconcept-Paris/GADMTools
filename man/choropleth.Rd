@@ -4,7 +4,7 @@
 \title{ Draw a choropleth on selected regions }
 
 \description{
-Drawing a choropleth (colored regions based on data values) with GADMTools is straightforward. You just have to select your shape(s) file(s) with \emph{gadm.loadcountries}, load your data from a
+Drawing a choropleth (colored regions based on data values) with GADMTools is straightforward. You just have to select your shape(s) file(s) with \emph{gadm_loadcountries}, load your data from a
 csv file for example, and call the choropleth function with the right arguments.
 }
 \usage{
@@ -14,7 +14,7 @@ choropleth (x, data, value=NULL, breaks = NULL, steps = 5, adm.join=NULL,
 
 }
 \arguments{
-  \item{x}{ \bold{Object} GADMWrapper }
+  \item{x}{ \bold{Object} gadm_sf or gadm_sp }
   
   \item{data}{
 \bold{data.frame} - data to plot
@@ -26,8 +26,7 @@ choropleth (x, data, value=NULL, breaks = NULL, steps = 5, adm.join=NULL,
 }
   \item{steps}{ \bold{Integer} - number of breaks. Default = 5. If \emph{breaks} is \bold{NOT NULL} this value is used internally with cut().
 }
-  \item{adm.join}{ \bold{String} - the name in GADM spdf dataset which will be
-  joined with a column of the data.
+  \item{adm.join}{ \bold{String} - the name in your dataset joined with the field NAME_X of the map, where X is the level of the administrative boundaries. For instance if the level is about 'Districts' of a country, and your dataset has a field named "Study_Location" containing a list of districts, just do adm.join = "Study_Location".
 }
   \item{legend}{
   \bold{String} - legend title. Default \bold{NULL}. 
@@ -43,7 +42,7 @@ choropleth (x, data, value=NULL, breaks = NULL, steps = 5, adm.join=NULL,
   \item{caption}{ \bold{String} - caaption of the plot. Default is NULL.}
 }
 \details{
-----
+Since this relase, it's no longer necessary to rename the field of your dataset that is joined with the right field of the map. Just write \bold{adm.join="data_field_to_link"}.
 }
 \value{
     \bold{Object}  ggplot2
@@ -64,27 +63,21 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 \link{classIntervals}
 }
 \examples{
-# library(GADMTools)
-# library(sp)
-# library(dplyr)
+library(GADMTools)
+data("Corsica")
+Cantons <- listNames(Corsica, 4)
+pop <- floor(runif(length(Cantons), min=15200, max=23500))
+DAT <- data.frame(Cantons, pop)
 
-# MAP <- gadm.loadCountries("BEL", level = 3, simplify=0.01)
-# DAT = read.csv2("BE_clamydia_incidence.csv")
-
-# Here is the main trick !
-# -----------------------------------------------------
-# DAT <- rename(DAT, NAME_3 = district)
-
-# choropleth(MAP, DAT,
-#            adm.join = "NAME_3",
-#            value = "rate03",
-#            breaks = "sd",
-#            palette="Oranges",
-#            legend = "Incidence",
-#            title="Chlamydia incidence by Belgian district for 2003)")
-
+choropleth(Corsica, DAT,
+           adm.join = "Cantons",
+           value = "pop",
+           breaks = "sd",
+           palette="Oranges",
+           legend = "Population",
+           title="Population Cantons de Corse")
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ ~documentation }
-\keyword{ ~hplot }% __ONLY ONE__ keyword per line
+

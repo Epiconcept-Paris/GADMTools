@@ -13,7 +13,7 @@ classDots(x, data, color="red", value = NULL, breaks = NULL,
 
 \arguments{
   \item{x}{
-  \bold{Object} GADMWrapper
+  \bold{Object} gadm_sp
   }
   \item{data}{
   \bold{Object} data.frame with columns 'latitude' and 'longitude'
@@ -52,9 +52,20 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 ----
 }
 \examples{
-# todo
+library(GADMTools)
+data("Corsica")
+
+Corse <- gadm_union(Corsica)
+longitude <- runif(6, min=8.74, max = 9.25)
+latitude  <- runif(6, min=41.7, max = 42.6)
+Cases <- runif(6, 25, 112)
+DAT <- data.frame(longitude, latitude, Cases)
+
+classDots(Corse, DAT, color="blue", value = "Cases", breaks = NULL,
+          steps = 4, labels = NULL, opacity = 0.5, title="",
+          note=NULL, legend = NULL)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ ~documentation }
-\keyword{ ~hplot }% __ONLY ONE__ keyword per line
+

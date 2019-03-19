@@ -13,7 +13,7 @@ dots(x, points, color="red", size = 8, value = NULL,
 }
 
 \arguments{
-  \item{x}{ \bold{Object} GADMWrapper or GT2}
+  \item{x}{ \bold{Object} gadm_sp or gadm_sf}
   \item{points}{ 
   \bold{Object} data.frame with columns 'latitude' and 'longitude'
 }
@@ -61,13 +61,17 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 \code{\link{RColorBrewer}}
 }
 \examples{
-# library(GADMTools)
-# library(sp)
-# data(quakes)
-# M <- gadm.loadCountries("FJI", basefile="./")
-# colnames(quakes)[1] <- "latitude"
-# colnames(quakes)[2] <- "longitude"
-# dots(M, quakes, value="mag")
+library(GADMTools)
+data("Corsica")
+
+longitude <- runif(6, min=8.74, max = 9.25)
+latitude  <- runif(6, min=41.7, max = 42.6)
+Cases <- runif(6, 25, 112)
+DAT <- data.frame(longitude, latitude, Cases)
+
+dots(Corsica, DAT, color="red", size = 8, value = "Cases")
+
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -1,3 +1,32 @@
+GADMTools v3.6-1 (Release date: 2019-03-16)
+===========================================
+
+Changes :
+
+Classes gadm_sf and gadm_sp now replace respectively classes GT2 and GADMWrapper
+
+CAUTION: Functions whose names were previously prefixed by "gadm." are now prefixed by "gadm_" for compliance with the R language coding conventions. Sorry for previous users of GADMTools 
+
+* Add function gadm_longTo360 for gadm_sf objects (ie for Fiji islands typically)
+
+* Add parameter "simplify" to the function gadm_sf_loadCountries
+
+* Add function gadm_getBbox
+* Add function gadm_crop
+* Add function gadm_removeBackground
+* Add function gadm_longTo360 for gadm_sf objects
+
+* Add function gadm_showNorth for ggplot2
+* Add function gadm_showScale for ggplot2
+
+* Add dadaset "Corsica"
+* Add dadaset "GADM36SF"
+* Add vignette "GADMTools - ISO 3166-1 alpha-3"
+
+* More examples in man pages can be run
+-------------------------------------------------------------------------------
+
+
 GADMTools v3.5-1 (Release date: 2019-02-02)
 ===========================================
 
@@ -12,6 +41,8 @@ Changes :
 
 * Replace method "susbset()" by gadm.subset() 
 
+-------------------------------------------------------------------------------
+
 GADMTools v3.0-1 (Release date: 2018-11-15)
 ===========================================
 
@@ -23,6 +54,9 @@ Changes :
 * Add function gadm.union
 * Add function gadm.longTo360
 
+-------------------------------------------------------------------------------
+
+
 GADMTools v2.2-2 (Release date: 2018-07-04)
 ===========================================
 
@@ -30,12 +64,17 @@ Changes :
 
 * BUGFIX -Graphics did not work because of internals changes of .Rds files from GADM DB.
 
+-------------------------------------------------------------------------------
+
+
 GADMTools v2.2-1 (Release date: 2018-11-15)
 ===========================================
 
 Changes :
 
 * Compatibility with GADM 3.6 Database
+
+-------------------------------------------------------------------------------
 
 
 GADMTools v2.1-1 (Release date: 2017-04-25)

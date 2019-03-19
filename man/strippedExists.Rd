@@ -1,9 +1,9 @@
 \name{strippedExists}
 \alias{strippedExists}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Test if a stripped GADMWrapper object exists}
+\title{Test if a stripped gadm_sp object exists}
 \description{
-Test if a stripped GADMWrapper object exists on the file system in the directory 'basefile'
+Test if a stripped gadm_sp object exists on the file system in the directory 'basefile'
 }
 \usage{
 strippedExists(name, level, basefile = './')
@@ -37,7 +37,7 @@ strippedExists(name, level, basefile = './')
 # library(GADMTools)
 # library(sp)
 # if (strippedExists('BEL', level = 2) {
-#   BE <- gadm.loadStripped("BEL", level=2)
+#   BE <- gadm_loadStripped("BEL", level=2)
 # }
 }
 \keyword{ ~documentation }

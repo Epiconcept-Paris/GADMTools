@@ -14,8 +14,8 @@ vignette(main, region, maincolor = "black",
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{main}{ \bold{Object} GADMWrapper }
-  \item{region}{ \bold{Object} GADMWrapper }
+  \item{main}{ \bold{Object} gadm_sp }
+  \item{region}{ \bold{Object} gadm_sp }
   \item{maincolor}{ a valid color }
   \item{regioncolor}{ a valid color }
   \item{mainfill}{ a valid color }
@@ -49,7 +49,7 @@ Jean Pierre Decorps <jp.decorps@epiconcept.fr>
 # library(GADMTools)
 # library(sp)
 # library(ggplot2)
-# FR <- gadm.loadCountries("FRA", level=1, basefile="./")
+# FR <- gadm_loadCountries("FRA", level=1, basefile="./")
 # AU <- subset(FR, regions="Auvergne", level=1)
 # vignette(FR, AU)
 }

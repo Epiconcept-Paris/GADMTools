@@ -1,4 +1,4 @@
-propDots.GT2 <- function(x, 
+propDots.gadm_sf <- function(x, 
                          data, 
                          value, 
                          breaks=NULL, 
@@ -13,7 +13,7 @@ propDots.GT2 <- function(x,
   .x <- x
   
   # Select a name to fortify it (for ggplot2) -------------------------------
-  .name <- gadm.getLevelName(x)
+  .name <- gadm_getLevelName(x)
   
   if (.x$hasBGND == TRUE) {
     .raster <- x$BGND
@@ -24,7 +24,7 @@ propDots.GT2 <- function(x,
   .title <- title
   .pcolor <- color
   
-  .map <- x$spdf
+  .map <- x$sf
   
   getBreaks <- function(value) {
     .min = min(data[,value], na.rm = T)
@@ -68,9 +68,7 @@ propDots.GT2 <- function(x,
   
   
   # Draw the shapefile ------------------------------------------------------
-  P <- P + geom_sf(data=.map, fill=NA, color="black", size = 0.5)
-  P <-  internal_getNorthScaleBar(P) +
-    
+  P <- P + geom_sf(data=.map, fill=NA, size = 0.5) +
     geom_point(data=.data,
                aes_string(x="longitude", y="latitude", 
                           size=eval(value)), 
@@ -91,7 +89,7 @@ propDots.GT2 <- function(x,
           plot.margin = margin(0, 0.1, 0, 0.1, "cm")) +
     theme(legend.key = element_blank()) +
     theme(axis.text = element_blank()) +
-    #    theme(axis.title = element_blank()) +
+#    theme(axis.title = element_blank()) +
     coord_sf();
   P
-}  
+}

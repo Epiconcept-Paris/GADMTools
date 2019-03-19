@@ -10,7 +10,7 @@ Allows you to arrange multiple maps into one image. This is useful for showing a
 grid.map(left, right, center=NULL, title=NULL)
 }
 \arguments{
-  \item{left}{ \bold{Object} GADMWrapper }
+  \item{left}{ \bold{Object} gadm_sp }
   
   \item{right}{
 \bold{data.frame} - data to plot

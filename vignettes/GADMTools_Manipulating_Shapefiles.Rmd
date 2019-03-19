@@ -69,34 +69,50 @@ The GADM website and data repository is hosted at UC Davis in the Hijmans Lab. T
 
 \newpage
 # Manipulating shapefiles
+
 ## functions
 
 SpatialPolygons | Simple Features | Description 
 :------------------- | :------------------- | :--------------------------------
-gadm.loadCountries |  | [deprecated] use *gadm.sp.loadCountries* function instead 
-gadm.sp.loadCountries | gadm.sf.loadCountries | downloads or loads one or more shapefiles
-gadm.getBackground | gadm.getBackground | Gets tiles with 'rosm' from OpenStreetMap
-gadm.loadStripped |  | Load a GADM stripped shapefile
-gadm.remove | gadm.remove | Removes one or more regions from a map in a GADMWrapper/GT2 object
-gadm.removeBackground | gadm.removeBackground | Removes the background of a map
-gadm.saveStripped | | Save a stripped GADM object
-gadm.subset | gadm.subset | Extract regions. "subset" does not work since release 3.5-1
-gadm.union | gadm.union | Merges regions
+gadm_sp_loadCountries | gadm_sf_loadCountries | downloads or loads one or more shapefiles
+gadm_getBackground | gadm_getBackground | Gets tiles with 'rosm' from OpenStreetMap
+gadm_loadStripped |  | Load a GADM stripped shapefile
+gadm_remove | gadm_remove | Removes one or more regions from a map in a GADMWrapper/GT2 object
+gadm_removeBackground | gadm_removeBackground | Removes the background of a map
+gadm_saveStripped | | Save a stripped GADM object
+gadm_subset | gadm_subset | Extract regions. "subset" does not work since release 3.5-1
+gadm_union | gadm_union | Merges regions
 listNames | listNames | List the region names for an administrative level
 saveAs | saveAs | Save your own GADM shapefile as a .rds file
 stripSP |  | Strip a GADMWrapper object
 
+## Added in version 3.6
+
+SpatialPolygons | Simple Features | Description 
+:------------------- | :------------------- | :--------------------------------
+gadm_getBbox         | gadm_getBbox         | get the bounding box of the map
+gadm_crop            | gadm_crop            | crop a region to a specific rectangle
+gadm_longTo360       | gadm_longTo360       | Converts longitudes from -180° - 0° - 180° to 0° - 360°
+gadm_removeBackground| gadm_removeBackground| Removes the background of a map
+
+
+**CAUTION**: Functions whose names were previously prefixed by "gadm." are now prefixed by "gadm_" for compliance with the R language coding conventions. Older functions are still availables for this release but will be removed in the next release. Generally all the "." in the function names have been replaced by "_".
+
+Function *gadm.loadCountries* has been removed.
+
+
+
 \newpage
-## Format SP : gadm.sp.loadCountries() / gadm.load.countries
-
-This is the main function of GADMTools, with it, you can load or download one or more shapefiles. If you load many shapefiles, the function assembles the shapefiles into one. 
-
-
-
-The old function *gadm.loadCountries* is deprecated.
+## Format SP : gadm_sp_loadCountries() / gadm_load.countries
+\par\noindent\rule[20pt]{\textwidth}{0.4pt}
+This is a main function of GADMTools, with it, you can load or download one or more shapefiles. If you load many shapefiles, the function assembles the shapefiles into one. 
 
 
-*gadm.sp.loadCountries*(
+
+The old function *gadm_loadCountries* has been removed.
+
+
+*gadm_sp_loadCountries*(
 
                    fileNames,
                    
@@ -116,72 +132,20 @@ Parameter | Description
 **fileNames**    | **Character vector** of named regions. An ISO-3166-1 code or a custom name. You don't have to specify the suffix (admX) nor the file extension (.rds).
 **level** | **Integer** - the level of the administrative boundaries (0 is the country, higher values equal finer divisions)
 **basefile** | **Character** - the path of the directory where shapefiles are stored. Default is "./GADM"
-**baseurl** | **Character** - the url of GADM files. Default is <http://biogeo.ucdavis.edu/data/gadm2.8/rds/>
-**simplify** | **Numeric** numerical tolerance value to be used by the Douglas-Peuker algorithm. Higher values use less polygon points (and less memory) and lower values use more polygon points (and more memory). We suggest not going higher than 0.01 in order for intra-country boundaries to align.
+**baseurl** | **Character** - the url of GADM files. Default is <http://biogeo.ucdavis.edu/data/gadm_.8/rds/>
+**simplify** | **Numeric** numerical tolerance value to be used by the Douglas-Peuker algorithm. Higher values use less polygon points (and less memory) and lower values use more polygon points (and more memory). We suggest not going higher than 0.025 in order for intra-country boundaries to align.
 
 
-**Return**: Object *GADMWrapper*
-
-\newpage
-
--------------------------------------------------------------------------------
-ISO3 CODES
--------------------------------------------------------------------------------
-
-
- |  |  |  |  |   |  |   |  | 
-:---: | --- | --- | --- | --- | ---  | ---  | ---  | --- | ---
-ABW | AFG | AGO | AIA | ALA | ALB | AND | ANT | ARE | ARG
-ARM | ASM | ATA | ATF | ATG | AUS | AUT | AZE | BDI | BEL
-BEN | BFA | BGD | BGR | BHR | BHS | BIH | BLM | BLR | BLZ
-BMU | BOL | BRA | BRB | BRN | BTN | BVT | BWA | CAF | CAN
-CCK | CHE | CHL | CHN | CIV | CMR | COD | COG | COK | COL
-COM | CPV | CRI | CUB | CXR | CYM | CYP | CZE | DEU | DJI
-DMA | DNK | DOM | DZA | ECU | EGY | ERI | ESH | ESP | EST
-ETH | FIN | FJI | FLK | FRA | FRO | FSM | GAB | GBR | GEO
-GGY | GHA | GIB | GIN | GLP | GMB | GNB | GNQ | GRC | GRD
-GRL | GTM | GUF | GUM | GUY | HKG | HMD | HND | HRV | HTI
-HUN | IDN | IMN | IND | IOT | IRL | IRN | IRQ | ISL | ISR
-ITA | JAM | JEY | JOR | JPN | KAZ | KEN | KGZ | KHM | KIR
-KNA | KOR | KWT | LAO | LBN | LBR | LBY | LCA | LIE | LKA
-LSO | LTU | LUX | LVA | MAC | MAF | MAR | MCO | MDA | MDG
-MDV | MEX | MHL | MKD | MLI | MLT | MMR | MNE | MNG | MNP
-MOZ | MRT | MSR | MTQ | MUS | MWI | MYS | MYT | NAM | NCL
-NER | NFK | NGA | NIC | NIU | NLD | NOR | NPL | NRU | NZL
-OMN | PAK | PAN | PCN | PER | PHL | PLW | PNG | POL | PRI
-PRK | PRT | PRY | PSE | PYF | QAT | REU | ROU | RUS | RWA
-SAU | SDN | SEN | SGP | SGS | SHN | SJM | SLB | SLE | SLV
-SMR | SOM | SPM | SRB | STP | SUR | SVK | SVN | SWE | SWZ
-SYC | SYR | TCA | TCD | TGO | THA | TJK | TKL | TKM | TLS
-TON | TTO | TUN | TUR | TUV | TWN | TZA | UGA | UKR | UMI
-URY | USA | UZB | VAT | VCT | VEN | VGB | VIR | VNM | VUT
-WLF | WSM | YEM | ZAF | ZMB | ZWE
+**Return**: Object *gadm_sp*
 
 
 \newpage
-### Loading a shapefile
-
-```{r eval=FALSE}
-library(GADMTools)
-library(sp)
-
-# Loading country border (level=0 [default])
-# -----------------------------------------------------------------
-map <- gadm.sp.loadCountries("FRA", basefile = "./")
-plotmap(map)
-```
-
-----------------------
-
-![loading a single country (France) @ level = 0](Rplot01.png)
-
-\newpage
-## Format SF : gadm.sf.loadCountries()
-
-This is the main function of GADMTools, with it, you can load or download one or more shapefiles. If you load many shapefiles, the function assembles the shapefiles into one. 
+## Format SF : gadm_sf_loadCountries()
+\par\noindent\rule[20pt]{\textwidth}{0.4pt}
+This is a main function of GADMTools, with it, you can load or download one or more shapefiles. If you load many shapefiles, the function assembles the shapefiles into one. 
 
 
-*gadm.sf.loadCountries*(
+*gadm_sf_loadCountries*(
 
                    fileNames,
                    
@@ -190,6 +154,8 @@ This is the main function of GADMTools, with it, you can load or download one or
                    basefile=GADM_BASE,
                    
                    baseurl=GADM_URL,
+                   
+                   simplify=NULL
                    
                   )
 
@@ -200,306 +166,201 @@ Parameter | Description
 **fileNames**    | **Character vector** of named regions. An ISO-3166-1 code or a custom name. You don't have to specify the suffix (admX) nor the file extension (.rds).
 **level** | **Integer** - the level of the administrative boundaries (0 is the country, higher values equal finer divisions)
 **basefile** | **Character** - the path of the directory where shapefiles are stored. Default is "./GADM"
-**baseurl** | **Character** - the url of GADM files. Default is <http://biogeo.ucdavis.edu/data/gadm2.8/rds/>
+**baseurl** | **Character** - the url of GADM files. Default is <http://biogeo.ucdavis.edu/data/gadm_.8/rds/>
+**simplify** | **Numeric** numerical tolerance value to be used by the Douglas-Peuker algorithm. Higher values use less polygon points (and less memory) and lower values use more polygon points (and more memory). We suggest not going higher than 0.025 in order for intra-country boundaries to align.
 
-**NB**: parameter simplify is not yet implemented for SF format
 
-**Return**: Object *GT2*
+**Return**: Object *gadm_sf*
 
 
 \newpage
 
-### Loading a shapefile
+## Loading a country
+\par\noindent\rule[20pt]{\textwidth}{0.4pt}
+```{r echo=FALSE, message=FALSE}
+library(GADMTools)
+data("Corsica")
+
+```
+
 
 ```{r eval=FALSE}
 library(GADMTools)
 
 # Loading country border (level=0 [default])
 # -----------------------------------------------------------------
-map <- gadm.sf.loadCountries("FRA", basefile = "./")
-plotmap(map)
+map <- gadm_sf_loadCountries("FRA", basefile = "./")
+gadm_plot(map) + theme_light()
+```
+   
+      
+      
+```{r out.width="500px", echo=FALSE, fig.align='center', fig.cap="Loading a single country (level = 0)", fig.pos="h", out.extra=""}
+knitr::include_graphics("Rplot_sf_01.jpeg")
 ```
 
-----------------------
-
-![loading a single country (France) @ level = 0](Rplot.sf.01.jpeg)
 
 
 \newpage
-## Loading an administrative level
-
+## Loading a country at an administrative level
+\par\noindent\rule[20pt]{\textwidth}{0.4pt}
 ```{r eval=FALSE}
 library(GADMTools)
-library(sp)
+data("Corsica")
+
 
 # Loading regions @ level = 2])
 # -----------------------------------------------------------------
-map <- gadm.sp.loadCountries(c("FRA"), level=2, basefile = "./")
-plotmap(map)
+map <- gadm_sp_loadCountries(c("FRA"), level=2, basefile = "./")
+gadm_plot(map)
 ```
 
-![loading regions of a country (France) @ level = 2](Rplot02.png)
+      
+```{r out.width="500px", echo=FALSE, fig.cap="loading regions of a country @ level = 2", fig.pos="h", out.extra=""}
+knitr::include_graphics("Rplot_sf_02.jpeg")
+```
 
-**NB**: you can use *gadm.sf.loadCountries* instead of *gadm.sp.loadCountries*
+
+**NB**: you can use *gadm_sf_loadCountries* instead of *gadm_sp_loadCountries*
+
 
 \newpage
-## Assembling many shapefiles
-
+## Assembling many countries
 
 ```{r eval=FALSE}
 library(GADMTools)
-library(sp)
 
 # Assemble administrative boundaries (country level = 0)
 # -----------------------------------------------------------------
-map <- gadm.sp.loadCountries(c("BEL","LUX","NLD"),  basefile = "./")
-plotmap(map, title="Bénélux")
+map <- gadm_sp_loadCountries(c("BEL","LUX","NLD"),  basefile = "./")
+gadm_plot(map + theme_light()
 ```
 
-![Benelux = Belgium + Luxembourg + Netherlands @ level = 0](Rplot04.png)
+```{r out.width="500px", echo=FALSE, fig.cap="Benelux = Belgium + Luxembourg + Netherlands @ level = 0", fig.pos="h", out.extra=""}
+knitr::include_graphics("Rplot_Benelux.jpeg")
+```
 
-**NB**: you can use *gadm.sf.loadCountries* instead of *gadm.sp.loadCountries*
+
+**NB**: you can use *gadm_sf_loadCountries* instead of *gadm_sp_loadCountries*
 
 
 \newpage
 ## Extracting regions
-
-In order to extract some regions of a map we need to know them. The listNames function allows this. The subset function is then used to extract the desired regions.
-
-
-### listNames()
-
-*listNames*(
-
-          x,
-          
-          level = 0
-          
-         )
-
-Parameter | Description                  
---------- | ---------------------------------------------------------------------------------                 
-**x** | **Object** - *GADMWrapper* or *GT2*
-**level** | **Integer** - the value of the administration level to list. Attention: only the administrative levels that have been loaded in the loadCountries object can be listed. Names are given in the country's language or English.
-
-### subset()
-
-*gadm.subset*(
-
-       x,
-
-       level = NULL,
-
-       regions = NULL,
-       
-       usevar = NULL
-
-      )
-
-
-Parameter | Description                  
---------- | ---------------------------------------------------------------------------------                 
-**x** | **Object** *GADMWrapper* or *GT2*
-**level** | **Integer** the level at which the regions are extracted from
-**regions** | **String vector** of named regions
-**usevar** | **String vector** name of an other var of spdf@data @ an other level
-
-\newpage
-### Example
-
-```{r eval=FALSE}
-# Extract some regions of a map
-# -----------------------------------------------------------------
-library(GADMTools)
-library(sp)
-
-FR = gadm.sp.loadCountries("FRA", level=2, basefile = "./")
-listNames(FR, level=2)
-AV = gadm.subset(FR, regions=c("Allier", "Cantal",
-            "Haute-Loire","Puy-de-Dôme"))
-plotmap(AV)
+\par\noindent\rule[20pt]{\textwidth}{0.4pt}
+### First extracting "Corse" from France @ level 4
+```{r eval = FALSE}
+FRA <- gadm_sf_loadCountries("FRA", level = 4, basefile = "./")
+Corsica <- gadm_subset(FRA, level=1, regions="Corse")
 ```
- | | | | 
---------- | ---------- | ------------- | --------------- | -------------
-[1] "Bas-Rhin" |               "Haut-Rhin" |               "Dordogne" |                "Gironde" |                
- [5] "Landes" |                  "Lot-et-Garonne" |          "Pyrénées-Atlantiques" |    "Allier"                 
- [9] "Cantal" |                  "Haute-Loire" |             "Puy-de-Dôme" |             "Essonne" |              
-[13] "Hauts-de-Seine" |          "Paris" |                   "Seine-et-Marne" |          "Seine-Saint-Denis"      
-[17] "Val-d'Oise" |              "Val-de-Marne" |            "Yvelines" |                "Calvados" |           
-[21] "Manche" |                 "Orne" |                "Côte-d'Or" |             "Nièvre"                 
-[25] "Saône-et-Loire" |        "Yonne" |               "Côtes-d'Armor" |           "Finistère"              
-[29] "Ille-et-Vilaine" |     "Morbihan" |              "Cher" |                  "Eure-et-Loir" |         
-[33] "Indre-et-Loire" |        "Indre" |               "Loir-et-Cher" |          "Loiret"                 
-[37] "Ardennes" |              "Aube" |                  "Haute-Marne" |         "Marne"                  
-[41] "Corse-du-Sud" |          "Haute-Corse" |         "Doubs" |               "Haute-Saône"            
-[45] "Jura" |                  "Territoire de Belfort" | "Eure" |                  "Seine-Maritime"         
-[49] "Aude" |                  "Gard" |                  "Hérault" |             "Lozère"                 
-[53] "Pyrénées-Orientales" | "Corrèze" |             "Creuse" |                "Haute-Vienne"           
-[57] "Meurthe-et-Moselle" |    "Meuse" |               "Moselle" |             "Vosges"                 
-[61] "Ariège" |                "Aveyron" |             "Gers" |                  "Haute-Garonne"          
-[65] "Hautes-Pyrénées" |     "Lot" |                 "Tarn-et-Garonne" |     "Tarn"                   
-[69] "Nord" |                  "Pas-de-Calais" |       "Loire-Atlantique" |      "Maine-et-Loire"         
-[73] "Mayenne" |             "Sarthe" |                "Vendée" |                "Aisne"                  
-[77] "Oise" |                  "Somme" |               "Charente-Maritime" |   "Charente"               
-[81] "Deux-Sèvres" |         "Vienne" |                "Alpes-de-Haute-Provence" | "Alpes-Maritimes"        
-[85] "Bouches-du-Rhône" |      "Hautes-Alpes" |          "Var" |                 "Vaucluse"               
-[89] "Ain" |                 "Ardèche" |             "Drôme" |               "Haute-Savoie"           
-[93] "Isère" |               "Loire" |               "Rhône" |               "Savoie"                 
 
-![extracting (subset) some departments in France @ level = 2](Rplot05.png)
-
+```{r fig.height=7, fig.align='center', fig.cap="Corsica (Region of France) @ level 4", fig.pos="h", out.extra=""}
+gadm_plot(Corsica) %>% gadm_showNorth("tl") %>% gadm_showScale('bl')
+```
 
 \newpage
+In order to extract some regions of a map we need to know them. The *listNames()* function allows this. The subset function is then used to extract the desired regions.
+
+CAUTION: only the administrative levels that have been loaded in the loadCountries object can be listed. For instance, with a map loaded @ level 4, the level for listNames can be one of [0, 1, 2, 3, 4]. Names are given in the country's language or English.
+
+```{r}
+listNames(Corsica, 2)
+
+```
+
+
+```{r fig.height=7, fig.align='center', fig.cap="Corsica - Haute-Corse", fig.pos="ht", out.extra=""}
+
+HCorse <- gadm_subset(Corsica, regions="Haute-Corse", level=2)
+gadm_plot(HCorse)
+```
 
 \newpage
 ## Merging regions
+\par\noindent\rule{\textwidth}{0.4pt}
 
-### gadm.union()
-
-*gadm.union*( x )
-
-Parameter | Description                  
---------- | ---------------------------------------------------------------------------------  
-**x** | **Object** *GADMWrapper* or *GT2*
-
-### Example
-
-```{r eval=FALSE}
-library(GADMTools)
-library(sp)
-
-FR = gadm.loadCountries("FRA", level=2, basefile = "./")
-AV = gadm.subset(FR, regions=c("Allier", "Cantal",
-            "Haute-Loire","Puy-de-Dôme"))
-AV <- gadm.union(AV)
-plotmap(AV)
+```{r fig.align='center', fig.height=7.1, fig.cap='Corsica with districts only', fig.pos="h", out.extra=""}
+UCorse <- gadm_union(Corsica, level=3, type="Arrondissements")
+gadm_plot(UCorse)
 
 ```
-
-
-![merging 4 departments of Auvergne @ level = 2](Rplot05.5.png)
-
 
 \newpage
-## Converting longitudes to 0 - 360
-
-### gadm.longTo360()
-
-*gadm.longTo360*( x )
-
-Parameter | Description                  
---------- | ---------------------------------------------------------------------------------  
-**x** | **Object** GADMWrapper
-
-### Example
-
-```{r eval=FALSE}
-library(GADMTools)
-library(GADMTools)
-FJI = gadm.sp.loadCountries("FJI", 1, basefile = "./")
-# Fig. 6
-plotmap(FJI, title = "Fidji Island with bad coordinates")
-```
-
-![BAD](Rplot_8.8.png)
-
-```{r eval=FALSE}
-FJI = gadm.longTo360(FJI)
-# Fig. 7
-plotmap(FJI, title = "Fidji Island with 0 - 360 coordinates")
-```
-
-![GOOD](Rplot_8.9.png)
-
-\newpage
-
 ## Removing regions
+\par\noindent\rule[20pt]{\textwidth}{0.4pt}
+```{r}
+listNames(Corsica, 3)
+```
 
-### remove()
 
-*remove*( 
+```{r fig.height=6.8, fig.align='center', fig.cap="Corsica without district of Corte", fig.pos="h", out.extra=""}
+Corse_without_Corte <- gadm_remove(Corsica, regions="Corte", 3)
+gadm_plot(Corse_without_Corte)
+```
 
-       x, 
-      
-       level=NULL, 
-      
-       regions=NULL
-      
-      )
 
-Parameter | Description                  
---------- | ---------------------------------------------------------------------------------  
-**x** | **Object** *GADMWrapper* or *GT2*
-**level** | **Integer** - level from which shapes are removed. If NULL, curent level is used.
-**regions** | **String vector** of regions to be removed
+\newpage
+## Cropping an area
+\par\noindent\rule[20pt]{\textwidth}{0.4pt}
+First get the bounding box of Corsica
+```{r "getBbox"}
+gadm_getBbox(Corsica)
+```
 
-### Example
+And now, cropping at ours custom coordinates
 
-```{r eval=FALSE}
-library(GADMTools)
-library(sp)
-
-FR = gadm.loadCountries("FRA", level=1, basefile = "./")
-plotmap(FR)
-listNames(FR, level=1)
-FR2 = remove(FR, level = 1, regions = c("Grand Est"))
-plotmap(FR2)
+```{r fig.width=7.5, fig.align='center', warning=FALSE, fig.pos="h", out.extra=""}
+STUDY_AREA <- gadm_crop(Corsica, xmin=9.3, ymin=42.96, xmax=9.566, ymax=43.02819)
+gadm_plot(STUDY_AREA)
 ```
 
 \newpage
- | |  
---------- | ---------- | -------------
-[1] "Alsace" |                   "Aquitaine" |                 "Auvergne"                  
- [4] "Île-de-France" |              "Basse-Normandie" |            "Bourgogne"                 
- [7] "Bretagne" |                   "Centre" |                     "Champagne-Ardenne"        
-[10] "Corse" |                      "Franche-Comté" |              "Haute-Normandie"         
-[13] "Languedoc-Roussillon" |       "Limousin" |                   "Lorraine"                  
-[16] "Midi-Pyrénées" |              "Nord-Pas-de-Calais" |         "Pays de la Loire"         
-[19] "Picardie" |                   "Poitou-Charentes" |           "Provence-Alpes-Côte d'Azur"
-[22] "Rhône-Alpes"  |  |              
+### Converting longitudes to 0 - 360
+\par\noindent\rule[20pt]{\textwidth}{0.4pt}
+```{r eval=FALSE, fig.pos="h", out.extra="" }
+library(GADMTools)
+FJI = gadm_sp_loadCountries("FJI", 1, basefile = "./")
+gadm_plot(FJI, title = "Fidji Island with bad coordinates")
+```
 
-![removing 2 regions from France @ level = 1](Rplot6_7.png)
+```{r out.width="4500px", echo=FALSE, fig.align='center', fig.cap="Fiji Islands, with polygons crossing the Date Line", fig.pos="h", out.extra=""}
+knitr::include_graphics("Rplot_8.8.png")
+```
 
------------------------------------------------------------
+
+```{r eval=FALSE}
+FJI = gadm_longTo360(FJI)
+gadm_plot(FJI, title = "Fidji Island with 0 - 360 coordinates")
+```
+
+
+```{r out.width="300px", echo=FALSE, fig.align='center', fig.cap="Fiji Islands, with polygons crossing the Date Line", fig.pos="h", out.extra=""}
+knitr::include_graphics("Rplot_8.9.png")
+```
 
 \newpage
 ## Adding a background image from OpenstreetMap
+\par\noindent\rule[20pt]{\textwidth}{0.4pt}
 
-### gadm.getBackground()
-
-*gadm.getBackground*( x, name, type = "osm", clip = TRUE )
-
-Parameter | Description                  
---------- | ---------------------------------------------------------------------------------  
-**x** | **Object** *GADMWrapper* or *GT2* - the region that you want to add a background.
-**name** | **Object** the name of the TIFF file withhout extension
-**type** | **Character** type (default "osm') of the map provided by *osm.types()*.
-**clip** | **Character** if TRUE (the default), background is clipped by the the external border of the spatial object.
-
-### Examples
 ```{r eval=FALSE}
 library(GADMTools)
 library(rosm)
-FRA = gadm.sp.loadCountries("FRA", 2, basefile = "./")
-BRE = gadm.subset(FRA, level=1, regions=c("Bretagne"))
-BRE2 <- gadm.getBackground(BRE, "BRE", "osm")
-plotmap(BRE2, title = "Map of Bretagne (FRANCE)")
+FRA = gadm_sp_loadCountries("FRA", 2, basefile = "./")
+BRE = gadm_subset(FRA, level=1, regions=c("Bretagne"))
+BRE2 <- gadm_getBackground(BRE, "BRE", "osm")
+gadm_plot(BRE2, title = "Map of Bretagne (FRANCE)")
+```
+
+```{r out.width="500px", echo=FALSE, fig.align='center', fig.cap="map of Bretagne with background from OSM @ level = 2", fig.pos="h", out.extra=""}
+knitr::include_graphics("Rplot_7.7.png")
 ```
 
 
-![map of Bretagne with background from OSM @ level = 2](Rplot_7.7.png)
-
 
 \newpage
-## Remove a background previously loaded with gadm.getBackground
+## Remove a background previously loaded with gadm_getBackground
+\par\noindent\rule[20pt]{\textwidth}{0.4pt}
 
-### gadm.removeBackground()
-
-*gadm.removeBackground*( x )
-
-Parameter | Description                  
---------- | ---------------------------------------------------------------------------------  
-**x** | **Object** *GADMWrapper* or *GT2*
+*gadm_removeBackground*( x )
 
 
 

@@ -4,7 +4,7 @@
 \title{ Create a geojson choropleth of selected regions.}
 
 \description{
-Drawing a choropleth (colored regions based on data values) with GADMTools is straightforward. You just have to select your shape(s) file(s) with \emph{gadm.loadcountries}, load your data from a
+Drawing a choropleth (colored regions based on data values) with GADMTools is straightforward. You just have to select your shape(s) file(s) with \emph{gadm_loadcountries}, load your data from a
 csv file for example, and call the json.choropleth function with the right arguments. json.choropleth creaate a GEOJSON file (output.json) that can be used with Leaflet library.
 }
 \usage{
@@ -13,7 +13,7 @@ json.choropleth (x, data, value=NULL, breaks = NULL, steps = 5,
   title="")
 }
 \arguments{
-  \item{x}{ \bold{Object} GADMWrapper }
+  \item{x}{ \bold{Object} gadm_sp }
   
   \item{data}{
 \bold{data.frame} - data to plot

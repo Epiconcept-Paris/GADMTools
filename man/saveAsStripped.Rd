@@ -1,9 +1,9 @@
 \name{saveAsStripped}
 \alias{saveAsStripped}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Strip a GADMWrapper object}
+\title{Strip a gadm_sp object}
 \description{
-Strip a GADMWrapper object (with property 'stripped' == FALSE) and save it  stripped (with property 'stripped' == TRUE).
+Strip a gadm_sp object (with property 'stripped' == FALSE) and save it  stripped (with property 'stripped' == TRUE).
 }
 \usage{
 saveAsStripped(x, fname, name= NULL, basefile = './')
@@ -11,7 +11,7 @@ saveAsStripped(x, fname, name= NULL, basefile = './')
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-\bold{Object} GADMWrapper with stripped property == FALSE
+\bold{Object} gadm_sp with stripped property == FALSE
 }
   \item{fname}{
 \bold{String} file name of the region to save. You don't have to specify the suffix (admX) nor the file extension (.rds).
@@ -25,7 +25,7 @@ saveAsStripped(x, fname, name= NULL, basefile = './')
 }
 
 
-\value{ \bold{Object} GADMWrapper with stripped property == TRUE }
+\value{ \bold{Object} gadm_sp with stripped property == TRUE }
 \references{
 ----}
 \author{Jean Pierre Decorps <jp.decorps@epiconcept.fr>}
@@ -39,7 +39,7 @@ saveAsStripped(x, fname, name= NULL, basefile = './')
 \examples{
 # library(GADMTools)
 # library(sp)
-# BE <- gadm.loadCountries('BEL', level=2)
+# BE <- gadm_loadCountries('BEL', level=2)
 # saveAsStripped(BE, "BEL", level=1)
 }
 \keyword{ ~documentation }

@@ -1,12 +1,12 @@
-\name{gadm.loadStripped}
-\alias{gadm.loadStripped}
+\name{gadm_loadStripped}
+\alias{gadm_loadStripped}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Load one GADM stripped shapefile}
 \description{
 Load one GADM stripped shapefiles from a local path for use with ggplot2.
 }
 \usage{
-gadm.loadStripped(name, level, basefile='./')
+gadm_loadStripped(name, level, basefile='./')
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -55,7 +55,7 @@ See : \url{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3}
 
 }
 
-\value{ \bold{Object} GADMWrapper with stripped properties == TRUE}
+\value{ \bold{Object} gadm_sp with stripped properties == TRUE}
 \references{
 ----}
 \author{Jean Pierre Decorps <jp.decorps@epiconcept.fr>}
@@ -69,7 +69,7 @@ See : \url{https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3}
 \examples{
 # library(GADMTools)
 # library(sp)
-# BE <- gadm.loadStripped('BEL', level=2)
+# BE <- gadm_loadStripped('BEL', level=2)
 # plotmap(BE)
 }
 \keyword{ ~documentation }

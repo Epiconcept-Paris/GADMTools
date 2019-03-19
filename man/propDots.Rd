@@ -13,7 +13,7 @@ propDots(x, data, value, breaks=NULL, range=NULL,
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-  \bold{Object} GADMWrapper
+  \bold{Object} gadm_sf or gadm_sp
   }
   \item{data}{
   \bold{Object} data.frame with columns 'latitude' and 'longitude'
@@ -31,37 +31,31 @@ propDots(x, data, value, breaks=NULL, range=NULL,
   \item{caption}{\bold{Character} caption of the plot}
   \item{note}{\bold{Character} A note associated with the plot}
 }
-\details{
-----
-}
+
 \value{
 \bold{Object} ggplot2
 }
-\references{
-----
-}
+
 \author{
 Jean Pierre Decorps <jp.decorps@epiconcept.fr>
-}
-\note{
-----
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
-----
-}
+\seealso{\code{\link{classDots}}}
+
 \examples{
-# library(GADMTools)
-# library(sp)
-# data(quakes)
-# M <- gadm.loadCountries("FJI", basefile="./")
-# colnames(quakes)[1] <- "latitude"
-# colnames(quakes)[2] <- "longitude"
-# propDots(M, quakes, value="mag")
+library(GADMTools)
+data("Corsica")
+
+longitude <- runif(7, min=8.74, max = 9.25)
+latitude  <- runif(7, min=41.7, max = 42.6)
+Cases <- runif(7, 25, 100)
+DAT <- data.frame(longitude, latitude, Cases)
+
+propDots(Corsica, data = DAT, value="Cases",
+         breaks=c(0, 25, 50, 75, 100), range = c(25, 100))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ ~documentation }
-\keyword{ ~hplot }% __ONLY ONE__ keyword per line

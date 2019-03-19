@@ -1,17 +1,17 @@
-\name{gadm.saveStripped}
-\alias{gadm.saveStripped}
+\name{gadm_saveStripped}
+\alias{gadm_saveStripped}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Save a stripped GADM object}
 \description{
 Save a stripped ( with stripSP() ) GADM object for later use it with ggplot2.
 }
 \usage{
-gadm.saveStripped(x,fname, basefile = './')
+gadm_saveStripped(x,fname, basefile = './')
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-\bold{Object} GADMWrapper with stripped property == TRUE
+\bold{Object} gadm_sp with stripped property == TRUE
 }
   \item{fname}{
 \bold{String} file name of a region. You don't have to specify the suffix (admX) nor the file extension (.rds).
@@ -36,9 +36,9 @@ gadm.saveStripped(x,fname, basefile = './')
 \examples{
 # library(GADMTools)
 # library(sp)
-# BE <- gadm.loadCountries('BEL', level=2)
+# BE <- gadm_loadCountries('BEL', level=2)
 # S_BE <- stripSP(BE)
-# gadm.saveStripped(S_BE, "BEL")
+# gadm_saveStripped(S_BE, "BEL")
 }
 \keyword{ ~documentation }
 \keyword{ ~utilities }% __ONLY ONE__ keyword per line

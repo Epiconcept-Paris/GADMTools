@@ -1,9 +1,9 @@
 \name{stripSP}
 \alias{stripSP}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Strip a GADMWrapper object}
+\title{Strip a gadm_sp object}
 \description{
-Strip a GADMWrapper object (with property 'stripped' == FALSE) and return a stripped GADMWrapper object (with property 'stripped' == TRUE)
+Strip a gadm_sp object (with property 'stripped' == FALSE) and return a stripped gadm_sp object (with property 'stripped' == TRUE)
 }
 \usage{
 stripSP(x, level=NULL)
@@ -11,7 +11,7 @@ stripSP(x, level=NULL)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-\bold{Object} GADMWrapper with property 'stripped' == FALSE
+\bold{Object} gadm_sp with property 'stripped' == FALSE
 }
   \item{level}{
 \bold{Int} admin level to be stripped/extracted. If NULL, the current level is selected
@@ -19,7 +19,7 @@ stripSP(x, level=NULL)
 }
 
 
-\value{ \bold{Object} GADMWrapper with property 'stripped' == TRUE }
+\value{ \bold{Object} gadm_sp with property 'stripped' == TRUE }
 \references{
 ----}
 \author{Jean Pierre Decorps <jp.decorps@epiconcept.fr>}
@@ -33,7 +33,7 @@ stripSP(x, level=NULL)
 \examples{
 # library(GADMTools)
 # library(sp)
-# BE <- gadm.loadCountries('BEL', level=2)
+# BE <- gadm_loadCountries('BEL', level=2)
 # Belgique <- stripSP(BE, level=2)
 }
 \keyword{ ~documentation }

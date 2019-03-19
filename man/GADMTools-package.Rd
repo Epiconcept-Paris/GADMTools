@@ -21,8 +21,8 @@ With \bold{GADMTools}, a wrapper for \bold{GADM} shapefiles, you can easily mani
 \tabular{ll}{
 Package: \tab GADMTools\cr
 Type: \tab Package\cr
-Version: \tab 3.0-1\cr
-Date: \tab 2019-02-02\cr
+Version: \tab 3.6-1\cr
+Date: \tab 2019-03-16\cr
 License: \tab GPL-3\cr
 }
 
