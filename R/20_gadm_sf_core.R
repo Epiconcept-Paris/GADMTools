@@ -6,7 +6,7 @@
 #loadNamespace("sp")
 loadNamespace("prettymapr")
 
-GADM_SF_URL  = "https://biogeo.ucdavis.edu/data/gadm3.6/Rsf/"
+GADM_SF_URL  = "https://biogeo.ucdavis.edu/data/gadm3.6/Rsf/gadm36_"
 DL_FILE <- TRUE
 
 "%w/o%" <- function(x, y) x[!x %in% y] #--  x without y
@@ -74,7 +74,6 @@ internal.gadm_sf.cleanUp <- function(df) {
                   -contains('C_'))
 }
 
-
 # gadm_sf_loadCountries -----------------------------------------------------------------------------------------------
 # =================================================================================================================
 gadm_sf_loadCountries <- gadm_sf.loadCountries <- function (fileNames,
@@ -92,7 +91,7 @@ gadm_sf_loadCountries <- gadm_sf.loadCountries <- function (fileNames,
     LOCAL_FILE = sprintf("%s%s", basefile, FILENAME)
     if (!file.exists(LOCAL_FILE)) {
       .OS <- toupper(Sys.info()["sysname"])
-      REMOTEFILE = sprintf("gadm36_%s_%d_sf.rds", fileName,level)
+      REMOTEFILE = sprintf("%s_%d_sf.rds", fileName,level)
       REMOTE_LINK <- sprintf("%s%s", baseurl, REMOTEFILE)
       if (.OS == "WINDOWS") {
         download.file(REMOTE_LINK, LOCAL_FILE, method="wininet",mode="wb")

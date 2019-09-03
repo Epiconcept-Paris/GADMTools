@@ -54,12 +54,13 @@ Its current customers and partners include some of the greatest names in the wor
 
 Function             | Description 
 :------------------- | :------------------------------------------
-choropleth           | Draw a choropleth on selected regions
-classDots            | Plot dots on a map with values between different fixed classestries
-dots                 | Plot dots on a map
-isopleth             | Draw an isopleth on selected regions
-gadm_showNorth       | Display a north arrow on a plot
-gadm_showScale       | Display a scale on a plot
+choropleth           | Draws a choropleth on selected regions
+classDots            | Plots dots on a map with values between different fixed classestries
+dots                 | Plots dots on a map
+dotDensity           | Draws a dot-density map
+isopleth             | Draws an isopleth on selected regions
+gadm_showNorth       | Displays a north arrow on a plot
+gadm_showScale       | Displays a scale on a plot
 
 \newpage
 ## Display a north arrow on a plot
@@ -179,6 +180,29 @@ classDots(Corse, DAT, color="blue", value = "Cases", steps = 4)
 
 ```
 
+\newpage
+## Dot-Density
+```{r message=FALSE, fig.align='center', fig.height=5.3, fig.cap="Dot-Density", fig.pos="h", out.extra=""}
+library(GADMTools)
+data("Corsica")
+
+# Creates test data.frame -------------------------------------------------
+# --------------------------------------------------------------------------
+VAR_1 <- as.integer(runif(n = 43, min = 800, max = 15800))
+VAR_2 <- as.integer(runif(n = 43, min = 1000, max = 15800))
+VAR_3 <- as.integer(runif(n = 43, min = 1500, max = 15800))
+Cantons <- listNames(Corsica, 4)
+DF <- data.frame(Cantons, VAR_1, VAR_2, VAR_3, stringsAsFactors = FALSE)
+
+dotDensity(Corsica,
+                DF, adm.join="Cantons", dot.size = 0.5, cases.by.dots = 1000,
+                values = c("VAR_1", "VAR_2", "VAR_3"),
+                labels = c("H1N1", "H1N2", "H2N2"),
+                palette = c("#ffff00", "#ffaa00", "#FF3200"))
+
+
+```
+
 
 \newpage
 ## Plotting density
@@ -192,8 +216,8 @@ isopleth(Corse, data = DAT, palette = "Blues")
 \newpage
 ## Plotting a choropleth
 
-```{r fig.align='center', fig.height=7, fig.cap="Choropleth", fig.pos="h", out.extra=""}
-DAT <- data.frame(Cantons, Pop)
+```{r message=FALSE, fig.align='center', fig.height=7, fig.cap="Choropleth", fig.pos="h", out.extra=""}
+DAT <- data.frame(Cantons, Pop, stringsAsFactors = FALSE)
 choropleth(Corsica, data = DAT, value = "Pop", adm.join = "Cantons",
            breaks = "sd", palette = "Greens")
 ```

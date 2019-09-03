@@ -10,12 +10,14 @@ importFrom("ggmap", "theme_nothing")
 importFrom("stats", "complete.cases")
 importFrom("methods", "as")
 
+
 export(
   choropleth,
   classDots,
   dots,
   fast.choropleth,
   gadm_crop,
+  dotDensity,
   gadm_getBackground, gadm.getBackground,
   gadm_sp_loadCountries, gadm_sp.loadCountries,
   gadm_longTo360,
