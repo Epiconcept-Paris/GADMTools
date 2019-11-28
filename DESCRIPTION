@@ -1,8 +1,8 @@
 Package: GADMTools
 Type: Package
 Title: Easy Use of 'GADM' Maps
-Version: 3.7-1
-Date: 2019-06-25
+Version: 3.7-2
+Date: 2019-10-08
 Authors@R: c(person("Jean Pierre", "Decorps", role = c("aut", "cre"),
                      email = "jp.decorps@epiconcept.fr"),
               person("Morgane","Vallee", role = "ctb", 
@@ -10,7 +10,7 @@ Authors@R: c(person("Jean Pierre", "Decorps", role = c("aut", "cre"),
               )
 Description: Manipulate, assemble, export <http://www.gadm.org> maps. Create 'choropleth', 'isopleth', dots plot, proportional dots,
    dot-density and more.
-Depends: R (>= 3.5.0), sp, tidyverse, classInt, sf, rgdal
+Depends: R (>= 3.5.0), sp, classInt, sf, rgdal
 Imports: methods, RColorBrewer, maptools, stringr, raster, rosm, lattice, jsonlite, gridExtra, rgeos, ggmap, ggspatial, ggplot2, dplyr, prettymapr
 Suggests: 
     knitr,
