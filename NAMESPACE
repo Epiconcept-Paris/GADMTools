@@ -40,6 +40,7 @@ export(
   grid.map,
   vignette,
   gadm_sf_loadCountries, gadm_sf.loadCountries,
+  gadm_sf_import_shp,
   gadm_removeBackground,
   gadm_showNorth,
   gadm_showScale

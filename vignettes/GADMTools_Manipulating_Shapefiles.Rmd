@@ -75,6 +75,7 @@ The GADM website and data repository is hosted at UC Davis in the Hijmans Lab. T
 SpatialPolygons | Simple Features | Description 
 :------------------- | :------------------- | :--------------------------------
 gadm_sp_loadCountries | gadm_sf_loadCountries | downloads or loads one or more shapefiles
+ ____________ | gadm_sf_import_shp    | load a .shp file and convert it to gadm_sf object
 gadm_getBackground | gadm_getBackground | Gets tiles with 'rosm' from OpenStreetMap
 gadm_loadStripped |  | Load a GADM stripped shapefile
 gadm_remove | gadm_remove | Removes one or more regions from a map in a GADMWrapper/GT2 object
@@ -92,7 +93,7 @@ SpatialPolygons | Simple Features | Description
 :------------------- | :------------------- | :--------------------------------
 gadm_getBbox         | gadm_getBbox         | get the bounding box of the map
 gadm_crop            | gadm_crop            | crop a region to a specific rectangle
-gadm_longTo360       | gadm_longTo360       | Converts longitudes from -180° - 0° - 180° to 0° - 360°
+gadm_longTo360       | gadm_longTo360       | Converts longitudes from -180$^\circ$ - 0$^\circ$ - 180$^\circ$ to 0$^\circ$ - 360$^\circ$
 gadm_removeBackground| gadm_removeBackground| Removes the background of a map
 
 
@@ -103,7 +104,7 @@ Function *gadm.loadCountries* has been removed.
 
 
 \newpage
-## Format SP : gadm_sp_loadCountries() / gadm_load.countries
+## Format SP : gadm_sp_loadCountries()
 \par\noindent\rule[20pt]{\textwidth}{0.4pt}
 This is a main function of GADMTools, with it, you can load or download one or more shapefiles. If you load many shapefiles, the function assembles the shapefiles into one. 
 
@@ -172,6 +173,55 @@ Parameter | Description
 
 **Return**: Object *gadm_sf*
 
+
+\newpage
+## Format SF : gadm_sf_import_shp()
+\par\noindent\rule[20pt]{\textwidth}{0.4pt}
+Sometimes we need to import shapefiles different from those provided by GADM.org. It is possible to read and import a file in shapefile format (.shp,.dbf,.proj) and put it in gadm_sf format for use with GADMTools.
+
+*gadm_sf_import_shp*(
+
+                  dir, 
+                  
+                  name, 
+                  
+                  level, 
+                  
+                  del = NULL, 
+                  
+                  renamed = NULL, 
+                  
+                  keepall = FALSE
+                  
+                )
+
+
+Parameter | Description                  
+--------- | ---------------------------------------------------------------------------------                 
+**dir**    | **Character** path to the directory where .shp file is located (eg. "./")
+**name** | **Character** - name of the .shp file without the extension (example: "india"),
+**level** | **Integer** - the administrative level
+**del** | **Character vector** - the variables (columns) to be deleted (optional if keepall == FALSE)
+**renamed** | **Character vector** - the variables to be renamed (eg. the administrative fields in GADM are named NAME_X where X is the level, and the ISO code(3)),
+**keepall** | **Boolean** if it is FALSE (default), allows to keep only the columns useful for GADMTools.
+
+
+**Return**: Object *gadm_sf*
+
+### Example
+```{r eval=FALSE}
+map <- gadm_sf_import_shp(dir="./", name = "india", level = 2,
+                          del = c("DCODE", "NAME3", "SDCODE"),
+                          renamed = c('ISO' = 'COUNTRY',
+                                      'NAME_0' = 'COUNTRY_LO',
+                                      'NAME_1' = 'NAME1',
+                                      'NAME_2' = 'NAME2'),
+                          keepall = FALSE
+                          )
+map$sf$ISO <- "IND"
+map$sf$NAME_0 <- "India"
+
+```
 
 \newpage
 
@@ -361,7 +411,4 @@ knitr::include_graphics("Rplot_7.7.png")
 \par\noindent\rule[20pt]{\textwidth}{0.4pt}
 
 *gadm_removeBackground*( x )
-
-
-
 

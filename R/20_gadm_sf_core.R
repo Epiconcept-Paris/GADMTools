@@ -140,6 +140,47 @@ gadm_sf_loadCountries <- gadm_sf.loadCountries <- function (fileNames,
             class = "gadm_sf")
 }
 
+# gadm_sf_import_shp ----------------------------------------------------------------------------------------------
+# =================================================================================================================
+gadm_sf_import_shp <- function(dir, name, level, del = NULL, renamed = NULL, keepall = FALSE) {
+  shp <- st_read(dir, name)
+  if (!is.null(del)) {
+    shp <- dplyr::select(shp, -c(!!!del))
+  }
+  if (!is.null(renamed)) {
+    shp <- dplyr::rename(shp, !!!renamed)
+  }
+  if (keepall == FALSE) {
+    V <- c("ISO", "NAME_0")
+    if (level >= 1) {
+      V <- c(V, "NAME_1")
+    }
+    if (level >= 2) {
+      V <- c(V, "NAME_2")
+    }
+    if (level >= 3) {
+      V <- c(V, "NAME_3")
+    }
+    if (level >= 4) {
+      V <- c(V, "NAME_4")
+    }
+    if (level == 5) {
+      V <- c(V, "NAME_5")
+    }
+    
+    shp <- dplyr::select(shp, !!!V)
+  }
+  
+  shp <- sf::st_as_sf(shp)
+  
+  # Creates gadm_sf object ----------------------------------------------------------------------------------------------
+  structure(list("basename"=dir,
+                 "sf" = shp,
+                 "level"=level,
+                 "hasBGND"  = FALSE),
+            class = "gadm_sf")
+}
+
 
 # gadm_simplify.gadm_sf ---------------------------------------------------
 # =========================================================================

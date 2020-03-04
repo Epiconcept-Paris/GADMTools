@@ -22,7 +22,7 @@ With \bold{GADMTools}, a wrapper for \bold{GADM} shapefiles, you can easily mani
 Package: \tab GADMTools\cr
 Type: \tab Package\cr
 Version: \tab 3.7-1\cr
-Date: \tab 2019-06-25\cr
+Date: \tab 2019-10-08\cr
 License: \tab GPL-3\cr
 }
 
