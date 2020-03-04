@@ -1,4 +1,4 @@
-import("classInt", "sf", "sp","rgdal","maptools", "rosm", "ggspatial", "ggplot2", "tidyverse")
+import("classInt", "sf", "sp","rgdal","maptools", "rosm", "ggspatial", "ggplot2")
 importFrom(gridExtra, arrangeGrob)
 importFrom("grDevices", "colorRampPalette")
 importFrom("utils", "download.file")
